@@ -4,7 +4,7 @@
     "href": "project.html",
     "title": "DANL Project",
     "section": "",
-    "text": "About this project 👏 Our group wanted to find a data set about a topic that we are all interested in.\n\nathletes &lt;- read.csv(\"C:/Users/peter/OneDrive/School 2023-24/Fall 23/DANL/Most_paid_athletes1.csv\")"
+    "text": "About this project 👏 Our group wanted to find a data set about a topic that we are all interested in. We think it will be interesting to look at the salaries of professional athletes.\n\nathletes &lt;- read.csv(\"C:/Users/peter/OneDrive/School 2023-24/Fall 23/DANL/Most_paid_athletes1.csv\")"
   },
   {
     "objectID": "project.html#summary-statistics",
