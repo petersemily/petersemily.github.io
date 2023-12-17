@@ -2,11 +2,11 @@
 title: DANL Project
 subtitle: "Data-Driven Mastery: Unlocking Business Potential"
 author: 
-  - Name 1
-  - Name 2
-  - Name 3
-  - Name 4
-  - Name 5
+  - Emily Peters
+  - Abby Dunnigan
+  - Meghan Catania
+  - Teddy Packert
+  - Collin Gates
 
 toc: true
 toc-title: "Table of Contents"
@@ -48,45 +48,49 @@ theme_set(theme_ipsum()+
 # Introduction
 
 About this project :clap:
+Our group wanted to find a data set about a topic that we are all interested in. 
 
 ```{r}
-1 + 1
+
+athletes <- read.csv("C:/Users/peter/OneDrive/School 2023-24/Fall 23/DANL/Most_paid_athletes1.csv")
+
 ```
 
 
 # Data
 
-The data.frame `mpg` contains a subset of the fuel economy data that the EPA makes available on [https://fueleconomy.gov/](https://fueleconomy.gov/). It contains only models which had a new release every year between 1999 and 2008 - this was used as a proxy for the popularity of the car. :oncoming_automobile:
+The data.frame `athletes` contains the top 10 highest payed athletes each year from 1990 to 2020 ranked by Forbes Magazine :trophy:
 
 
 ## Summary Statistics
 
 ```{r}
-mpg <- ggplot2::mpg
-```
-
-```{r}
 #| results: asis
 #| echo: false
-rmarkdown::paged_table(mpg) 
+rmarkdown::paged_table(athletes) 
 ```
 
 
 ```{r}
-skim(mpg) %>% 
+skim(athletes) %>% 
   select(-n_missing)
 ```
 
 
-## MPG and a Type of Cars
-The following boxplot shows how the distribution of highway MPG (`hwy`) varies by a type of cars (`class`) :blue_car: :truck: :minibus:.
+## Mean Salary Per Year
+This time series shows each mean `earnings....million.` by each `Year`.
+
+```{r}
+mean_salaries <- athletes %>% 
+  group_by(Year) %>% 
+  summarize(mean_sal = mean(earnings....million.))
+```
 
 
 ```{r}
-ggplot(data = mpg) +
-  geom_boxplot(aes(x = class, y = hwy, fill = class),
-               show.legend = F) +
-  labs(x = "Class", y = "Highway\nMPG") 
+ggplot(data = mean_salaries) +
+  geom_line(mapping=aes(x=Year, y=mean_sal))
+   
 ```
-
+It is clear from 1990 to 2020, the mean salary of the athletes increased significantly. This could account for an increasing demand in watching sports over time, or for inflation.
 
