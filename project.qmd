@@ -48,7 +48,7 @@ theme_set(theme_ipsum()+
 # Introduction
 
 About this project :clap:
-Our group wanted to find a data set about a topic that we are all interested in. 
+Our group wanted to find a data set about a topic that we are all interested in. We think it will be interesting to look at the salaries of professional athletes.
 
 ```{r}
 
