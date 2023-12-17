@@ -76,6 +76,7 @@ skim(athletes) %>%
   select(-n_missing)
 ```
 #Analysis
+
 ## Mean Salary Per Year
 This time series shows each mean `earnings....million.` by each `Year`.
 

@@ -153,9 +153,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><span class="header-section-number">2</span> Data</a>
   <ul class="collapse">
   <li><a href="#summary-statistics" id="toc-summary-statistics" class="nav-link" data-scroll-target="#summary-statistics"><span class="header-section-number">2.1</span> Summary Statistics</a></li>
-  <li><a href="#salary-variation" id="toc-salary-variation" class="nav-link" data-scroll-target="#salary-variation"><span class="header-section-number">2.2</span> Salary Variation</a></li>
-  <li><a href="#top-salaries-by-sports" id="toc-top-salaries-by-sports" class="nav-link" data-scroll-target="#top-salaries-by-sports"><span class="header-section-number">2.3</span> Top Salaries by Sports</a></li>
-  <li><a href="#percent-change-of-mean-earnings....million.-by-year" id="toc-percent-change-of-mean-earnings....million.-by-year" class="nav-link" data-scroll-target="#percent-change-of-mean-earnings....million.-by-year"><span class="header-section-number">2.4</span> Percent change of mean <code>earnings....million.</code> by <code>Year</code></a></li>
+  <li><a href="#mean-salary-per-year" id="toc-mean-salary-per-year" class="nav-link" data-scroll-target="#mean-salary-per-year"><span class="header-section-number">2.2</span> Mean Salary Per Year</a></li>
+  <li><a href="#salary-variation" id="toc-salary-variation" class="nav-link" data-scroll-target="#salary-variation"><span class="header-section-number">2.3</span> Salary Variation</a></li>
+  <li><a href="#top-salaries-by-sports" id="toc-top-salaries-by-sports" class="nav-link" data-scroll-target="#top-salaries-by-sports"><span class="header-section-number">2.4</span> Top Salaries by Sports</a></li>
+  <li><a href="#percent-change-of-mean-earnings....million.-by-year" id="toc-percent-change-of-mean-earnings....million.-by-year" class="nav-link" data-scroll-target="#percent-change-of-mean-earnings....million.-by-year"><span class="header-section-number">2.5</span> Percent change of mean <code>earnings....million.</code> by <code>Year</code></a></li>
   </ul></li>
   </ul>
 </nav>
@@ -398,7 +399,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 </div>
 </div>
-<p>#Analysis ## Mean Salary Per Year This time series shows each mean <code>earnings....million.</code> by each <code>Year</code>.</p>
+<p>#Analysis</p>
+</section>
+<section id="mean-salary-per-year" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="mean-salary-per-year"><span class="header-section-number">2.2</span> Mean Salary Per Year</h2>
+<p>This time series shows each mean <code>earnings....million.</code> by each <code>Year</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mean_salaries <span class="ot">&lt;-</span> athletes <span class="sc">%&gt;%</span> </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year) <span class="sc">%&gt;%</span> </span>
@@ -413,8 +418,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>It is clear from 1990 to 2020, the mean salary of the athletes increased significantly. This could account for an increasing demand in watching sports over time, or for inflation.</p>
 </section>
-<section id="salary-variation" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="salary-variation"><span class="header-section-number">2.2</span> Salary Variation</h2>
+<section id="salary-variation" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="salary-variation"><span class="header-section-number">2.3</span> Salary Variation</h2>
 <p>This bar graph shows each salary in terms of the top 5 countries</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>top5 <span class="ot">&lt;-</span> athletes <span class="sc">%&gt;%</span> </span>
@@ -434,8 +439,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>You can infer a lot from this particular data visualization. First, the overwhelming majority of athletes in the ranking each year are American. This could show that sports are more popular in America since American athletes in general get paid more. Second, you can see that most athletes that have made the ranking make $100 million or less.</p>
 </section>
-<section id="top-salaries-by-sports" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="top-salaries-by-sports"><span class="header-section-number">2.3</span> Top Salaries by Sports</h2>
+<section id="top-salaries-by-sports" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="top-salaries-by-sports"><span class="header-section-number">2.4</span> Top Salaries by Sports</h2>
 <p>Next, we will look at the <code>earnings....million.</code> ranked by <code>Sport</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>top5_sport <span class="ot">&lt;-</span> athletes <span class="sc">%&gt;%</span> </span>
@@ -460,8 +465,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><span class="emoji" data-emoji="basketball">🏀</span> <span class="emoji" data-emoji="boxing_glove">🥊</span> <span class="emoji" data-emoji="golf">⛳</span> <span class="emoji" data-emoji="soccer">⚽</span> <span class="emoji" data-emoji="tennis">🎾</span></p>
 <p>You might notice that we included more than five observations in this data frame. This is because some data for the same sport is counted differently from an inconsistency in the way the sport name was entered.</p>
 </section>
-<section id="percent-change-of-mean-earnings....million.-by-year" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="percent-change-of-mean-earnings....million.-by-year"><span class="header-section-number">2.4</span> Percent change of mean <code>earnings....million.</code> by <code>Year</code></h2>
+<section id="percent-change-of-mean-earnings....million.-by-year" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="percent-change-of-mean-earnings....million.-by-year"><span class="header-section-number">2.5</span> Percent change of mean <code>earnings....million.</code> by <code>Year</code></h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>p_chg <span class="ot">&lt;-</span> mean_salaries <span class="sc">%&gt;%</span> </span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sal_lag =</span> <span class="fu">lag</span>(mean_sal),</span>
