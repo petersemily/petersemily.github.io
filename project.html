@@ -153,7 +153,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><span class="header-section-number">2</span> Data</a>
   <ul class="collapse">
   <li><a href="#summary-statistics" id="toc-summary-statistics" class="nav-link" data-scroll-target="#summary-statistics"><span class="header-section-number">2.1</span> Summary Statistics</a></li>
-  <li><a href="#mean-salary-per-year" id="toc-mean-salary-per-year" class="nav-link" data-scroll-target="#mean-salary-per-year"><span class="header-section-number">2.2</span> Mean Salary Per Year</a></li>
+  <li><a href="#salary-variation" id="toc-salary-variation" class="nav-link" data-scroll-target="#salary-variation"><span class="header-section-number">2.2</span> Salary Variation</a></li>
+  <li><a href="#top-salaries-by-sports" id="toc-top-salaries-by-sports" class="nav-link" data-scroll-target="#top-salaries-by-sports"><span class="header-section-number">2.3</span> Top Salaries by Sports</a></li>
+  <li><a href="#percent-change-of-mean-earnings....million.-by-year" id="toc-percent-change-of-mean-earnings....million.-by-year" class="nav-link" data-scroll-target="#percent-change-of-mean-earnings....million.-by-year"><span class="header-section-number">2.4</span> Percent change of mean <code>earnings....million.</code> by <code>Year</code></a></li>
   </ul></li>
   </ul>
 </nav>
@@ -396,10 +398,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 </div>
 </div>
-</section>
-<section id="mean-salary-per-year" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="mean-salary-per-year"><span class="header-section-number">2.2</span> Mean Salary Per Year</h2>
-<p>This time series shows each mean <code>earnings....million.</code> by each <code>Year</code>.</p>
+<p>#Analysis ## Mean Salary Per Year This time series shows each mean <code>earnings....million.</code> by each <code>Year</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mean_salaries <span class="ot">&lt;-</span> athletes <span class="sc">%&gt;%</span> </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year) <span class="sc">%&gt;%</span> </span>
@@ -413,6 +412,75 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>It is clear from 1990 to 2020, the mean salary of the athletes increased significantly. This could account for an increasing demand in watching sports over time, or for inflation.</p>
+</section>
+<section id="salary-variation" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="salary-variation"><span class="header-section-number">2.2</span> Salary Variation</h2>
+<p>This bar graph shows each salary in terms of the top 5 countries</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>top5 <span class="ot">&lt;-</span> athletes <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Nationality) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n=</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>(n)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>top5_athletes <span class="ot">&lt;-</span> athletes <span class="sc">%&gt;%</span> </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Nationality <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">'USA'</span>,<span class="st">'Germany'</span>,<span class="st">'UK'</span>,<span class="st">'Switzerland'</span>,<span class="st">'Portugal'</span>))</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> top5_athletes)<span class="sc">+</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>earnings....million.))<span class="sc">+</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(.<span class="sc">~</span> Nationality)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="project_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="864"></p>
+</div>
+</div>
+<p>You can infer a lot from this particular data visualization. First, the overwhelming majority of athletes in the ranking each year are American. This could show that sports are more popular in America since American athletes in general get paid more. Second, you can see that most athletes that have made the ranking make $100 million or less.</p>
+</section>
+<section id="top-salaries-by-sports" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="top-salaries-by-sports"><span class="header-section-number">2.3</span> Top Salaries by Sports</h2>
+<p>Next, we will look at the <code>earnings....million.</code> ranked by <code>Sport</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>top5_sport <span class="ot">&lt;-</span> athletes <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Sport) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n_athletes=</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>(n_athletes)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#| results: asis</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>rmarkdown<span class="sc">::</span><span class="fu">paged_table</span>(top5_sport) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["Sport"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n_athletes"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"Basketball","2":"54"},{"1":"Boxing","2":"29"},{"1":"basketball","2":"27"},{"1":"Golf","2":"24"},{"1":"Soccer","2":"22"},{"1":"golf","2":"20"},{"1":"Tennis","2":"18"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Here, we can see that the athletes ranked for highest salary play these sports.</p>
+<p><span class="emoji" data-emoji="basketball">🏀</span> <span class="emoji" data-emoji="boxing_glove">🥊</span> <span class="emoji" data-emoji="golf">⛳</span> <span class="emoji" data-emoji="soccer">⚽</span> <span class="emoji" data-emoji="tennis">🎾</span></p>
+<p>You might notice that we included more than five observations in this data frame. This is because some data for the same sport is counted differently from an inconsistency in the way the sport name was entered.</p>
+</section>
+<section id="percent-change-of-mean-earnings....million.-by-year" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="percent-change-of-mean-earnings....million.-by-year"><span class="header-section-number">2.4</span> Percent change of mean <code>earnings....million.</code> by <code>Year</code></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>p_chg <span class="ot">&lt;-</span> mean_salaries <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sal_lag =</span> <span class="fu">lag</span>(mean_sal),</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">chg =</span> mean_sal <span class="sc">-</span> sal_lag,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">perc_chg =</span> chg<span class="sc">/</span>mean_sal)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#| results: asis</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>rmarkdown<span class="sc">::</span><span class="fu">paged_table</span>(p_chg) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["Year"],"name":[1],"type":["int"],"align":["right"]},{"label":["mean_sal"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["sal_lag"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["chg"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["perc_chg"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"1990","2":"12.80000","3":"NA","4":"NA","5":"NA"},{"1":"1991","2":"18.35000","3":"12.80000","4":"5.550000","5":"0.30245232"},{"1":"1992","2":"15.87000","3":"18.35000","4":"-2.480000","5":"-0.15626969"},{"1":"1993","2":"17.83000","3":"15.87000","4":"1.960000","5":"0.10992709"},{"1":"1994","2":"14.89000","3":"17.83000","4":"-2.940000","5":"-0.19744795"},{"1":"1995","2":"22.91000","3":"14.89000","4":"8.020000","5":"0.35006547"},{"1":"1996","2":"27.31000","3":"22.91000","4":"4.400000","5":"0.16111315"},{"1":"1997","2":"33.81000","3":"27.31000","4":"6.500000","5":"0.19225081"},{"1":"1998","2":"28.14000","3":"33.81000","4":"-5.670000","5":"-0.20149254"},{"1":"1999","2":"35.75000","3":"28.14000","4":"7.610000","5":"0.21286713"},{"1":"2000","2":"33.85000","3":"35.75000","4":"-1.900000","5":"-0.05612999"},{"1":"2002","2":"32.36364","3":"33.85000","4":"-1.486364","5":"-0.04592697"},{"1":"2003","2":"37.50000","3":"32.36364","4":"5.136364","5":"0.13696970"},{"1":"2004","2":"40.74000","3":"37.50000","4":"3.240000","5":"0.07952872"},{"1":"2005","2":"40.62000","3":"40.74000","4":"-0.120000","5":"-0.00295421"},{"1":"2006","2":"43.10000","3":"40.62000","4":"2.480000","5":"0.05754060"},{"1":"2007","2":"42.10000","3":"43.10000","4":"-1.000000","5":"-0.02375297"},{"1":"2008","2":"48.30000","3":"42.10000","4":"6.200000","5":"0.12836439"},{"1":"2009","2":"47.60000","3":"48.30000","4":"-0.700000","5":"-0.01470588"},{"1":"2010","2":"51.37000","3":"47.60000","4":"3.770000","5":"0.07338914"},{"1":"2011","2":"44.88000","3":"51.37000","4":"-6.490000","5":"-0.14460784"},{"1":"2012","2":"54.31000","3":"44.88000","4":"9.430000","5":"0.17363285"},{"1":"2013","2":"55.25000","3":"54.31000","4":"0.940000","5":"0.01701357"},{"1":"2014","2":"64.24000","3":"55.25000","4":"8.990000","5":"0.13994396"},{"1":"2015","2":"95.03000","3":"64.24000","4":"30.790000","5":"0.32400295"},{"1":"2016","2":"63.52000","3":"95.03000","4":"-31.510000","5":"-0.49606423"},{"1":"2017","2":"62.37000","3":"63.52000","4":"-1.150000","5":"-0.01843835"},{"1":"2018","2":"105.94000","3":"62.37000","4":"43.570000","5":"0.41127053"},{"1":"2019","2":"94.14000","3":"105.94000","4":"-11.800000","5":"-0.12534523"},{"1":"2020","2":"81.92000","3":"94.14000","4":"-12.220000","5":"-0.14916992"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>The mean salary varies greatly from year to year. One reason that could possibly explain this is the state of the economy in each year. Some years are better than others. Although there is a constant high demand for sports, the economy can dictate how much people spend on attending events, which can then effect a player’s salary.</p>
 
 
 </section>

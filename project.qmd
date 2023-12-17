@@ -75,8 +75,7 @@ rmarkdown::paged_table(athletes)
 skim(athletes) %>% 
   select(-n_missing)
 ```
-
-
+#Analysis
 ## Mean Salary Per Year
 This time series shows each mean `earnings....million.` by each `Year`.
 
@@ -94,3 +93,52 @@ ggplot(data = mean_salaries) +
 ```
 It is clear from 1990 to 2020, the mean salary of the athletes increased significantly. This could account for an increasing demand in watching sports over time, or for inflation.
 
+## Salary Variation 
+This bar graph shows each salary in terms of the top 5 countries
+```{r}
+top5 <- athletes %>% 
+  group_by(Nationality) %>% 
+  summarize(n=n()) %>% 
+  arrange(-(n)) %>% 
+  slice(1:5)
+top5_athletes <- athletes %>% 
+  filter(Nationality %in% c('USA','Germany','UK','Switzerland','Portugal'))
+
+ggplot(data = top5_athletes)+
+  geom_histogram(mapping=aes(x=earnings....million.))+
+  facet_wrap(.~ Nationality)
+```
+You can infer a lot from this particular data visualization. First, the overwhelming majority of athletes in the ranking each year are American. This could show that sports are more popular in America since American athletes in general get paid more. Second, you can see that most athletes that have made the ranking make $100 million or less.
+
+## Top Salaries by Sports 
+Next, we will look at the `earnings....million.` ranked by `Sport`.
+```{r}
+top5_sport <- athletes %>% 
+  group_by(Sport) %>% 
+  summarize(n_athletes=n()) %>% 
+  arrange(-(n_athletes)) %>% 
+  slice(1:7)
+
+#| results: asis
+#| echo: false
+rmarkdown::paged_table(top5_sport) 
+```
+Here, we can see that the athletes ranked for highest salary play these sports.
+
+:basketball: :boxing_glove: :golf: :soccer: :tennis:
+
+You might notice that we included more than five observations in this data frame. This is because some data for the same sport is counted differently from an inconsistency in the way the sport name was entered. 
+
+##  Percent change of mean `earnings....million.` by `Year`
+```{r}
+
+p_chg <- mean_salaries %>% 
+  mutate(sal_lag = lag(mean_sal),
+         chg = mean_sal - sal_lag,
+         perc_chg = chg/mean_sal)
+
+#| results: asis
+#| echo: false
+rmarkdown::paged_table(p_chg) 
+```
+The mean salary varies greatly from year to year. One reason that could possibly explain this is the state of the economy in each year. Some years are better than others. Although there is a constant high demand for sports, the economy can dictate how much people spend on attending events, which can then effect a player's salary. 
