@@ -11,14 +11,14 @@
     "href": "project.html#summary-statistics",
     "title": "DANL Project",
     "section": "2.1 Summary Statistics",
-    "text": "2.1 Summary Statistics\n\n\n\n  \n\n\n\nskim(athletes) %&gt;% \n  select(-n_missing)\n\n\nData summary\n\n\nName\nathletes\n\n\nNumber of rows\n301\n\n\nNumber of columns\n8\n\n\n_______________________\n\n\n\nColumn type frequency:\n\n\n\ncharacter\n4\n\n\nnumeric\n4\n\n\n________________________\n\n\n\nGroup variables\nNone\n\n\n\nVariable type: character\n\n\n\n\n\n\n\n\n\n\n\n\nskim_variable\ncomplete_rate\nmin\nmax\nempty\nn_unique\nwhitespace\n\n\n\n\nName\n1\n6\n23\n0\n82\n0\n\n\nNationality\n1\n2\n16\n0\n22\n0\n\n\nPrevious.Year.Rank\n1\n0\n10\n24\n37\n0\n\n\nSport\n1\n3\n28\n0\n29\n0\n\n\n\nVariable type: numeric\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nskim_variable\ncomplete_rate\nmean\nsd\np0\np25\np50\np75\np100\nhist\n\n\n\n\nS.NO\n1\n151.00\n87.04\n1.0\n76\n151\n226.0\n301\n▇▇▇▇▇\n\n\nCurrent.Rank\n1\n5.45\n2.85\n1.0\n3\n5\n8.0\n10\n▇▇▇▇▇\n\n\nYear\n1\n2005.12\n9.06\n1990.0\n1997\n2005\n2013.0\n2020\n▇▆▇▇▇\n\n\nearnings….million.\n1\n45.52\n33.53\n8.1\n24\n39\n59.4\n300\n▇▂▁▁▁\n\n\n\n\n\n#Analysis"
+    "text": "2.1 Summary Statistics\n\n\n\n  \n\n\n\nskim(athletes) %&gt;% \n  select(-n_missing)\n\n\nData summary\n\n\nName\nathletes\n\n\nNumber of rows\n301\n\n\nNumber of columns\n8\n\n\n_______________________\n\n\n\nColumn type frequency:\n\n\n\ncharacter\n4\n\n\nnumeric\n4\n\n\n________________________\n\n\n\nGroup variables\nNone\n\n\n\nVariable type: character\n\n\n\n\n\n\n\n\n\n\n\n\nskim_variable\ncomplete_rate\nmin\nmax\nempty\nn_unique\nwhitespace\n\n\n\n\nName\n1\n6\n23\n0\n82\n0\n\n\nNationality\n1\n2\n16\n0\n22\n0\n\n\nPrevious.Year.Rank\n1\n0\n10\n24\n37\n0\n\n\nSport\n1\n3\n28\n0\n29\n0\n\n\n\nVariable type: numeric\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nskim_variable\ncomplete_rate\nmean\nsd\np0\np25\np50\np75\np100\nhist\n\n\n\n\nS.NO\n1\n151.00\n87.04\n1.0\n76\n151\n226.0\n301\n▇▇▇▇▇\n\n\nCurrent.Rank\n1\n5.45\n2.85\n1.0\n3\n5\n8.0\n10\n▇▇▇▇▇\n\n\nYear\n1\n2005.12\n9.06\n1990.0\n1997\n2005\n2013.0\n2020\n▇▆▇▇▇\n\n\nearnings….million.\n1\n45.52\n33.53\n8.1\n24\n39\n59.4\n300\n▇▂▁▁▁"
   },
   {
     "objectID": "project.html#mean-salary-per-year",
     "href": "project.html#mean-salary-per-year",
     "title": "DANL Project",
-    "section": "2.2 Mean Salary Per Year",
-    "text": "2.2 Mean Salary Per Year\nThis time series shows each mean earnings....million. by each Year.\n\nmean_salaries &lt;- athletes %&gt;% \n  group_by(Year) %&gt;% \n  summarize(mean_sal = mean(earnings....million.))\n\n\nggplot(data = mean_salaries) +\n  geom_line(mapping=aes(x=Year, y=mean_sal))\n\n\n\n\nIt is clear from 1990 to 2020, the mean salary of the athletes increased significantly. This could account for an increasing demand in watching sports over time, or for inflation."
+    "section": "3.1 Mean Salary Per Year",
+    "text": "3.1 Mean Salary Per Year\nThis time series shows each mean earnings....million. by each Year.\n\nmean_salaries &lt;- athletes %&gt;% \n  group_by(Year) %&gt;% \n  summarize(mean_sal = mean(earnings....million.))\n\n\nggplot(data = mean_salaries) +\n  geom_line(mapping=aes(x=Year, y=mean_sal))\n\n\n\n\nIt is clear from 1990 to 2020, the mean salary of the athletes increased significantly. This could account for an increasing demand in watching sports over time, or for inflation."
   },
   {
     "objectID": "posts/starwars/starwars_df.html",
@@ -122,21 +122,21 @@
     "objectID": "project.html#salary-variation",
     "href": "project.html#salary-variation",
     "title": "DANL Project",
-    "section": "2.3 Salary Variation",
-    "text": "2.3 Salary Variation\nThis bar graph shows each salary in terms of the top 5 countries\n\ntop5 &lt;- athletes %&gt;% \n  group_by(Nationality) %&gt;% \n  summarize(n=n()) %&gt;% \n  arrange(-(n)) %&gt;% \n  slice(1:5)\ntop5_athletes &lt;- athletes %&gt;% \n  filter(Nationality %in% c('USA','Germany','UK','Switzerland','Portugal'))\n\nggplot(data = top5_athletes)+\n  geom_histogram(mapping=aes(x=earnings....million.))+\n  facet_wrap(.~ Nationality)\n\n\n\n\nYou can infer a lot from this particular data visualization. First, the overwhelming majority of athletes in the ranking each year are American. This could show that sports are more popular in America since American athletes in general get paid more. Second, you can see that most athletes that have made the ranking make $100 million or less."
+    "section": "3.2 Salary Variation",
+    "text": "3.2 Salary Variation\nThis bar graph shows each salary in terms of the top 5 countries\n\ntop5 &lt;- athletes %&gt;% \n  group_by(Nationality) %&gt;% \n  summarize(n=n()) %&gt;% \n  arrange(-(n)) %&gt;% \n  slice(1:5)\ntop5_athletes &lt;- athletes %&gt;% \n  filter(Nationality %in% c('USA','Germany','UK','Switzerland','Portugal'))\n\nggplot(data = top5_athletes)+\n  geom_histogram(mapping=aes(x=earnings....million.))+\n  facet_wrap(.~ Nationality)\n\n\n\n\nYou can infer a lot from this particular data visualization. First, the overwhelming majority of athletes in the ranking each year are American. This could show that sports are more popular in America since American athletes in general get paid more. Second, you can see that most athletes that have made the ranking make $100 million or less."
   },
   {
     "objectID": "project.html#top-salaries-by-sports",
     "href": "project.html#top-salaries-by-sports",
     "title": "DANL Project",
-    "section": "2.4 Top Salaries by Sports",
-    "text": "2.4 Top Salaries by Sports\nNext, we will look at the earnings....million. ranked by Sport.\n\ntop5_sport &lt;- athletes %&gt;% \n  group_by(Sport) %&gt;% \n  summarize(n_athletes=n()) %&gt;% \n  arrange(-(n_athletes)) %&gt;% \n  slice(1:7)\n\n#| results: asis\n#| echo: false\nrmarkdown::paged_table(top5_sport) \n\n\n\n  \n\n\n\nHere, we can see that the athletes ranked for highest salary play these sports.\n🏀 🥊 ⛳ ⚽ 🎾\nYou might notice that we included more than five observations in this data frame. This is because some data for the same sport is counted differently from an inconsistency in the way the sport name was entered."
+    "section": "3.3 Top Salaries by Sports",
+    "text": "3.3 Top Salaries by Sports\nNext, we will look at the earnings....million. ranked by Sport.\n\ntop5_sport &lt;- athletes %&gt;% \n  group_by(Sport) %&gt;% \n  summarize(n_athletes=n()) %&gt;% \n  arrange(-(n_athletes)) %&gt;% \n  slice(1:7)\n\n#| results: asis\n#| echo: false\nrmarkdown::paged_table(top5_sport) \n\n\n\n  \n\n\n\nHere, we can see that the athletes ranked for highest salary play these sports.\n🏀 🥊 ⛳ ⚽ 🎾\nYou might notice that we included more than five observations in this data frame. This is because some data for the same sport is counted differently from an inconsistency in the way the sport name was entered."
   },
   {
     "objectID": "project.html#percent-change-of-mean-earnings....million.-by-year",
     "href": "project.html#percent-change-of-mean-earnings....million.-by-year",
     "title": "DANL Project",
-    "section": "2.5 Percent change of mean earnings....million. by Year",
-    "text": "2.5 Percent change of mean earnings....million. by Year\n\np_chg &lt;- mean_salaries %&gt;% \n  mutate(sal_lag = lag(mean_sal),\n         chg = mean_sal - sal_lag,\n         perc_chg = chg/mean_sal)\n\n#| results: asis\n#| echo: false\nrmarkdown::paged_table(p_chg) \n\n\n\n  \n\n\n\nThe mean salary varies greatly from year to year. One reason that could possibly explain this is the state of the economy in each year. Some years are better than others. Although there is a constant high demand for sports, the economy can dictate how much people spend on attending events, which can then effect a player’s salary."
+    "section": "3.4 Percent change of mean earnings....million. by Year",
+    "text": "3.4 Percent change of mean earnings....million. by Year\n\np_chg &lt;- mean_salaries %&gt;% \n  mutate(sal_lag = lag(mean_sal),\n         chg = mean_sal - sal_lag,\n         perc_chg = chg/mean_sal)\n\n#| results: asis\n#| echo: false\nrmarkdown::paged_table(p_chg) \n\n\n\n  \n\n\n\nThe mean salary varies greatly from year to year. One reason that could possibly explain this is the state of the economy in each year. Some years are better than others. Although there is a constant high demand for sports, the economy can dictate how much people spend on attending events, which can then effect a player’s salary."
   }
 ]
