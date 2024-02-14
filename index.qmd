@@ -2,7 +2,7 @@
 title: "Emily Peters"
 about:
   template: trestles  # jolla  trestles  solana  marquee  broadside
-  image: img/profile.png
+  image: IMG_4552_Original.png
   image-width: 15em
   image-shape: round # rectangle  round  rounded
   
@@ -10,15 +10,12 @@ about:
     - icon: linkedin
       text: LinkedIn
       href: https://linkedin.com
-    - icon: instagram
-      text: Instagram
-      href: https://instagram.com
     - icon: github
       text: GitHub
       href: https://github.com/petersemily/petersemily.github.io
     - icon: file-earmark-pdf
       text: Resumé
-      href: https://GITHUB_USERNAME.github.io/resume-example.pdf
+      href: Emily_Peters_resume_2-24.pdf
     - icon: mailbox
       text: Email
       href: mailto:emp21@geneseo.edu
@@ -26,11 +23,12 @@ about:
 ---
 
 
-Emily Peters majors in Data Analytics at SUNY Geneseo. 
+Emily Peters majors in Data Analytics and minors in Mathematics at SUNY Geneseo. When not at school, she enjoys spending time outside with her dog or working on a puzzle.
 
 ## Education
 
 Genesee Community College | Batavia, NY
+Major in Economic Crime Investigation | August 2021 - December 2022
 
 State University of New York at Geneseo | Geneseo, NY <br>
 B.S. in Data Analytics | Jan 2023 - present <br>

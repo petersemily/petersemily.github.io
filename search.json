@@ -21,6 +21,27 @@
     "text": "3.1 Mean Salary Per Year\nThis time series shows each mean earnings....million. by each Year.\n\nmean_salaries &lt;- athletes %&gt;% \n  group_by(Year) %&gt;% \n  summarize(mean_sal = mean(earnings....million.))\n\n\nggplot(data = mean_salaries) +\n  geom_line(mapping=aes(x=Year, y=mean_sal))\n\n\n\n\nIt is clear from 1990 to 2020, the mean salary of the athletes increased significantly. This could account for an increasing demand in watching sports over time, or for inflation."
   },
   {
+    "objectID": "project.html#salary-variation",
+    "href": "project.html#salary-variation",
+    "title": "DANL Project",
+    "section": "3.2 Salary Variation",
+    "text": "3.2 Salary Variation\nThis bar graph shows each salary in terms of the top 5 countries\n\ntop5 &lt;- athletes %&gt;% \n  group_by(Nationality) %&gt;% \n  summarize(n=n()) %&gt;% \n  arrange(-(n)) %&gt;% \n  slice(1:5)\ntop5_athletes &lt;- athletes %&gt;% \n  filter(Nationality %in% c('USA','Germany','UK','Switzerland','Portugal'))\n\nggplot(data = top5_athletes)+\n  geom_histogram(mapping=aes(x=earnings....million.))+\n  facet_wrap(.~ Nationality)\n\n\n\n\nYou can infer a lot from this particular data visualization. First, the overwhelming majority of athletes in the ranking each year are American. This could show that sports are more popular in America since American athletes in general get paid more. Second, you can see that most athletes that have made the ranking make $100 million or less."
+  },
+  {
+    "objectID": "project.html#top-salaries-by-sports",
+    "href": "project.html#top-salaries-by-sports",
+    "title": "DANL Project",
+    "section": "3.3 Top Salaries by Sports",
+    "text": "3.3 Top Salaries by Sports\nNext, we will look at the earnings....million. ranked by Sport.\n\ntop5_sport &lt;- athletes %&gt;% \n  group_by(Sport) %&gt;% \n  summarize(n_athletes=n()) %&gt;% \n  arrange(-(n_athletes)) %&gt;% \n  slice(1:7)\n\n#| results: asis\n#| echo: false\nrmarkdown::paged_table(top5_sport) \n\n\n\n  \n\n\n\nHere, we can see that the athletes ranked for highest salary play these sports.\n🏀 🥊 ⛳ ⚽ 🎾\nYou might notice that we included more than five observations in this data frame. This is because some data for the same sport is counted differently from an inconsistency in the way the sport name was entered."
+  },
+  {
+    "objectID": "project.html#percent-change-of-mean-earnings....million.-by-year",
+    "href": "project.html#percent-change-of-mean-earnings....million.-by-year",
+    "title": "DANL Project",
+    "section": "3.4 Percent change of mean earnings....million. by Year",
+    "text": "3.4 Percent change of mean earnings....million. by Year\n\np_chg &lt;- mean_salaries %&gt;% \n  mutate(sal_lag = lag(mean_sal),\n         chg = mean_sal - sal_lag,\n         perc_chg = chg/mean_sal)\n\n#| results: asis\n#| echo: false\nrmarkdown::paged_table(p_chg) \n\n\n\n  \n\n\n\nThe mean salary varies greatly from year to year. One reason that could possibly explain this is the state of the economy in each year. Some years are better than others. Although there is a constant high demand for sports, the economy can dictate how much people spend on attending events, which can then effect a player’s salary."
+  },
+  {
     "objectID": "posts/starwars/starwars_df.html",
     "href": "posts/starwars/starwars_df.html",
     "title": "Starwars",
@@ -95,14 +116,14 @@
     "href": "index.html",
     "title": "Emily Peters",
     "section": "",
-    "text": "Emily Peters majors in Data Analytics at SUNY Geneseo."
+    "text": "Emily Peters majors in Data Analytics and minors in Mathematics at SUNY Geneseo. When not at school, she enjoys spending time outside with her dog or working on a puzzle."
   },
   {
     "objectID": "index.html#education",
     "href": "index.html#education",
     "title": "Emily Peters",
     "section": "Education",
-    "text": "Education\nGenesee Community College | Batavia, NY\nState University of New York at Geneseo | Geneseo, NY  B.S. in Data Analytics | Jan 2023 - present  Minor in Mathematics"
+    "text": "Education\nGenesee Community College | Batavia, NY Major in Economic Crime Investigation | August 2021 - December 2022\nState University of New York at Geneseo | Geneseo, NY  B.S. in Data Analytics | Jan 2023 - present  Minor in Mathematics"
   },
   {
     "objectID": "posts/post-with-code/index.html",
@@ -119,24 +140,101 @@
     "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
   },
   {
-    "objectID": "project.html#salary-variation",
-    "href": "project.html#salary-variation",
-    "title": "DANL Project",
-    "section": "3.2 Salary Variation",
-    "text": "3.2 Salary Variation\nThis bar graph shows each salary in terms of the top 5 countries\n\ntop5 &lt;- athletes %&gt;% \n  group_by(Nationality) %&gt;% \n  summarize(n=n()) %&gt;% \n  arrange(-(n)) %&gt;% \n  slice(1:5)\ntop5_athletes &lt;- athletes %&gt;% \n  filter(Nationality %in% c('USA','Germany','UK','Switzerland','Portugal'))\n\nggplot(data = top5_athletes)+\n  geom_histogram(mapping=aes(x=earnings....million.))+\n  facet_wrap(.~ Nationality)\n\n\n\n\nYou can infer a lot from this particular data visualization. First, the overwhelming majority of athletes in the ranking each year are American. This could show that sports are more popular in America since American athletes in general get paid more. Second, you can see that most athletes that have made the ranking make $100 million or less."
+    "objectID": "danl-210-py-only.html",
+    "href": "danl-210-py-only.html",
+    "title": "DANL 210: Data Preparation and Management",
+    "section": "",
+    "text": "#| include: false\n\n# install.packages(\"reticulate\")\n# library(reticulate)\n\n# Provide the pahname of the anaconda3 directory:\nreticulate::use_python(\"C:/Users/peter/OneDrive/anaconda/python.exe\", required = TRUE)"
   },
   {
-    "objectID": "project.html#top-salaries-by-sports",
-    "href": "project.html#top-salaries-by-sports",
-    "title": "DANL Project",
-    "section": "3.3 Top Salaries by Sports",
-    "text": "3.3 Top Salaries by Sports\nNext, we will look at the earnings....million. ranked by Sport.\n\ntop5_sport &lt;- athletes %&gt;% \n  group_by(Sport) %&gt;% \n  summarize(n_athletes=n()) %&gt;% \n  arrange(-(n_athletes)) %&gt;% \n  slice(1:7)\n\n#| results: asis\n#| echo: false\nrmarkdown::paged_table(top5_sport) \n\n\n\n  \n\n\n\nHere, we can see that the athletes ranked for highest salary play these sports.\n🏀 🥊 ⛳ ⚽ 🎾\nYou might notice that we included more than five observations in this data frame. This is because some data for the same sport is counted differently from an inconsistency in the way the sport name was entered."
+    "objectID": "danl-210-py-only.html#variables-and-data-types",
+    "href": "danl-210-py-only.html#variables-and-data-types",
+    "title": "DANL 210: Data Preparation and Management",
+    "section": "0.1 Variables and Data Types",
+    "text": "0.1 Variables and Data Types\nIn Python, variables can store data of different types without explicitly declaring the type.\nFor example:\n\ninteger_variable = 10\nstring_variable = 'Hello'\nfloat_variable = 10.5\n\nfloat_variable\n\n10.5"
   },
   {
-    "objectID": "project.html#percent-change-of-mean-earnings....million.-by-year",
-    "href": "project.html#percent-change-of-mean-earnings....million.-by-year",
-    "title": "DANL Project",
-    "section": "3.4 Percent change of mean earnings....million. by Year",
-    "text": "3.4 Percent change of mean earnings....million. by Year\n\np_chg &lt;- mean_salaries %&gt;% \n  mutate(sal_lag = lag(mean_sal),\n         chg = mean_sal - sal_lag,\n         perc_chg = chg/mean_sal)\n\n#| results: asis\n#| echo: false\nrmarkdown::paged_table(p_chg) \n\n\n\n  \n\n\n\nThe mean salary varies greatly from year to year. One reason that could possibly explain this is the state of the economy in each year. Some years are better than others. Although there is a constant high demand for sports, the economy can dictate how much people spend on attending events, which can then effect a player’s salary."
+    "objectID": "danl-210-py-only.html#control-structures",
+    "href": "danl-210-py-only.html#control-structures",
+    "title": "DANL 210: Data Preparation and Management",
+    "section": "0.2 Control Structures",
+    "text": "0.2 Control Structures\nPython supports the usual logical conditions from mathematics:\n\n# Equals: a == b\n# Not Equals: a != b\n# Less than: a &lt; b\n# Less than or equal to: a &lt;= b\n# Greater than: a &gt; b\n# Greater than or equal to: a &gt;= b\n\nThese conditions can be used in several ways, most commonly in ‘if statements’ and loops.\n\n# if statement:\nif 5 &gt; 2:\n    print('Five is greater than two!')\n\nFive is greater than two!"
+  },
+  {
+    "objectID": "danl-210-py-only.html#functions",
+    "href": "danl-210-py-only.html#functions",
+    "title": "DANL 210: Data Preparation and Management",
+    "section": "0.3 Functions",
+    "text": "0.3 Functions\nA function is a block of code which only runs when it is called.\nYou can pass data, known as parameters, into a function.\nA function can return data as a result.\n\n# Defining a function:\ndef my_function():\n    print('Hello from a function')\n\n# Calling a function:\nmy_function()\n\nHello from a function"
+  },
+  {
+    "objectID": "danl-210-py-only.html#lists-and-dictionaries",
+    "href": "danl-210-py-only.html#lists-and-dictionaries",
+    "title": "DANL 210: Data Preparation and Management",
+    "section": "0.4 Lists and Dictionaries",
+    "text": "0.4 Lists and Dictionaries\nA list is a collection which is ordered and changeable.\nA dictionary is a collection which is unordered, changeable and indexed.\n\n# List example:\nmy_list = ['apple', 'banana', 'cherry']\n\n# Dictionary example:\nmy_dict = {'name': 'John', 'age': 36}"
+  },
+  {
+    "objectID": "danl-210-py-only.html#import-python-libraries",
+    "href": "danl-210-py-only.html#import-python-libraries",
+    "title": "DANL 210: Data Preparation and Management",
+    "section": "1.1 Import Python libraries",
+    "text": "1.1 Import Python libraries\n\nimport pandas as pd\n\n\noj = pd.read_csv('https://bcdanl.github.io/data/dominick_oj.csv')\n\n\n\nCode!\noj\n\n\n\n\n\n\n\n\n\nsales\nprice\nbrand\nad\n\n\n\n\n0\n8256.0\n3.87\ntropicana\n0\n\n\n1\n6144.0\n3.87\ntropicana\n0\n\n\n2\n3840.0\n3.87\ntropicana\n0\n\n\n3\n8000.0\n3.87\ntropicana\n0\n\n\n4\n8896.0\n3.87\ntropicana\n0\n\n\n...\n...\n...\n...\n...\n\n\n28942\n2944.0\n2.00\ndominicks\n0\n\n\n28943\n4928.0\n1.94\ndominicks\n0\n\n\n28944\n13440.0\n1.59\ndominicks\n0\n\n\n28945\n55680.0\n1.49\ndominicks\n0\n\n\n28946\n7040.0\n1.75\ndominicks\n0\n\n\n\n\n28947 rows × 4 columns\n\n\n\n\noj.describe()\n\n\n\n\n\n\n\n\nsales\nprice\nad\n\n\n\n\ncount\n28947.000000\n28947.000000\n28947.000000\n\n\nmean\n17312.213356\n2.282488\n0.237261\n\n\nstd\n27477.660437\n0.648001\n0.425411\n\n\nmin\n64.000000\n0.520000\n0.000000\n\n\n25%\n4864.000000\n1.790000\n0.000000\n\n\n50%\n8384.000000\n2.170000\n0.000000\n\n\n75%\n17408.000000\n2.730000\n0.000000\n\n\nmax\n716416.000100\n3.870000\n1.000000"
+  },
+  {
+    "objectID": "danl-210-py-only.html#python-r-interaction",
+    "href": "danl-210-py-only.html#python-r-interaction",
+    "title": "DANL 210: Data Preparation and Management",
+    "section": "1.2 Python-R Interaction",
+    "text": "1.2 Python-R Interaction\nBelow is using Python’s DataFrame oj to visualize using R’s ggplot\nlibrary(tidyverse)\n\n# Access the Python pandas DataFrame\noj &lt;- py$oj\n\n# Plot using ggplot2\nggplot(oj, aes(x = log(sales), y = log(price), \n               color = brand)) +\n  geom_point(alpha = .25) +\n  geom_smooth(method = lm) +\n  theme_minimal()\n\n1.2.1 Interactive DataFrame with R’s DT Package\n#| echo: false\n#| warning: false\n\ninstall.packages(\"DT\", repos = \"http://cran.us.r-project.org\")\nlibrary(DT)\ndatatable(oj)\n\nIn *.ipynb on Google Colab, we can use itables or just Google Colab’s default to print DataFrame.\n\n# !pip install itables\nfrom itables import init_notebook_mode, show\ninit_notebook_mode(all_interactive=False)\nimport pandas as pd\noj = pd.read_csv('https://bcdanl.github.io/data/dominick_oj.csv')\nshow(oj)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nsales\nprice\nbrand\nad\n\n\n\n\nLoading... (need help?)"
+  },
+  {
+    "objectID": "danl-210-quarto-reticulate.html",
+    "href": "danl-210-quarto-reticulate.html",
+    "title": "DANL 210: Data Preparation and Management",
+    "section": "",
+    "text": "In Python, variables can store data of different types without explicitly declaring the type.\nFor example:\n\ninteger_variable = 10\nstring_variable = 'Hello'\nfloat_variable = 10.5\n\nfloat_variable\n\n10.5"
+  },
+  {
+    "objectID": "danl-210-quarto-reticulate.html#variables-and-data-types",
+    "href": "danl-210-quarto-reticulate.html#variables-and-data-types",
+    "title": "DANL 210: Data Preparation and Management",
+    "section": "",
+    "text": "In Python, variables can store data of different types without explicitly declaring the type.\nFor example:\n\ninteger_variable = 10\nstring_variable = 'Hello'\nfloat_variable = 10.5\n\nfloat_variable\n\n10.5"
+  },
+  {
+    "objectID": "danl-210-quarto-reticulate.html#control-structures",
+    "href": "danl-210-quarto-reticulate.html#control-structures",
+    "title": "DANL 210: Data Preparation and Management",
+    "section": "\n0.2 Control Structures",
+    "text": "0.2 Control Structures\nPython supports the usual logical conditions from mathematics:\n\n# Equals: a == b\n# Not Equals: a != b\n# Less than: a &lt; b\n# Less than or equal to: a &lt;= b\n# Greater than: a &gt; b\n# Greater than or equal to: a &gt;= b\n\nThese conditions can be used in several ways, most commonly in ‘if statements’ and loops.\n\n# if statement:\nif 5 &gt; 2:\n    print('Five is greater than two!')\n\nFive is greater than two!"
+  },
+  {
+    "objectID": "danl-210-quarto-reticulate.html#functions",
+    "href": "danl-210-quarto-reticulate.html#functions",
+    "title": "DANL 210: Data Preparation and Management",
+    "section": "\n0.3 Functions",
+    "text": "0.3 Functions\nA function is a block of code which only runs when it is called.\nYou can pass data, known as parameters, into a function.\nA function can return data as a result.\n\n# Defining a function:\ndef my_function():\n    print('Hello from a function')\n\n# Calling a function:\nmy_function()\n\nHello from a function"
+  },
+  {
+    "objectID": "danl-210-quarto-reticulate.html#lists-and-dictionaries",
+    "href": "danl-210-quarto-reticulate.html#lists-and-dictionaries",
+    "title": "DANL 210: Data Preparation and Management",
+    "section": "\n0.4 Lists and Dictionaries",
+    "text": "0.4 Lists and Dictionaries\nA list is a collection which is ordered and changeable.\nA dictionary is a collection which is unordered, changeable and indexed.\n\n# List example:\nmy_list = ['apple', 'banana', 'cherry']\n\n# Dictionary example:\nmy_dict = {'name': 'John', 'age': 36}"
+  },
+  {
+    "objectID": "danl-210-quarto-reticulate.html#import-python-libraries",
+    "href": "danl-210-quarto-reticulate.html#import-python-libraries",
+    "title": "DANL 210: Data Preparation and Management",
+    "section": "\n1.1 Import Python libraries",
+    "text": "1.1 Import Python libraries\n\nimport pandas as pd\n\n\noj = pd.read_csv('https://bcdanl.github.io/data/dominick_oj.csv')\n\n\nCode!oj\n\n         sales  price      brand  ad\n0       8256.0   3.87  tropicana   0\n1       6144.0   3.87  tropicana   0\n2       3840.0   3.87  tropicana   0\n3       8000.0   3.87  tropicana   0\n4       8896.0   3.87  tropicana   0\n...        ...    ...        ...  ..\n28942   2944.0   2.00  dominicks   0\n28943   4928.0   1.94  dominicks   0\n28944  13440.0   1.59  dominicks   0\n28945  55680.0   1.49  dominicks   0\n28946   7040.0   1.75  dominicks   0\n\n[28947 rows x 4 columns]\n\n\n\noj.describe()\n\n               sales         price            ad\ncount   28947.000000  28947.000000  28947.000000\nmean    17312.213356      2.282488      0.237261\nstd     27477.660437      0.648001      0.425411\nmin        64.000000      0.520000      0.000000\n25%      4864.000000      1.790000      0.000000\n50%      8384.000000      2.170000      0.000000\n75%     17408.000000      2.730000      0.000000\nmax    716416.000100      3.870000      1.000000"
+  },
+  {
+    "objectID": "danl-210-quarto-reticulate.html#python-r-interaction",
+    "href": "danl-210-quarto-reticulate.html#python-r-interaction",
+    "title": "DANL 210: Data Preparation and Management",
+    "section": "\n1.2 Python-R Interaction",
+    "text": "1.2 Python-R Interaction\nBelow is using Python’s DataFrame oj to visualize using R’s ggplot\n\nlibrary(tidyverse)\n\n# Access the Python pandas DataFrame\noj &lt;- py$oj\n\n# Plot using ggplot2\nggplot(oj, aes(x = log(sales), y = log(price), \n               color = brand)) +\n  geom_point(alpha = .25) +\n  geom_smooth(method = lm) +\n  theme_minimal()\n\n\n\n\n\n1.2.1 Interactive DataFrame with R’s DT Package\n\n\npackage 'DT' successfully unpacked and MD5 sums checked\n\nThe downloaded binary packages are in\n    C:\\Users\\peter\\AppData\\Local\\Temp\\RtmpMzSM9y\\downloaded_packages\n\n\n\n\n\n\n\nIn *.ipynb on Google Colab, we can use itables or just Google Colab’s default to print DataFrame.\n\n# !pip install itables\nfrom itables import init_notebook_mode, show\ninit_notebook_mode(all_interactive=False)\n\noj = pd.read_csv('https://bcdanl.github.io/data/dominick_oj.csv')\nshow(oj)"
   }
 ]

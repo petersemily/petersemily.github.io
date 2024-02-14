@@ -7,8 +7,13 @@ website:
   navbar:
     pinned: true
     left:
-      - text: Project
+      - text: R Project
         href: project.qmd
+      - text: Python Data Analysis
+        menu:
+          - text: Python Basics
+            href: basic-python-intro.ipynb
+          - text: Summary for HW 1
       - text: Blog
         href: blog-listing.qmd
   page-footer: 
