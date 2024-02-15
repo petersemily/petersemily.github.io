@@ -4,12 +4,9 @@ about:
   template: trestles  # jolla  trestles  solana  marquee  broadside
   image: IMG_4552_Original.png
   image-width: 15em
-  image-shape: round # rectangle  round  rounded
+  image-shape: rounded # rectangle  round  rounded
   
   links:
-    - icon: linkedin
-      text: LinkedIn
-      href: https://linkedin.com
     - icon: github
       text: GitHub
       href: https://github.com/petersemily/petersemily.github.io
