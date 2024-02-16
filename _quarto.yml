@@ -11,9 +11,10 @@ website:
         href: project.qmd
       - text: Python Data Analysis
         menu:
-          - text: Python Basics
+          - text: Python Basics Lecture
             href: basic-python-intro.ipynb
-          - text: Summary for HW 1
+          - text: Python Basics HW1 Summary
+            href: hw1_python_basics.ipynb
       - text: Blog
         href: blog-listing.qmd
   page-footer: 

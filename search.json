@@ -236,5 +236,61 @@
     "title": "DANL 210: Data Preparation and Management",
     "section": "\n1.2 Python-R Interaction",
     "text": "1.2 Python-R Interaction\nBelow is using Python’s DataFrame oj to visualize using R’s ggplot\n\nlibrary(tidyverse)\n\n# Access the Python pandas DataFrame\noj &lt;- py$oj\n\n# Plot using ggplot2\nggplot(oj, aes(x = log(sales), y = log(price), \n               color = brand)) +\n  geom_point(alpha = .25) +\n  geom_smooth(method = lm) +\n  theme_minimal()\n\n\n\n\n\n1.2.1 Interactive DataFrame with R’s DT Package\n\n\npackage 'DT' successfully unpacked and MD5 sums checked\n\nThe downloaded binary packages are in\n    C:\\Users\\peter\\AppData\\Local\\Temp\\RtmpMzSM9y\\downloaded_packages\n\n\n\n\n\n\n\nIn *.ipynb on Google Colab, we can use itables or just Google Colab’s default to print DataFrame.\n\n# !pip install itables\nfrom itables import init_notebook_mode, show\ninit_notebook_mode(all_interactive=False)\n\noj = pd.read_csv('https://bcdanl.github.io/data/dominick_oj.csv')\nshow(oj)"
+  },
+  {
+    "objectID": "posts/hw1_python_basics.html",
+    "href": "posts/hw1_python_basics.html",
+    "title": "Summary of basic python in lectures 6 & 7 and Classwork 4",
+    "section": "",
+    "text": "Assigning variables to a value\n\nvariables are a name for a value\nuse equal sign\n\n\na=1\nprint(a)\n\nData types\n\nintegers -&gt; whole numbers\nfloat -&gt; decimal\nstrings -&gt; “characters in quotes”\nboolean -&gt; logical (TRUE or FALSE)\nnothing -&gt; NONE\n\nEquality/inequality signs\n\n== : equal to\n!= : not equal to\n\n:greater than\n\n\n= : greater than or equal to\n\n&lt; : less than\n&lt;= : less than or equal to\n\nif statements: executes certain code if a specific condition is met\n\nname = \"Geneseo\"\nscore = 99\n\nif name == \"Geneseo\" and score &gt; 90:\n    print(\"Geneseo, you achieved a high score.\")\n\nif name == \"Geneseo\" or score &gt; 90:\n    print(\"You could be called Geneseo or have a high score\")\n\nif name != \"Geneseo\" and score &gt; 90:\n    print(\"You are not called Geneseo and you have a high score\")\n\nin keyword: picks out variables\n\nmy_list=['a','b','c']\nprint('a'in my_list)\n\nLists [] & Tuples () : store data together\nLists are mutable, so they can take multiple types of data at once. Tuples are immutable.\n\nlist1=[1,'2',3.1,True]\ntuple1= (1,2,3)\n\nFor loops: a way to execute the same code multiple times\n\nfor i in list1:\n  print(i)\n\nThe indentation matters, if there is no indent then the code will present an error. When you type the colon and hit enter, it will automatically indent for you\nDictionaries {} : store data in key-value pairs\n\nnumbers = {'first number':1 , 'second number':2}\n\nSlicing: extracting from a string or a list * basic syntax: variable_name[start: end: step] * index starts at 0 * the end value is not included\n\nnumber_list=[0,1,2,3,4,5,6]\nnumber_list[0:4]\n#or just use a specific index:\nnumber_list[4]\n\nimporting package\n\nimport pandas as pd\n#need to us pd. everytime we use a function from pandas\n\nPandas\nimporting a dataframe - read_csv() function\n\nimport pandas as pd\nnba = pd.read_csv(\"https://bcdanl.github.io/data/nba.csv\")\ntype(nba)\nnba\n\nfunction within read_csv() : parse_dates([‘VariableName’]) changes dates to datetimes (YYYY/DD/MM)\nMethods: perform operations and modify data in a dataframe. Basic syntax: dataframe.method()\n\nnba.info()\n\nAttribute: gives information about the dataframe without changing it. Basic syntax: dataframe.attribute\n\nnba.columns #gives names of all variables\nnba.shape #gives # of observatoins and variables\nnba.dtypes #gives data type for each variable\n\nIndex(['Name', 'Team', 'Position', 'Birthday', 'Salary'], dtype='object')"
+  },
+  {
+    "objectID": "posts/basic-python-intro.html",
+    "href": "posts/basic-python-intro.html",
+    "title": "Introduction to Python",
+    "section": "",
+    "text": "Python is a high-level, interpreted programming language. This is a simple Python code:\n\nprint('Hello, World!')"
+  },
+  {
+    "objectID": "posts/basic-python-intro.html#what-is-python",
+    "href": "posts/basic-python-intro.html#what-is-python",
+    "title": "Introduction to Python",
+    "section": "",
+    "text": "Python is a high-level, interpreted programming language. This is a simple Python code:\n\nprint('Hello, World!')"
+  },
+  {
+    "objectID": "posts/basic-python-intro.html#variables-and-data-types",
+    "href": "posts/basic-python-intro.html#variables-and-data-types",
+    "title": "Introduction to Python",
+    "section": "Variables and Data Types",
+    "text": "Variables and Data Types\nIn Python, variables can store data of different types without explicitly declaring the type.\nFor example:\n\ninteger_variable = 10\nstring_variable = 'Hello'\nfloat_variable = 10.5\n\nfloat_variable\n\n10.5"
+  },
+  {
+    "objectID": "posts/basic-python-intro.html#control-structures",
+    "href": "posts/basic-python-intro.html#control-structures",
+    "title": "Introduction to Python",
+    "section": "Control Structures",
+    "text": "Control Structures\nPython supports the usual logical conditions from mathematics:\n\n# Equals: a == b\n# Not Equals: a != b\n# Less than: a &lt; b\n# Less than or equal to: a &lt;= b\n# Greater than: a &gt; b\n# Greater than or equal to: a &gt;= b\n\nThese conditions can be used in several ways, most commonly in ‘if statements’ and loops.\n\n# if statement:\nif 5 &gt; 2:\n    print('Five is greater than two!')"
+  },
+  {
+    "objectID": "posts/basic-python-intro.html#functions",
+    "href": "posts/basic-python-intro.html#functions",
+    "title": "Introduction to Python",
+    "section": "Functions",
+    "text": "Functions\nA function is a block of code which only runs when it is called.\nYou can pass data, known as parameters, into a function.\nA function can return data as a result.\n\n# Defining a function:\ndef my_function():\n    print('Hello from a function')\n\n# Calling a function:\nmy_function()"
+  },
+  {
+    "objectID": "posts/basic-python-intro.html#lists-and-dictionaries",
+    "href": "posts/basic-python-intro.html#lists-and-dictionaries",
+    "title": "Introduction to Python",
+    "section": "Lists and Dictionaries",
+    "text": "Lists and Dictionaries\nA list is a collection which is ordered and changeable.\nA dictionary is a collection which is unordered, changeable and indexed.\n\n# List example:\nmy_list = ['apple', 'banana', 'cherry']\n\n# Dictionary example:\nmy_dict = {'name': 'John', 'age': 36}"
+  },
+  {
+    "objectID": "posts/blog-listing.html",
+    "href": "posts/blog-listing.html",
+    "title": "Insightful Analytics",
+    "section": "",
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\nNo matching items"
   }
 ]
