@@ -2,10 +2,9 @@
 title: "Emily Peters"
 about:
   template: trestles  # jolla  trestles  solana  marquee  broadside
-  image: profile.png
+  image: IMG_4552_Original.png
   image-width: 15em
   image-shape: rounded # rectangle  round  rounded
-  
   links:
     - icon: github
       text: GitHub
