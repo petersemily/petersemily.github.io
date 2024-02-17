@@ -14,7 +14,7 @@ website:
           - text: Python Basics Lecture
             href: basic-python-intro.ipynb
           - text: Python Basics HW1 Summary
-            href: hw1-python-basics.html
+            href: hw1-python-basics.ipynb
       - text: Blog
         href: blog-listing.qmd
   page-footer: 
