@@ -1,0 +1,1777 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Emily Peters">
+
+<title>Emily Peters - Spotify Blog Post HW2</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Emily Peters</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../project_files/project.html" rel="" target="">
+ <span class="menu-text">R Project</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-python-data-analysis" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Python Data Analysis</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-python-data-analysis">    
+        <li>
+    <a class="dropdown-item" href="../../basic-python-intro.html" rel="" target="">
+ <span class="dropdown-text">Python Basics Lecture</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../hw1-python-basics.html" rel="" target="">
+ <span class="dropdown-text">Python Basics HW1 Summary</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../posts/blog-listing.html" rel="" target="">
+ <span class="menu-text">Blog</span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools ms-auto">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Spotify Blog Post HW2</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">python</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Emily Peters </p>
+            </div>
+    </div>
+      
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<div class="cell" data-outputid="06fd4fa0-84ae-402f-e2ab-d6f8715db564" data-execution_count="46">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>spotify <span class="op">=</span> pd.read_csv(<span class="st">'https://bcdanl.github.io/data/spotify_all.csv'</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>spotify</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="46">
+
+  <div id="df-3f2528a9-9317-4cf6-9e47-28baa01cc230" class="colab-df-container">
+    <div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">pid</th>
+<th data-quarto-table-cell-role="th">playlist_name</th>
+<th data-quarto-table-cell-role="th">pos</th>
+<th data-quarto-table-cell-role="th">artist_name</th>
+<th data-quarto-table-cell-role="th">track_name</th>
+<th data-quarto-table-cell-role="th">duration_ms</th>
+<th data-quarto-table-cell-role="th">album_name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>0</td>
+<td>Throwbacks</td>
+<td>0</td>
+<td>Missy Elliott</td>
+<td>Lose Control (feat. Ciara &amp; Fat Man Scoop)</td>
+<td>226863</td>
+<td>The Cookbook</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>0</td>
+<td>Throwbacks</td>
+<td>1</td>
+<td>Britney Spears</td>
+<td>Toxic</td>
+<td>198800</td>
+<td>In The Zone</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>0</td>
+<td>Throwbacks</td>
+<td>2</td>
+<td>Beyoncé</td>
+<td>Crazy In Love</td>
+<td>235933</td>
+<td>Dangerously In Love (Alben für die Ewigkeit)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>0</td>
+<td>Throwbacks</td>
+<td>3</td>
+<td>Justin Timberlake</td>
+<td>Rock Your Body</td>
+<td>267266</td>
+<td>Justified</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>0</td>
+<td>Throwbacks</td>
+<td>4</td>
+<td>Shaggy</td>
+<td>It Wasn't Me</td>
+<td>227600</td>
+<td>Hot Shot</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">198000</td>
+<td>999998</td>
+<td>✝️</td>
+<td>6</td>
+<td>Chris Tomlin</td>
+<td>Waterfall</td>
+<td>209573</td>
+<td>Love Ran Red</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">198001</td>
+<td>999998</td>
+<td>✝️</td>
+<td>7</td>
+<td>Chris Tomlin</td>
+<td>The Roar</td>
+<td>220106</td>
+<td>Love Ran Red</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">198002</td>
+<td>999998</td>
+<td>✝️</td>
+<td>8</td>
+<td>Crowder</td>
+<td>Lift Your Head Weary Sinner (Chains)</td>
+<td>224666</td>
+<td>Neon Steeple</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">198003</td>
+<td>999998</td>
+<td>✝️</td>
+<td>9</td>
+<td>Chris Tomlin</td>
+<td>We Fall Down</td>
+<td>280960</td>
+<td>How Great Is Our God: The Essential Collection</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">198004</td>
+<td>999998</td>
+<td>✝️</td>
+<td>10</td>
+<td>Caleb and Kelsey</td>
+<td>10,000 Reasons / What a Beautiful Name</td>
+<td>178189</td>
+<td>10,000 Reasons / What a Beautiful Name</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>198005 rows × 7 columns</p>
+</div>
+    <div class="colab-df-buttons">
+
+  <div class="colab-df-container">
+    <button class="colab-df-convert" onclick="convertToInteractive('df-3f2528a9-9317-4cf6-9e47-28baa01cc230')" title="Convert this dataframe to an interactive table." style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 -960 960 960">
+    <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"></path>
+  </svg>
+    </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    .colab-df-buttons div {
+      margin-bottom: 4px;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+    <script>
+      const buttonEl =
+        document.querySelector('#df-3f2528a9-9317-4cf6-9e47-28baa01cc230 button.colab-df-convert');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      async function convertToInteractive(key) {
+        const element = document.querySelector('#df-3f2528a9-9317-4cf6-9e47-28baa01cc230');
+        const dataTable =
+          await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                    [key], {});
+        if (!dataTable) return;
+
+        const docLinkHtml = 'Like what you see? Visit the ' +
+          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+          + ' to learn more about interactive tables.';
+        element.innerHTML = '';
+        dataTable['output_type'] = 'display_data';
+        await google.colab.output.renderOutput(dataTable, element);
+        const docLink = document.createElement('div');
+        docLink.innerHTML = docLinkHtml;
+        element.appendChild(docLink);
+      }
+    </script>
+  </div>
+
+
+<div id="df-e196ae48-b55b-43eb-be7a-67f73b9a0d7f">
+  <button class="colab-df-quickchart" onclick="quickchart('df-e196ae48-b55b-43eb-be7a-67f73b9a0d7f')" title="Suggest charts" style="display:none;">
+
+<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 0 24 24" width="24px">
+    <g>
+        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"></path>
+    </g>
+</svg>
+  </button>
+
+<style>
+  .colab-df-quickchart {
+      --bg-color: #E8F0FE;
+      --fill-color: #1967D2;
+      --hover-bg-color: #E2EBFA;
+      --hover-fill-color: #174EA6;
+      --disabled-fill-color: #AAA;
+      --disabled-bg-color: #DDD;
+  }
+
+  [theme=dark] .colab-df-quickchart {
+      --bg-color: #3B4455;
+      --fill-color: #D2E3FC;
+      --hover-bg-color: #434B5C;
+      --hover-fill-color: #FFFFFF;
+      --disabled-bg-color: #3B4455;
+      --disabled-fill-color: #666;
+  }
+
+  .colab-df-quickchart {
+    background-color: var(--bg-color);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    fill: var(--fill-color);
+    height: 32px;
+    padding: 0;
+    width: 32px;
+  }
+
+  .colab-df-quickchart:hover {
+    background-color: var(--hover-bg-color);
+    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+    fill: var(--button-hover-fill-color);
+  }
+
+  .colab-df-quickchart-complete:disabled,
+  .colab-df-quickchart-complete:disabled:hover {
+    background-color: var(--disabled-bg-color);
+    fill: var(--disabled-fill-color);
+    box-shadow: none;
+  }
+
+  .colab-df-spinner {
+    border: 2px solid var(--fill-color);
+    border-color: transparent;
+    border-bottom-color: var(--fill-color);
+    animation:
+      spin 1s steps(1) infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+      border-left-color: var(--fill-color);
+    }
+    20% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    30% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+      border-right-color: var(--fill-color);
+    }
+    40% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    60% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+    }
+    80% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-bottom-color: var(--fill-color);
+    }
+    90% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+    }
+  }
+</style>
+
+  <script>
+    async function quickchart(key) {
+      const quickchartButtonEl =
+        document.querySelector('#' + key + ' button');
+      quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
+      quickchartButtonEl.classList.add('colab-df-spinner');
+      try {
+        const charts = await google.colab.kernel.invokeFunction(
+            'suggestCharts', [key], {});
+      } catch (error) {
+        console.error('Error during call to suggestCharts:', error);
+      }
+      quickchartButtonEl.classList.remove('colab-df-spinner');
+      quickchartButtonEl.classList.add('colab-df-quickchart-complete');
+    }
+    (() => {
+      let quickchartButtonEl =
+        document.querySelector('#df-e196ae48-b55b-43eb-be7a-67f73b9a0d7f button');
+      quickchartButtonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+    })();
+  </script>
+</div>
+
+  <div id="id_e1ba9b4b-8ce0-4e0a-8b9f-ba6dc096cc28">
+    <style>
+      .colab-df-generate {
+        background-color: #E8F0FE;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        display: none;
+        fill: #1967D2;
+        height: 32px;
+        padding: 0 0 0 0;
+        width: 32px;
+      }
+
+      .colab-df-generate:hover {
+        background-color: #E2EBFA;
+        box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+        fill: #174EA6;
+      }
+
+      [theme=dark] .colab-df-generate {
+        background-color: #3B4455;
+        fill: #D2E3FC;
+      }
+
+      [theme=dark] .colab-df-generate:hover {
+        background-color: #434B5C;
+        box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+        filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+        fill: #FFFFFF;
+      }
+    </style>
+    <button class="colab-df-generate" onclick="generateWithVariable('spotify')" title="Generate code using this dataframe." style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 0 24 24" width="24px">
+    <path d="M7,19H8.4L18.45,9,17,7.55,7,17.6ZM5,21V16.75L18.45,3.32a2,2,0,0,1,2.83,0l1.4,1.43a1.91,1.91,0,0,1,.58,1.4,1.91,1.91,0,0,1-.58,1.4L9.25,21ZM18.45,9,17,7.55Zm-12,3A5.31,5.31,0,0,0,4.9,8.1,5.31,5.31,0,0,0,1,6.5,5.31,5.31,0,0,0,4.9,4.9,5.31,5.31,0,0,0,6.5,1,5.31,5.31,0,0,0,8.1,4.9,5.31,5.31,0,0,0,12,6.5,5.46,5.46,0,0,0,6.5,12Z"></path>
+  </svg>
+    </button>
+    <script>
+      (() => {
+      const buttonEl =
+        document.querySelector('#id_e1ba9b4b-8ce0-4e0a-8b9f-ba6dc096cc28 button.colab-df-generate');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      buttonEl.onclick = () => {
+        google.colab.notebook.generateWithVariable('spotify');
+      }
+      })();
+    </script>
+  </div>
+
+    </div>
+  </div>
+</div>
+</div>
+<p>Cody Johnson has been one of my favorite artists to listen to recently, so his name caught my eye while looking through the spotify data frame.</p>
+<div class="cell" data-outputid="2f847663-87d3-4db9-866d-333c19173929" data-execution_count="47">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>artist<span class="op">=</span> spotify.query(<span class="st">"artist_name=='Cody Johnson'"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>artist</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="47">
+
+  <div id="df-f823922f-fbef-4c8e-b9a1-275289105335" class="colab-df-container">
+    <div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">pid</th>
+<th data-quarto-table-cell-role="th">playlist_name</th>
+<th data-quarto-table-cell-role="th">pos</th>
+<th data-quarto-table-cell-role="th">artist_name</th>
+<th data-quarto-table-cell-role="th">track_name</th>
+<th data-quarto-table-cell-role="th">duration_ms</th>
+<th data-quarto-table-cell-role="th">album_name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">502</td>
+<td>9</td>
+<td>old country</td>
+<td>9</td>
+<td>Cody Johnson</td>
+<td>Diamond In My Pocket</td>
+<td>196906</td>
+<td>A Different Day</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">30193</td>
+<td>456</td>
+<td>Country</td>
+<td>56</td>
+<td>Cody Johnson</td>
+<td>Dance Her Home</td>
+<td>174680</td>
+<td>Cowboy Like Me</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">30194</td>
+<td>456</td>
+<td>Country</td>
+<td>57</td>
+<td>Cody Johnson</td>
+<td>Me and My Kind</td>
+<td>156200</td>
+<td>Cowboy Like Me</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">30195</td>
+<td>456</td>
+<td>Country</td>
+<td>58</td>
+<td>Cody Johnson</td>
+<td>Texas Kind Of Way</td>
+<td>249573</td>
+<td>Six Strings One Dream</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">30197</td>
+<td>456</td>
+<td>Country</td>
+<td>60</td>
+<td>Cody Johnson</td>
+<td>Diamond In My Pocket</td>
+<td>196906</td>
+<td>A Different Day</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">30198</td>
+<td>456</td>
+<td>Country</td>
+<td>61</td>
+<td>Cody Johnson</td>
+<td>Lucky</td>
+<td>186813</td>
+<td>Cowboy Like Me</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">30235</td>
+<td>456</td>
+<td>Country</td>
+<td>98</td>
+<td>Cody Johnson</td>
+<td>18 Wheels</td>
+<td>180040</td>
+<td>A Different Day</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">30236</td>
+<td>456</td>
+<td>Country</td>
+<td>99</td>
+<td>Cody Johnson</td>
+<td>Jesus Ain't Watching</td>
+<td>219120</td>
+<td>A Different Day</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">30237</td>
+<td>456</td>
+<td>Country</td>
+<td>100</td>
+<td>Cody Johnson</td>
+<td>Ride With Me</td>
+<td>215600</td>
+<td>A Different Day</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">30238</td>
+<td>456</td>
+<td>Country</td>
+<td>101</td>
+<td>Cody Johnson</td>
+<td>Chain Drinkin'</td>
+<td>189760</td>
+<td>Gotta Be Me</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">30239</td>
+<td>456</td>
+<td>Country</td>
+<td>102</td>
+<td>Cody Johnson</td>
+<td>Grass Stains</td>
+<td>190093</td>
+<td>Gotta Be Me</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">30240</td>
+<td>456</td>
+<td>Country</td>
+<td>103</td>
+<td>Cody Johnson</td>
+<td>Billy's Brother</td>
+<td>183040</td>
+<td>Gotta Be Me</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">30258</td>
+<td>456</td>
+<td>Country</td>
+<td>121</td>
+<td>Cody Johnson</td>
+<td>With You I Am</td>
+<td>220893</td>
+<td>Gotta Be Me</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">30259</td>
+<td>456</td>
+<td>Country</td>
+<td>122</td>
+<td>Cody Johnson</td>
+<td>Wild as You</td>
+<td>186066</td>
+<td>Gotta Be Me</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">30260</td>
+<td>456</td>
+<td>Country</td>
+<td>123</td>
+<td>Cody Johnson</td>
+<td>Kiss Goodbye</td>
+<td>200786</td>
+<td>Gotta Be Me</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">30262</td>
+<td>456</td>
+<td>Country</td>
+<td>125</td>
+<td>Cody Johnson</td>
+<td>Proud</td>
+<td>205946</td>
+<td>Cowboy Like Me</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">30263</td>
+<td>456</td>
+<td>Country</td>
+<td>126</td>
+<td>Cody Johnson</td>
+<td>Give a Cowboy a Kiss</td>
+<td>305013</td>
+<td>Cowboy Like Me</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">30264</td>
+<td>456</td>
+<td>Country</td>
+<td>127</td>
+<td>Cody Johnson</td>
+<td>I Know My Way Back (Clara's Song)</td>
+<td>205893</td>
+<td>Gotta Be Me</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">30265</td>
+<td>456</td>
+<td>Country</td>
+<td>128</td>
+<td>Cody Johnson</td>
+<td>Cowboy Like Me</td>
+<td>302124</td>
+<td>Cowboy Like Me</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">30266</td>
+<td>456</td>
+<td>Country</td>
+<td>129</td>
+<td>Cody Johnson</td>
+<td>I Ain't Going Nowhere Baby</td>
+<td>277160</td>
+<td>Gotta Be Me</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">30269</td>
+<td>456</td>
+<td>Country</td>
+<td>132</td>
+<td>Cody Johnson</td>
+<td>Keep Her Man</td>
+<td>198426</td>
+<td>A Different Day</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">30271</td>
+<td>456</td>
+<td>Country</td>
+<td>134</td>
+<td>Cody Johnson</td>
+<td>I Don't Care About You</td>
+<td>238400</td>
+<td>A Different Day</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">30272</td>
+<td>456</td>
+<td>Country</td>
+<td>135</td>
+<td>Cody Johnson</td>
+<td>Never Go Home Again</td>
+<td>252146</td>
+<td>Cowboy Like Me</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">30273</td>
+<td>456</td>
+<td>Country</td>
+<td>136</td>
+<td>Cody Johnson</td>
+<td>Half a Song</td>
+<td>211506</td>
+<td>Gotta Be Me</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">30274</td>
+<td>456</td>
+<td>Country</td>
+<td>137</td>
+<td>Cody Johnson</td>
+<td>Every Scar Has a Story</td>
+<td>208160</td>
+<td>Gotta Be Me</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">45608</td>
+<td>680</td>
+<td>Country Favorites</td>
+<td>229</td>
+<td>Cody Johnson</td>
+<td>Texas Kind Of Way</td>
+<td>249573</td>
+<td>Six Strings One Dream</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">45613</td>
+<td>680</td>
+<td>Country Favorites</td>
+<td>234</td>
+<td>Cody Johnson</td>
+<td>The Only One I Know (Cowboy Life)</td>
+<td>239320</td>
+<td>Gotta Be Me</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">67453</td>
+<td>998</td>
+<td>Country</td>
+<td>102</td>
+<td>Cody Johnson</td>
+<td>With You I Am</td>
+<td>220893</td>
+<td>Gotta Be Me</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">75623</td>
+<td>1125</td>
+<td>summer music</td>
+<td>70</td>
+<td>Cody Johnson</td>
+<td>Diamond In My Pocket</td>
+<td>196906</td>
+<td>A Different Day</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">100834</td>
+<td>1501</td>
+<td>band songs</td>
+<td>21</td>
+<td>Cody Johnson</td>
+<td>Diamond In My Pocket</td>
+<td>196906</td>
+<td>A Different Day</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">110576</td>
+<td>1642</td>
+<td>driving music</td>
+<td>224</td>
+<td>Cody Johnson</td>
+<td>Guilty As Can Be</td>
+<td>242720</td>
+<td>A Different Day</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">118340</td>
+<td>1773</td>
+<td>Chill</td>
+<td>74</td>
+<td>Cody Johnson</td>
+<td>Jesse's Name</td>
+<td>274854</td>
+<td>Black and White Label</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">131620</td>
+<td>1957</td>
+<td>summer</td>
+<td>6</td>
+<td>Cody Johnson</td>
+<td>Me and My Kind</td>
+<td>156200</td>
+<td>Cowboy Like Me</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">136414</td>
+<td>999032</td>
+<td>Walk Up Songs</td>
+<td>5</td>
+<td>Cody Johnson</td>
+<td>I Know My Way Back (Clara's Song)</td>
+<td>205893</td>
+<td>Gotta Be Me</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">151883</td>
+<td>999265</td>
+<td>Red Dirt</td>
+<td>50</td>
+<td>Cody Johnson</td>
+<td>Me and My Kind</td>
+<td>156200</td>
+<td>Cowboy Like Me</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">151884</td>
+<td>999265</td>
+<td>Red Dirt</td>
+<td>51</td>
+<td>Cody Johnson</td>
+<td>Dance Her Home</td>
+<td>174680</td>
+<td>Cowboy Like Me</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">177107</td>
+<td>999668</td>
+<td>Texas Forever</td>
+<td>72</td>
+<td>Cody Johnson</td>
+<td>Wild as You</td>
+<td>186066</td>
+<td>Gotta Be Me</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">177108</td>
+<td>999668</td>
+<td>Texas Forever</td>
+<td>73</td>
+<td>Cody Johnson</td>
+<td>With You I Am</td>
+<td>220893</td>
+<td>Gotta Be Me</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">177109</td>
+<td>999668</td>
+<td>Texas Forever</td>
+<td>74</td>
+<td>Cody Johnson</td>
+<td>Me and My Kind</td>
+<td>156200</td>
+<td>Cowboy Like Me</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">177110</td>
+<td>999668</td>
+<td>Texas Forever</td>
+<td>75</td>
+<td>Cody Johnson</td>
+<td>Diamond In My Pocket</td>
+<td>196906</td>
+<td>A Different Day</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">177111</td>
+<td>999668</td>
+<td>Texas Forever</td>
+<td>76</td>
+<td>Cody Johnson</td>
+<td>Dance Her Home</td>
+<td>174680</td>
+<td>Cowboy Like Me</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">177138</td>
+<td>999668</td>
+<td>Texas Forever</td>
+<td>103</td>
+<td>Cody Johnson</td>
+<td>Texas Kind Of Way</td>
+<td>249573</td>
+<td>Six Strings One Dream</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">177142</td>
+<td>999668</td>
+<td>Texas Forever</td>
+<td>107</td>
+<td>Cody Johnson</td>
+<td>Ride With Me</td>
+<td>215600</td>
+<td>A Different Day</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">177148</td>
+<td>999668</td>
+<td>Texas Forever</td>
+<td>113</td>
+<td>Cody Johnson</td>
+<td>Give a Cowboy a Kiss</td>
+<td>305013</td>
+<td>Cowboy Like Me</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">187105</td>
+<td>999828</td>
+<td>Texas Country</td>
+<td>54</td>
+<td>Cody Johnson</td>
+<td>Dance Her Home</td>
+<td>174680</td>
+<td>Cowboy Like Me</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">187106</td>
+<td>999828</td>
+<td>Texas Country</td>
+<td>55</td>
+<td>Cody Johnson</td>
+<td>Diamond In My Pocket</td>
+<td>196906</td>
+<td>A Different Day</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">187132</td>
+<td>999828</td>
+<td>Texas Country</td>
+<td>81</td>
+<td>Cody Johnson</td>
+<td>Me and My Kind</td>
+<td>156200</td>
+<td>Cowboy Like Me</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">187157</td>
+<td>999828</td>
+<td>Texas Country</td>
+<td>106</td>
+<td>Cody Johnson</td>
+<td>With You I Am</td>
+<td>220893</td>
+<td>Gotta Be Me</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">187172</td>
+<td>999828</td>
+<td>Texas Country</td>
+<td>121</td>
+<td>Cody Johnson</td>
+<td>Texas Kind Of Way</td>
+<td>249573</td>
+<td>Six Strings One Dream</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+    <div class="colab-df-buttons">
+
+  <div class="colab-df-container">
+    <button class="colab-df-convert" onclick="convertToInteractive('df-f823922f-fbef-4c8e-b9a1-275289105335')" title="Convert this dataframe to an interactive table." style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 -960 960 960">
+    <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"></path>
+  </svg>
+    </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    .colab-df-buttons div {
+      margin-bottom: 4px;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+    <script>
+      const buttonEl =
+        document.querySelector('#df-f823922f-fbef-4c8e-b9a1-275289105335 button.colab-df-convert');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      async function convertToInteractive(key) {
+        const element = document.querySelector('#df-f823922f-fbef-4c8e-b9a1-275289105335');
+        const dataTable =
+          await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                    [key], {});
+        if (!dataTable) return;
+
+        const docLinkHtml = 'Like what you see? Visit the ' +
+          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+          + ' to learn more about interactive tables.';
+        element.innerHTML = '';
+        dataTable['output_type'] = 'display_data';
+        await google.colab.output.renderOutput(dataTable, element);
+        const docLink = document.createElement('div');
+        docLink.innerHTML = docLinkHtml;
+        element.appendChild(docLink);
+      }
+    </script>
+  </div>
+
+
+<div id="df-a6ce8a24-4bd2-4101-885c-2d15e9be6684">
+  <button class="colab-df-quickchart" onclick="quickchart('df-a6ce8a24-4bd2-4101-885c-2d15e9be6684')" title="Suggest charts" style="display:none;">
+
+<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 0 24 24" width="24px">
+    <g>
+        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"></path>
+    </g>
+</svg>
+  </button>
+
+<style>
+  .colab-df-quickchart {
+      --bg-color: #E8F0FE;
+      --fill-color: #1967D2;
+      --hover-bg-color: #E2EBFA;
+      --hover-fill-color: #174EA6;
+      --disabled-fill-color: #AAA;
+      --disabled-bg-color: #DDD;
+  }
+
+  [theme=dark] .colab-df-quickchart {
+      --bg-color: #3B4455;
+      --fill-color: #D2E3FC;
+      --hover-bg-color: #434B5C;
+      --hover-fill-color: #FFFFFF;
+      --disabled-bg-color: #3B4455;
+      --disabled-fill-color: #666;
+  }
+
+  .colab-df-quickchart {
+    background-color: var(--bg-color);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    fill: var(--fill-color);
+    height: 32px;
+    padding: 0;
+    width: 32px;
+  }
+
+  .colab-df-quickchart:hover {
+    background-color: var(--hover-bg-color);
+    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+    fill: var(--button-hover-fill-color);
+  }
+
+  .colab-df-quickchart-complete:disabled,
+  .colab-df-quickchart-complete:disabled:hover {
+    background-color: var(--disabled-bg-color);
+    fill: var(--disabled-fill-color);
+    box-shadow: none;
+  }
+
+  .colab-df-spinner {
+    border: 2px solid var(--fill-color);
+    border-color: transparent;
+    border-bottom-color: var(--fill-color);
+    animation:
+      spin 1s steps(1) infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+      border-left-color: var(--fill-color);
+    }
+    20% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    30% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+      border-right-color: var(--fill-color);
+    }
+    40% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    60% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+    }
+    80% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-bottom-color: var(--fill-color);
+    }
+    90% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+    }
+  }
+</style>
+
+  <script>
+    async function quickchart(key) {
+      const quickchartButtonEl =
+        document.querySelector('#' + key + ' button');
+      quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
+      quickchartButtonEl.classList.add('colab-df-spinner');
+      try {
+        const charts = await google.colab.kernel.invokeFunction(
+            'suggestCharts', [key], {});
+      } catch (error) {
+        console.error('Error during call to suggestCharts:', error);
+      }
+      quickchartButtonEl.classList.remove('colab-df-spinner');
+      quickchartButtonEl.classList.add('colab-df-quickchart-complete');
+    }
+    (() => {
+      let quickchartButtonEl =
+        document.querySelector('#df-a6ce8a24-4bd2-4101-885c-2d15e9be6684 button');
+      quickchartButtonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+    })();
+  </script>
+</div>
+
+  <div id="id_793c0d0f-33ee-4769-9b82-2e5fa0dc3ea3">
+    <style>
+      .colab-df-generate {
+        background-color: #E8F0FE;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        display: none;
+        fill: #1967D2;
+        height: 32px;
+        padding: 0 0 0 0;
+        width: 32px;
+      }
+
+      .colab-df-generate:hover {
+        background-color: #E2EBFA;
+        box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+        fill: #174EA6;
+      }
+
+      [theme=dark] .colab-df-generate {
+        background-color: #3B4455;
+        fill: #D2E3FC;
+      }
+
+      [theme=dark] .colab-df-generate:hover {
+        background-color: #434B5C;
+        box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+        filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+        fill: #FFFFFF;
+      }
+    </style>
+    <button class="colab-df-generate" onclick="generateWithVariable('artist')" title="Generate code using this dataframe." style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 0 24 24" width="24px">
+    <path d="M7,19H8.4L18.45,9,17,7.55,7,17.6ZM5,21V16.75L18.45,3.32a2,2,0,0,1,2.83,0l1.4,1.43a1.91,1.91,0,0,1,.58,1.4,1.91,1.91,0,0,1-.58,1.4L9.25,21ZM18.45,9,17,7.55Zm-12,3A5.31,5.31,0,0,0,4.9,8.1,5.31,5.31,0,0,0,1,6.5,5.31,5.31,0,0,0,4.9,4.9,5.31,5.31,0,0,0,6.5,1,5.31,5.31,0,0,0,8.1,4.9,5.31,5.31,0,0,0,12,6.5,5.46,5.46,0,0,0,6.5,12Z"></path>
+  </svg>
+    </button>
+    <script>
+      (() => {
+      const buttonEl =
+        document.querySelector('#id_793c0d0f-33ee-4769-9b82-2e5fa0dc3ea3 button.colab-df-generate');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      buttonEl.onclick = () => {
+        google.colab.notebook.generateWithVariable('artist');
+      }
+      })();
+    </script>
+  </div>
+
+    </div>
+  </div>
+</div>
+</div>
+<div class="cell" data-outputid="76b5c789-185f-46ee-bda3-06919c382625">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>artist[<span class="st">'playlist_name'</span>].nunique()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="31">
+<pre><code>12</code></pre>
+</div>
+</div>
+<p>Cody Johnson’s music appeared in 12 different playlists.</p>
+<div class="cell" data-outputid="0e8462da-f613-49c1-8b71-1be208149c29" data-execution_count="48">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tracks<span class="op">=</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    artist</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    .drop_duplicates(subset<span class="op">=</span>[<span class="st">'track_name'</span>])</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'track_name'</span>].nunique()</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>tracks</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="48">
+<pre><code>27</code></pre>
+</div>
+</div>
+<div class="cell" data-outputid="9cc2c8e5-19e9-401f-8b6b-0e660360373b" data-execution_count="49">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>artist[<span class="st">'album_name'</span>].nunique()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="49">
+<pre><code>5</code></pre>
+</div>
+</div>
+<p>27 different songs were featured, and they were from 5 different albums.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>artist[<span class="st">'duration_min'</span>]<span class="op">=</span>artist[<span class="st">'duration_ms'</span>]<span class="op">/</span><span class="dv">60000</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>artist[<span class="st">'duration_min'</span>].mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>On average, Cody Johnson’s songs are 3.53 minutes long.</p>
+<div class="cell" data-outputid="3be149af-beea-4624-ad9f-9f5d4f729fa0" data-execution_count="51">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>total_ms<span class="op">=</span> artist[<span class="st">'duration_ms'</span>].<span class="bu">sum</span>()</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>total_ms</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="51">
+<pre><code>10368578</code></pre>
+</div>
+</div>
+<div class="cell" data-outputid="fab3e46a-1b98-4256-846d-e589732dfb6d">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>total_ms<span class="op">/</span><span class="dv">60000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="45">
+<pre><code>172.80963333333332</code></pre>
+</div>
+</div>
+<p>Playing all of Cody Johnson’s music from spotify will take 172.81 minutes.</p>
+
+
+
+</main> <!-- /main -->
+<script type="text/javascript" src="links.js"></script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">Powered with GitHub and Quarto<br>© Emily Peters, 2023</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+</body></html>

@@ -8,7 +8,7 @@ website:
     pinned: true
     left:
       - text: R Project
-        href: project.qmd
+        href: project_files/project.qmd
       - text: Python Data Analysis
         menu:
           - text: Python Basics Lecture

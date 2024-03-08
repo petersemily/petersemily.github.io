@@ -23,7 +23,7 @@ Emily Peters majors in Data Analytics and minors in Mathematics at SUNY Geneseo.
 
 ## Education
 
-Genesee Community College | Batavia, NY
+Genesee Community College | Batavia, NY <br>
 Major in Economic Crime Investigation | August 2021 - December 2022
 
 State University of New York at Geneseo | Geneseo, NY <br>
