@@ -18,7 +18,7 @@ website:
       - text: Blog
         href: blog-listing.qmd
   page-footer: 
-    center: "Powered with GitHub and Quarto<br>© Emily Peters, 2023"
+    center: "Powered with GitHub and Quarto<br>© Emily Peters, 2024"
 
 format:
   html:
