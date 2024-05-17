@@ -18,7 +18,7 @@ website:
       - text: Blog
         href: blog-listing.qmd
       - text: DANL210 Python Project
-        href: posts/danl210_project.ipynb
+        href: danl210_project-FINAL-DOC.ipynb
   page-footer: 
     center: "Powered with GitHub and Quarto<br>© Emily Peters, 2024"
 
