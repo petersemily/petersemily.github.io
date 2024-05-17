@@ -15,7 +15,6 @@ about:
     - icon: mailbox
       text: Email
       href: mailto:emp21@geneseo.edu
-
 ---
 
 

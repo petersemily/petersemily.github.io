@@ -17,8 +17,8 @@ website:
             href: hw1-python-basics.ipynb
       - text: Blog
         href: blog-listing.qmd
-      - text: DANL210 Python Project
-        href: danl210_project-FINAL-DOC.ipynb
+      - text: DANL 210 Python Project
+        href: danl210_project_last_try.ipynb
   page-footer: 
     center: "Powered with GitHub and Quarto<br>© Emily Peters, 2024"
 
