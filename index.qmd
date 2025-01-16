@@ -1,42 +1,35 @@
 ---
-title: "YOUR NAME" 
+title: "Emily Peters" 
 about:
-  template: trestles  # jolla  trestles  solana  marquee  broadside
-  image: img/profile.png
+  template: jolla  # jolla  trestles  solana  marquee  broadside
+  image: img/profile2.jpg
   image-width: 16em
   image-shape: rounded # rectangle  round  rounded
-  
   links:
     - icon: linkedin
       text: LinkedIn
-      href: https://linkedin.com
-    - icon: instagram
-      text: Instagram
-      href: https://instagram.com
+      href: www.linkedin.com/in/emilypeters32
     - icon: github
       text: GitHub
-      href: https://github.com
+      href: https://github.com/petersemily
     - icon: file-earmark-pdf
       text: Resumé
-      href: resume-example.pdf
+      href: Emily_Peters_Resume.pdf
       target: _blank
     - icon: mailbox
       text: Email
-      href: mailto:YOUR_EMAIL@geneseo.edu
-
+      href: mailto:peters32emily@gmail.com
 ---
 
-
-Finley Malloc majors in Data Analytics at SUNY Geneseo. When not working on data analytics, Finley enjoys spending time unicycling and playing with her pet iguana.
+Emily Peters majors in Data Analytics and minors in Mathematics at SUNY Geneseo. Outside of school, Emily enjoys spending time outside with her dog and doing puzzles.
 
 ## Education
 
 State University of New York at Geneseo | Geneseo, NY <br>
-B.S. in Data Analytics | Aug 2022 - May 2026 <br>
-Minor in Business Administration 
+B.S. in Data Analytics | Jan 2023 - May 2025 <br>
+Minor in Business Mathematics <br> 
 
-## Experience
-
-Starbucks Analytics | Data Analyst Intern | May 2024 - Aug 2024
+Genesee Community College | Batavia, NY <br>
+Major in Economic Crime Investigation | Aug 2021 - Dec 2022
 
 

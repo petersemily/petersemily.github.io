@@ -1,29 +1,24 @@
+---
 project: 
   type: website
   output-dir: "." 
-
 website:
-  title: "YOUR NAME"
+  title: "Emily Peters"
   navbar:
     # background: "#1c4982"
     pinned: true
     left:
-      - text: Project
-        href: project.qmd
-      - text: Blog
-        href: blog-listing.qmd
-            
+      - text: DANL 210 Project
+        href: danl210_project-FINAL-DOC.ipynb
   page-footer: 
-    center: "Powered with GitHub and Quarto<br>© YOUR NAME, 2024"
-
+    center: "Powered with GitHub and Quarto<br>© YOUR NAME, 2025"
 format:
   html:
     theme: 
       light: flatly # flatly sandstone yeti united litera journal
-      dark: darkly #  darkly cyborg slate solra superhero
-    mainfont: system-ui; 
+      dark: darkly # darkly cyborg slate solar superhero
+    mainfont: system-ui
     highlight-style: atom-one  # atom-one espresso
     css: styles.css
     toc: false
     include-after-body: target_blank.html
-
