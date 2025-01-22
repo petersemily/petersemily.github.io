@@ -8,10 +8,9 @@ website:
     # background: "#1c4982"
     pinned: true
     left:
-      - text: DANL 210 Project
-        href: danl210_project-FINAL-DOC.ipynb
+      - text: DANL 310
   page-footer: 
-    center: "Powered with GitHub and Quarto<br>© YOUR NAME, 2025"
+    center: "Powered with GitHub and Quarto<br>© Emily Peters, 2025"
 format:
   html:
     theme: 

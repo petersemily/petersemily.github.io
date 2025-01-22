@@ -1,14 +1,14 @@
 ---
 title: "Emily Peters" 
 about:
-  template: jolla  # jolla  trestles  solana  marquee  broadside
+  template: solana  # jolla  trestles  solana  marquee  broadside
   image: img/profile2.jpg
   image-width: 16em
   image-shape: rounded # rectangle  round  rounded
   links:
     - icon: linkedin
-      text: LinkedIn
-      href: www.linkedin.com/in/emilypeters32
+      text: LinkedIn      
+      href: https://www.linkedin.com/in/emilypeters32
     - icon: github
       text: GitHub
       href: https://github.com/petersemily
@@ -20,7 +20,6 @@ about:
       text: Email
       href: mailto:peters32emily@gmail.com
 ---
-
 Emily Peters majors in Data Analytics and minors in Mathematics at SUNY Geneseo. Outside of school, Emily enjoys spending time outside with her dog and doing puzzles.
 
 ## Education
