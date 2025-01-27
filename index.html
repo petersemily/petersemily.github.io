@@ -88,11 +88,17 @@ ul.task-list li input[type="checkbox"] {
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <span class="nav-link">
-<span class="menu-text">DANL 310</span>
-    </span>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-danl-310" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">DANL 310</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-danl-310">    
+        <li>
+    <a class="dropdown-item" href="./danl-310-quarto-r.html">
+ <span class="dropdown-text">R Basics</span></a>
   </li>  
+    </ul>
+  </li>
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -151,6 +157,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
  <!-- /main -->
 <script type="text/javascript" src="links.js"></script>
+
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

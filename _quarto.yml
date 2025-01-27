@@ -9,6 +9,10 @@ website:
     pinned: true
     left:
       - text: DANL 310
+        menu:
+          - text: R Basics
+            href: danl-310-quarto-r.qmd
+      
   page-footer: 
     center: "Powered with GitHub and Quarto<br>© Emily Peters, 2025"
 format:
