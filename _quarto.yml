@@ -11,7 +11,11 @@ website:
       - text: DANL 310
         menu:
           - text: R Basics
-            href: danl-310-quarto-r.qmd
+            href: 310_files/danl-310-quarto-r.qmd
+      - text: DANL 310
+        menu:
+          - text: Python Basics
+            href: 320_files/danl-320-python-basic.ipynb
       
   page-footer: 
     center: "Powered with GitHub and Quarto<br>© Emily Peters, 2025"
