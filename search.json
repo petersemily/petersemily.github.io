@@ -131,5 +131,12 @@
     "title": "Starwars",
     "section": "Human vs. Droid",
     "text": "Human vs. Droid\n\nggplot(data = \n         starwars %&gt;% \n         filter(species %in% c(\"Human\", \"Droid\"))) +\n  geom_boxplot(aes(x = species, y = mass, \n                   fill = species),\n               show.legend = FALSE)"
+  },
+  {
+    "objectID": "310_1-27_ggplot.html",
+    "href": "310_1-27_ggplot.html",
+    "title": "Lecture 3 - 1/27/25",
+    "section": "",
+    "text": "Code\nlibrary(gapminder)\ngapminder &lt;- gapminder::gapminder\n\n\n\n\nCode\nlibrary(skimr)\nskim(gapminder)\n\n\n\nData summary\n\n\nName\ngapminder\n\n\nNumber of rows\n1704\n\n\nNumber of columns\n6\n\n\n_______________________\n\n\n\nColumn type frequency:\n\n\n\nfactor\n2\n\n\nnumeric\n4\n\n\n________________________\n\n\n\nGroup variables\nNone\n\n\n\nVariable type: factor\n\n\n\n\n\n\n\n\n\n\n\nskim_variable\nn_missing\ncomplete_rate\nordered\nn_unique\ntop_counts\n\n\n\n\ncountry\n0\n1\nFALSE\n142\nAfg: 12, Alb: 12, Alg: 12, Ang: 12\n\n\ncontinent\n0\n1\nFALSE\n5\nAfr: 624, Asi: 396, Eur: 360, Ame: 300\n\n\n\nVariable type: numeric\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nskim_variable\nn_missing\ncomplete_rate\nmean\nsd\np0\np25\np50\np75\np100\nhist\n\n\n\n\nyear\n0\n1\n1979.50\n17.27\n1952.00\n1965.75\n1979.50\n1993.25\n2007.0\n▇▅▅▅▇\n\n\nlifeExp\n0\n1\n59.47\n12.92\n23.60\n48.20\n60.71\n70.85\n82.6\n▁▆▇▇▇\n\n\npop\n0\n1\n29601212.32\n106157896.74\n60011.00\n2793664.00\n7023595.50\n19585221.75\n1318683096.0\n▇▁▁▁▁\n\n\ngdpPercap\n0\n1\n7215.33\n9857.45\n241.17\n1202.06\n3531.85\n9325.46\n113523.1\n▇▁▁▁▁\n\n\n\n\n\n\n\nCode\nlibrary(tidyverse)\np &lt;- ggplot(data = gapminder,\n            mapping = aes(x = gdpPercap,\n                          y = lifeExp))\np + geom_point()"
   }
 ]
