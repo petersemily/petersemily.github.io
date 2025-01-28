@@ -12,10 +12,14 @@ website:
         menu:
           - text: R Basics
             href: 310_files/danl-310-quarto-r.qmd
-      - text: DANL 310
+      - text: DANL 320
         menu:
           - text: Python Basics
             href: 320_files/danl-320-python-basic.ipynb
+          - text: Seaborn
+            href: 320_files/seaborn_basics.ipynb
+          - text: Pandas
+            href: 320_files/pandas_basics.ipynb
       
   page-footer: 
     center: "Powered with GitHub and Quarto<br>© Emily Peters, 2025"
