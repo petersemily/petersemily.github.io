@@ -5,7 +5,7 @@ project:
 website:
   title: "Emily Peters"
   navbar:
-    # background: "#1c4982"
+    background: "#5738a8"
     pinned: true
     left:
       - text: DANL 310

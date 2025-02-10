@@ -3,7 +3,11 @@ title: PySpark Basics
 author: Emily Peters
 date: 2025-02-17
 categories: [Python, Big Data, Spark] # tags for a blog post (e.g., spark, python)
-image: posts/pyspark-blog/pyspark-image.png 
+image: pyspark-image.png 
+  
+execute: 
+  warning: false
+  message: false
   
 toc: true
 ---
