@@ -7,67 +7,109 @@
     "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
   },
   {
-    "objectID": "posts/post-with-code/index.html",
-    "href": "posts/post-with-code/index.html",
-    "title": "Post With Code",
+    "objectID": "posts/pyspark-blog/pyspark-basics.html",
+    "href": "posts/pyspark-blog/pyspark-basics.html",
+    "title": "PySpark Basics",
     "section": "",
-    "text": "This is a post with executable code with no space in the folder name.\n\n1 + 1\n\n[1] 2"
+    "text": "Apache Hadoop\nHadoop provides storage and ways to easily process big data sets. Storage is managed by the Hadoop Distributed File System (HDFS), and the data is processed using MapReduce.  - HDFS divides up data from multiple sources and distributes them across different servers to be processed.The computing environment is redundant, allowing the application to run if a server fails.  - MapReduce distributes data across multiple machines and the brings the processed data back together so it’s coherent.\nHadoop has its limits, however. Data cannot be processed in real time. It can only collect data for a certain period of time and then process it all at once. This process is called batch processing.\n\n\nApache Spark\nSpark is built for processing large amounts of data, as well as data analysis, machine learning, data visualization, and streaming real-time data.  Spark starts with the driver node, which communicates to the cluser manager. The cluser manager to distributes tasks to different worker nodes. Worker nodes execute the task they were given, communicate with each other if needed, and send the results back to the driver node. Here are some other attribuutes of Spark: 1. In-Memory Processing  - Loads data into memory once and performs all operations in-memory  2. Data Reuse  - Data is cached so that it can be reused  3. Faster Execution  - Allows for real-time processing \nHadoop and Spark can be used together to store big data sets and quickly process data.\n\n\nPySpark\nPySpark is an API that allows the use of Spark in Python. - PySpark can incorporate pandas DataFrames and SQL tables.\nPySpark has methods that make data transformation easy to complete, similar to pandas. A Spark DataFrame has a few key differences: 1. Data is distributed among different machines  2. Operations are executed the same in each node  3. Can process more data than one machine can handle  4. Transformations are not computed until called to action (lazy evaluation)  5. High fault tolerance; can function if a node is disabled and recovers lost data  6. Built for extremely large amounts of data"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Emily Peters",
+    "objectID": "posts/ggplot-review/ggplot-basics.html",
+    "href": "posts/ggplot-review/ggplot-basics.html",
+    "title": "GGPlot Basics",
     "section": "",
-    "text": "Emily Peters majors in Data Analytics and minors in Mathematics at SUNY Geneseo. Outside of school, Emily enjoys spending time outside with her dog and doing puzzles."
+    "text": "Let’s go over some essentials to create amazing visualizations in GGPlot. We will use the gapminder dataframe. First, we’ll load tidyverse, which is where ggplot2 is stored, and the gapminder dataframe.\n\nlibrary(tidyverse)\nlibrary(gapminder)\ngapminder &lt;- gapminder::gapminder\nview(gapminder)\n\n\nDifferent Types of GGPlots\n\nScatter Plot\n\n\nggplot(data = gapminder,\n       mapping = aes(x = gdpPercap, \n                     y = lifeExp))+\n  geom_point()\n\n\n\n\n\n\n\n\n1a. Scatter Plot with curve of best fit\n\nggplot(data = gapminder,\n       mapping = aes(x = gdpPercap, \n                     y = lifeExp))+\n  geom_point()+\n  geom_smooth()\n\n\n\n\n\n\n\n\n\nyou can get rid of the shaded part by inserting the argument se = FALSE in geom_smooth\n\n\nLine Chart\n\n\nA time series of GPD in the United States from 1952 until 2007.\n\n\ng &lt;- gapminder |&gt;\n  filter(country %in% 'United States')\n\n\nggplot(data = g,\n       mapping = aes(x = year,\n                     y = gdpPercap))+\n  geom_line()\n\n\n\n\n\n\n\n\n\nBar Chart\n\n\nThis gives a count of each continent recorded.\n\n\nggplot(data = gapminder,\n       mapping = aes(x = continent))+\n  geom_bar()\n\n\n\n\n\n\n\n\n\nBox Plot\n\n\nRange of GDP across the world in 2007\n\n\ngdp &lt;- gapminder |&gt;\n  filter(year %in% 2007)\n\n\nggplot(data = gdp,\n       mapping = aes(x = gdpPercap))+\n  geom_boxplot()\n\n\n\n\n\n\n\n\n\n\nAesthetic Mapping\nIn most cases, we will want to go beyond the basic ggPlots. We can do this in a few different ways: - add color - reduce overplotting - facets - add labels\n\nColor Color can be used to showcase different variables and/or make a graph more aesthically pleasing. Let’s add some color to our bar chart.\n\n\nggplot(data = gapminder,\n       mapping = aes(x = continent))+\n  geom_bar(aes(fill = continent))\n\n\n\n\n\n\n\n\n\nAlthough our graph is still the same, it looks much nicer and less boring than the first graph.\n\nNow, lets showcase how each continent varies in our scatter plot.\n\nggplot(data = gapminder,\n       mapping = aes(x = gdpPercap, \n                     y = lifeExp))+\n  geom_point(aes(color = continent))\n\n\n\n\n\n\n\n\n\nThis gives us insight into how different continents compare to each other’s relationship between GDP Per Capita and Life Expectancy\n\nYou might notice that a lot of points towards the left of the graph look very crowded. This is called overplotting, and there is a way to reduce this.\n\nReduce Overplotting\n\n\nWe can use alpha to add transparency to the graph\nalpha is set to a value between 0 and 1\n\nThe closer to 0, the more transparent the points become\n\n\n\nggplot(data = gapminder,\n       mapping = aes(x = gdpPercap, \n                     y = lifeExp))+\n  geom_point(aes(color = continent,\n                 alpha = .04))\n\n\n\n\n\n\n\n\n\nThe points are still jumbled together, but it is easier to see through the overlapping.\n\nWith a large quantity of data, sometimes it’s easier to interpret a graph if it is partitioned into smaller graphs by a variable in the dataset. This is where facets come into play.\n\nFacets Continuing with our scatter plot, separating the points into facets by continent (just like we did with color), will paint a more clear picture about the relationships between GDP and Life Expectancy for each continent.\n\n\nggplot(data = gapminder,\n       mapping = aes(x = gdpPercap, \n                     y = lifeExp))+\n  geom_point()+\n  facet_wrap(~continent)+\n  geom_smooth()\n\n\n\n\n\n\n\n\n\nLabels\n\n\nLabels add clarity to a graph. They tell the audience exactly what they are looking at, leaving little room for misinterpretation.\n\n\nggplot(data = gapminder,\n       mapping = aes(x = gdpPercap, \n                     y = lifeExp))+\n  geom_point()+\n  facet_wrap(~continent)+\n  geom_smooth()+\nlabs(x = \"GDP Per Capita\", \n         y = \"Life Expectancy in Years\",\n         title = \"GDP and Life Expectancy Throughout the World\",\n         subtitle = \"Years 1952 Through 2007\",\n         caption = \"Source: Gapminder.\")\n\n\n\n\n\n\n\n\n-This is very useful if the variable names in a dataset are not very clear, and because you can add some background information about the data."
   },
   {
-    "objectID": "index.html#education",
-    "href": "index.html#education",
-    "title": "Emily Peters",
-    "section": "Education",
-    "text": "Education\nState University of New York at Geneseo | Geneseo, NY  B.S. in Data Analytics | Jan 2023 - May 2025  Minor in Business Mathematics \nGenesee Community College | Batavia, NY  Major in Economic Crime Investigation | Aug 2021 - Dec 2022"
-  },
-  {
-    "objectID": "320_files/seaborn_basics.html",
-    "href": "320_files/seaborn_basics.html",
-    "title": "Seaborn Example",
+    "objectID": "blog-listing.html",
+    "href": "blog-listing.html",
+    "title": "Insightful Analytics",
     "section": "",
-    "text": "import seaborn as sns\nimport matplotlib.pyplot as plt\nimport pandas as pd\n\n# Sample data\ndata = {\n    'Category': ['A', 'B', 'C', 'D'],\n    'Values': [23, 45, 56, 78]\n}\ndf = pd.DataFrame(data)\n\n# Create a barplot\nsns.set(style=\"whitegrid\")  # Optional: Set a clean grid style\nplt.figure(figsize=(8, 6))  # Set the figure size\nsns.barplot(data=df, x='Category', y='Values', palette='viridis')\n\n# Customize the plot\nplt.title(\"Bar Plot Example\", fontsize=16)\nplt.xlabel(\"Category\", fontsize=12)\nplt.ylabel(\"Values\", fontsize=12)\n\n# Show the plot\nplt.show()\n\nFutureWarning: \n\nPassing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.\n\n  sns.barplot(data=df, x='Category', y='Values', palette='viridis')"
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\nPySpark Basics\n\n\n\n\n\n\n\n\nFeb 17, 2025\n\n\nEmily Peters\n\n\n2 min\n\n\n\n\n\n\n\n\n\n\n\n\nGGPlot Basics\n\n\n\n\n\n\n\n\nFeb 17, 2025\n\n\nEmily Peters\n\n\n5 min\n\n\n\n\n\n\n\n\n\n\n\n\nStarwars\n\n\n\n\n\n\n\n\nOct 30, 2023\n\n\nYour Name\n\n\n3 min\n\n\n\n\n\n\n\n\n\n\n\n\nPost With Code\n\n\n\n\n\n\n\n\nOct 30, 2023\n\n\nYOUR NAME\n\n\n1 min\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\n\n\nOct 27, 2023\n\n\nYOUR NAME\n\n\n1 min\n\n\n\n\n\n\nNo matching items"
   },
   {
-    "objectID": "320_files/danl_proj_nba.html#salary-distribution-among-teams",
-    "href": "320_files/danl_proj_nba.html#salary-distribution-among-teams",
-    "title": "Data Analysis Project",
-    "section": "Salary Distribution Among Teams",
-    "text": "Salary Distribution Among Teams\nLet’s start with the salary distribution among teams using seaborn for visualization. ​​\n\n\n# Handle missing values in 'Salary' by replacing them with the median salary\nmedian_salary = nba['Salary'].median()\nnba['Salary'].fillna(median_salary, inplace=True)\n\n/var/folders/_m/d6jf0jhd2zzdfd5kzdhl_24w0000gn/T/ipykernel_79892/1671011424.py:3: FutureWarning: A value is trying to be set on a copy of a DataFrame or Series through chained assignment using an inplace method.\nThe behavior will change in pandas 3.0. This inplace method will never work because the intermediate object on which we are setting values always behaves as a copy.\n\nFor example, when doing 'df[col].method(value, inplace=True)', try using 'df.method({col: value}, inplace=True)' or df[col] = df[col].method(value) instead, to perform the operation inplace on the original object.\n\n\n  nba['Salary'].fillna(median_salary, inplace=True)\n\n\n\n# Set the aesthetic style of the plots\nsns.set_style(\"whitegrid\")\n\n# Calculate total salary by team\nteam_salary = (\n    nba\n    .groupby('Team')['Salary']\n    .sum()\n    .reset_index()\n    .sort_values(by='Salary', ascending=False)\n)\n\n# Plot total salary by team\nplt.figure(figsize=(10, 16))\nsns.barplot(data = team_salary,\n            x = 'Salary', y = 'Team',\n            palette = 'coolwarm')\nplt.title('Total Salary Distribution Among NBA Teams')\nplt.xlabel('Total Salary')\nplt.ylabel('Team')\nplt.xticks(rotation=45)\nplt.show()\n\n\n\n\n\n\n\n\nThe visualization above displays the total salary distribution among NBA teams, with teams sorted by their total salary expenditure. This bar plot reveals which teams are the biggest spenders on player salaries and which are more conservative. The color gradient provides a visual cue to easily distinguish between the higher and lower spending teams.\nNotice that Portland Trail Blazers has the highest total salary followed by Golden State Warriors and Philadelphia 76ers, and Memphis Grizzlies has the lowest total salary."
+    "objectID": "320_files/pandas_basics.html#creating-a-series",
+    "href": "320_files/pandas_basics.html#creating-a-series",
+    "title": "Pandas Basics",
+    "section": "Creating a Series",
+    "text": "Creating a Series\n\n\n# Creating a Series from a list\ndata = [10, 20, 30, 40, 50]\nseries = pd.Series(data)\nseries\n\n\n\n\n\n\n\n\n0\n\n\n\n\n0\n10\n\n\n1\n20\n\n\n2\n30\n\n\n3\n40\n\n\n4\n50\n\n\n\n\ndtype: int64"
   },
   {
-    "objectID": "320_files/danl_proj_nba.html#player-age-distribution",
-    "href": "320_files/danl_proj_nba.html#player-age-distribution",
-    "title": "Data Analysis Project",
-    "section": "Player Age Distribution",
-    "text": "Player Age Distribution\nNext, let’s explore the Player Age Distribution across the NBA. We’ll create a histogram to visualize how player ages are distributed, which will help us understand if the league trends younger, older, or has a balanced age mix. ​​\n\n# Convert 'Birthday' column to datetime format\nfrom dateutil import parser\n# nba['Birthday'] = nba['Birthday'].apply(lambda x: parser.parse(x))\n\n# Now, let's calculate the age of each player\n# nba['Age'] = (datetime.now() - nba['Birthday']).dt.days // 365\n\n# Plot the age distribution of NBA players\nplt.figure(figsize=(10, 6))\nsns.histplot(nba['Age'],\n             bins = 15,\n             kde = True,\n             color = 'skyblue')\nplt.title('Age Distribution of NBA Players')\nplt.xlabel('Age')\nplt.ylabel('Count')\nplt.show()\n\n\n/Users/bchoe/anaconda3/lib/python3.11/site-packages/seaborn/_oldcore.py:1119: FutureWarning: use_inf_as_na option is deprecated and will be removed in a future version. Convert inf values to NaN before operating instead.\n  with pd.option_context('mode.use_inf_as_na', True):\n\n\n\n\n\n\n\n\n\nThe histogram above shows the age distribution of NBA players, with a kernel density estimate (KDE) overlay to indicate the distribution shape. The plot helps identify the common ages for NBA players and whether there are significant numbers of very young or older players.\nNotice that the majority of players fall within an age range from 24 to 34. There are few players whose age is above 40."
+    "objectID": "320_files/pandas_basics.html#creating-a-dataframe",
+    "href": "320_files/pandas_basics.html#creating-a-dataframe",
+    "title": "Pandas Basics",
+    "section": "Creating a DataFrame",
+    "text": "Creating a DataFrame\n\n\n# Creating a DataFrame from a dictionary\ndata = {\n    \"Name\": [\"Alice\", \"Bob\", \"Charlie\"],\n    \"Age\": [25, 30, 35],\n    \"City\": [\"New York\", \"Los Angeles\", \"Chicago\"]\n}\ndf = pd.DataFrame(data)\ndf\n\n\n  \n    \n\n\n\n\n\n\nName\nAge\nCity\n\n\n\n\n0\nAlice\n25\nNew York\n\n\n1\nBob\n30\nLos Angeles\n\n\n2\nCharlie\n35\nChicago"
   },
   {
-    "objectID": "320_files/danl_proj_nba.html#position-wise-salary-insights",
-    "href": "320_files/danl_proj_nba.html#position-wise-salary-insights",
-    "title": "Data Analysis Project",
-    "section": "Position-wise Salary Insights",
-    "text": "Position-wise Salary Insights\nMoving on to Position-wise Salary Insights, we’ll examine how average salaries differ across player positions. This analysis could reveal which positions are typically higher-paid, potentially reflecting their value on the basketball court. Let’s create a box plot to visualize the salary distribution for each position. ​​\n\n# Plot salary distribution by player position\nplt.figure(figsize=(10, 6))\nsns.boxplot(data = nba,\n            x = 'Position', y = 'Salary',\n            palette = 'Set2')\nplt.title('Salary Distribution by Position')\nplt.xlabel('Position')\nplt.ylabel('Salary')\nplt.show()\n\n\n\n\n\n\n\n\nThe box plot above illustrates the salary distribution by player position, showcasing the variation in salaries among different positions within the NBA. PG-SG has the highest median salary."
+    "objectID": "320_files/pandas_basics.html#exploring-data",
+    "href": "320_files/pandas_basics.html#exploring-data",
+    "title": "Pandas Basics",
+    "section": "Exploring Data",
+    "text": "Exploring Data\n\n\n# Display the first few rows\ndf.head()\n\n# Display the shape of the DataFrame\nprint(\"Shape:\", df.shape)\n\n# Display summary statistics\ndf.describe()\n\nShape: (3, 3)\n\n\n\n  \n    \n\n\n\n\n\n\nAge\n\n\n\n\ncount\n3.0\n\n\nmean\n30.0\n\n\nstd\n5.0\n\n\nmin\n25.0\n\n\n25%\n27.5\n\n\n50%\n30.0\n\n\n75%\n32.5\n\n\nmax\n35.0"
   },
   {
-    "objectID": "320_files/danl_proj_nba.html#top-10-highest-paid-players",
-    "href": "320_files/danl_proj_nba.html#top-10-highest-paid-players",
-    "title": "Data Analysis Project",
-    "section": "Top 10 Highest Paid Players",
-    "text": "Top 10 Highest Paid Players\nLastly, we’ll identify the Top 10 Highest Paid Players in the NBA. Let’s visualize this information.\n\n# Identify the top 10 highest paid players\ntop_10_salaries = nba.sort_values(by='Salary', ascending=False).head(10)\n\n# Plot the top 10 highest paid players\nplt.figure(figsize=(12, 8))\nsns.barplot(data = top_10_salaries,\n            x = 'Salary', y = 'PlayerName',\n            palette = 'viridis')\nplt.title('Top 10 Highest Paid NBA Players')\nplt.xlabel('Salary')\nplt.ylabel('Player')\nplt.show()\n\n\n\n\n\n\n\n\nThe bar plot above reveals the top 10 highest-paid NBA players, showcasing those who stand at the pinnacle of the league in terms of salary. This visualization not only highlights the star players who command the highest salaries but also may reflect their marketability, performance, and contribution to their respective teams."
+    "objectID": "320_files/pandas_basics.html#selecting-data",
+    "href": "320_files/pandas_basics.html#selecting-data",
+    "title": "Pandas Basics",
+    "section": "Selecting Data",
+    "text": "Selecting Data\n\n# Selecting a single column\ndf[\"Name\"]\n\n\n\n\n\n\n\n\nName\n\n\n\n\n0\nAlice\n\n\n1\nBob\n\n\n2\nCharlie\n\n\n\n\ndtype: object\n\n\n\n# Selecting multiple columns\ndf[[\"Name\", \"City\"]]\n\n\n  \n    \n\n\n\n\n\n\nName\nCity\n\n\n\n\n0\nAlice\nNew York\n\n\n1\nBob\nLos Angeles\n\n\n2\nCharlie\nChicago\n\n\n\n\n\n    \n\n  \n    \n\n  \n    \n  \n    \n\n  \n\n    \n  \n\n\n\n  \n\n\n    \n        \n    \n\n  \n\n\n\n  \n\n\n    \n  \n\n\n\n# Selecting rows by index\ndf.iloc[0]\n\n\n\n\n\n\n\n\n0\n\n\n\n\nName\nAlice\n\n\nAge\n25\n\n\nCity\nNew York\n\n\n\n\ndtype: object"
   },
   {
-    "objectID": "310_files/310_1-27_ggplot.html",
-    "href": "310_files/310_1-27_ggplot.html",
-    "title": "Lecture 3 - 1/27/25",
+    "objectID": "320_files/pandas_basics.html#filtering-data",
+    "href": "320_files/pandas_basics.html#filtering-data",
+    "title": "Pandas Basics",
+    "section": "Filtering Data",
+    "text": "Filtering Data\n\n# Filtering rows where Age is greater than 25\nfiltered_df = df[df[\"Age\"] &gt; 25]\nfiltered_df\n\n\n  \n    \n\n\n\n\n\n\nName\nAge\nCity\n\n\n\n\n1\nBob\n30\nLos Angeles\n\n\n2\nCharlie\n35\nChicago"
+  },
+  {
+    "objectID": "320_files/pandas_basics.html#adding-a-new-column",
+    "href": "320_files/pandas_basics.html#adding-a-new-column",
+    "title": "Pandas Basics",
+    "section": "Adding a New Column",
+    "text": "Adding a New Column\n\n\n# Adding a new column\ndf[\"Salary\"] = [50000, 60000, 70000]\ndf\n\n\n  \n    \n\n\n\n\n\n\nName\nAge\nCity\nSalary\n\n\n\n\n0\nAlice\n25\nNew York\n50000\n\n\n1\nBob\n30\nLos Angeles\n60000\n\n\n2\nCharlie\n35\nChicago\n70000\n\n\n\n\n\n    \n\n  \n    \n\n  \n    \n  \n    \n\n  \n\n    \n  \n\n\n\n  \n\n\n    \n        \n    \n\n  \n\n\n\n  \n\n\n  \n    \n    \n\n  \n    \n  \n    \n    \n  \n\n    \n  \n\n\n    ## Conclusion\n\n    This notebook covers the basic operations of pandas. You can explore more advanced features like merging,\n    joining, and working with time series data in pandas documentation: https://pandas.pydata.org/docs/"
+  },
+  {
+    "objectID": "320_files/danl-320-python-basic.html",
+    "href": "320_files/danl-320-python-basic.html",
+    "title": "Python Basics",
     "section": "",
-    "text": "Code\nlibrary(gapminder)\ngapminder &lt;- gapminder::gapminder\n\n\n\n\nCode\nlibrary(skimr)\nskim(gapminder)\n\n\n\nData summary\n\n\nName\ngapminder\n\n\nNumber of rows\n1704\n\n\nNumber of columns\n6\n\n\n_______________________\n\n\n\nColumn type frequency:\n\n\n\nfactor\n2\n\n\nnumeric\n4\n\n\n________________________\n\n\n\nGroup variables\nNone\n\n\n\nVariable type: factor\n\n\n\n\n\n\n\n\n\n\n\nskim_variable\nn_missing\ncomplete_rate\nordered\nn_unique\ntop_counts\n\n\n\n\ncountry\n0\n1\nFALSE\n142\nAfg: 12, Alb: 12, Alg: 12, Ang: 12\n\n\ncontinent\n0\n1\nFALSE\n5\nAfr: 624, Asi: 396, Eur: 360, Ame: 300\n\n\n\nVariable type: numeric\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nskim_variable\nn_missing\ncomplete_rate\nmean\nsd\np0\np25\np50\np75\np100\nhist\n\n\n\n\nyear\n0\n1\n1979.50\n17.27\n1952.00\n1965.75\n1979.50\n1993.25\n2007.0\n▇▅▅▅▇\n\n\nlifeExp\n0\n1\n59.47\n12.92\n23.60\n48.20\n60.71\n70.85\n82.6\n▁▆▇▇▇\n\n\npop\n0\n1\n29601212.32\n106157896.74\n60011.00\n2793664.00\n7023595.50\n19585221.75\n1318683096.0\n▇▁▁▁▁\n\n\ngdpPercap\n0\n1\n7215.33\n9857.45\n241.17\n1202.06\n3531.85\n9325.46\n113523.1\n▇▁▁▁▁\n\n\n\n\n\n\n\nCode\nlibrary(tidyverse)\np &lt;- ggplot(data = gapminder,\n            mapping = aes(x = gdpPercap,\n                          y = lifeExp))\np + geom_point() \n\n\n\n\n\n\n\n\n\n\n\nCode\np + \n  geom_point() + \n  geom_smooth()\n\n\n\n\n\n\n\n\n\n\n\nCode\n#assign color to a variable gives different colors for each different value in that variable\np1 &lt;-  ggplot(data = gapminder,\n             mapping = aes(x = gdpPercap, y = lifeExp,\n                           color = continent))\n\n\n\n\nCode\np1 + geom_point() +\n  geom_smooth(method = 'lm')\n\n\n\n\n\n\n\n\n\n\n\nCode\np2 &lt;- ggplot(data = gapminder,\n            mapping = aes(x = gdpPercap, y = lifeExp))\n\n\n\n\nCode\np2 + geom_point(color = \"purple\") +\n     geom_smooth(color = \"red\", method = \"loess\", se = F, size = 8)\n\n\n\n\n\n\n\n\n\nCode\n#other argument: alpha = &lt;number between 0 & 1 excluding&gt;\n#size - thickness of points or line\n\n\n\n\nCode\np &lt;- ggplot(data = gapminder,\n            mapping = aes(x = gdpPercap,\n                          y = lifeExp))\n\np + geom_point(color = \"purple\") +\n    geom_smooth(method = \"loess\") \n\n\n\n\n\n\n\n\n\nCode\np + geom_point(alpha = 0.3) +\n    geom_smooth(color = \"orange\", se = F, size = 8, method = \"lm\") \n\n\n\n\n\n\n\n\n\n\n\nCode\np + geom_point(alpha = 0.3) +\n    geom_smooth(method = \"gam\") +\n    scale_x_log10(labels = scales::dollar) +\n    labs(x = \"GDP Per Capita\", \n         y = \"Life Expectancy in Years\",\n         title = \"Economic Growth and Life Expectancy\",\n         subtitle = \"Data points are country-years\",\n         caption = \"Source: Gapminder.\")\n\n\n\n\n\n\n\n\n\nCode\n#scale_x_log10 - scales x by log10 (base 10 log of 1000 is 3)\n#labs - labels\n\n\n\n\nCode\n# mapping aesthetics per geom\np &lt;- ggplot(data = gapminder, \n            mapping = aes(x = gdpPercap, y = lifeExp))\n\np + geom_point(mapping = aes(color = continent)) +\n    geom_smooth(method = \"loess\")  +\n    scale_x_continuous(trans = scales::log_trans())\n\n\n\n\n\n\n\n\n\nCode\n#natural log ^"
+    "text": "Python is a high-level, interpreted programming language. This is a simple Python code:\n\nprint('Hello, World!')\n\n\n\n\nIn Python, variables can store data of different types without explicitly declaring the type.\nFor example:\n\ninteger_variable = 10\nstring_variable = 'Hello'\nfloat_variable = 10.5\n\nfloat_variable\n\n10.5\n\n\n\n\n\nPython supports the usual logical conditions from mathematics:\n\n# Equals: a == b\n# Not Equals: a != b\n# Less than: a &lt; b\n# Less than or equal to: a &lt;= b\n# Greater than: a &gt; b\n# Greater than or equal to: a &gt;= b\n\nThese conditions can be used in several ways, most commonly in ‘if statements’ and loops.\n\n# if statement:\nif 5 &gt; 2:\n    print('Five is greater than two!')\n\n\n\n\nA function is a block of code which only runs when it is called.\nYou can pass data, known as parameters, into a function.\nA function can return data as a result.\n\n# Defining a function:\ndef my_function():\n    print('Hello from a function')\n\n# Calling a function:\nmy_function()\n\n\n\n\nA list is a collection which is ordered and changeable.\nA dictionary is a collection which is unordered, changeable and indexed.\n\n# List example:\nmy_list = ['apple', 'banana', 'cherry']\n\n# Dictionary example:\nmy_dict = {'name': 'John', 'age': 36}"
+  },
+  {
+    "objectID": "320_files/danl-320-python-basic.html#what-is-python",
+    "href": "320_files/danl-320-python-basic.html#what-is-python",
+    "title": "Python Basics",
+    "section": "",
+    "text": "Python is a high-level, interpreted programming language. This is a simple Python code:\n\nprint('Hello, World!')"
+  },
+  {
+    "objectID": "320_files/danl-320-python-basic.html#variables-and-data-types",
+    "href": "320_files/danl-320-python-basic.html#variables-and-data-types",
+    "title": "Python Basics",
+    "section": "",
+    "text": "In Python, variables can store data of different types without explicitly declaring the type.\nFor example:\n\ninteger_variable = 10\nstring_variable = 'Hello'\nfloat_variable = 10.5\n\nfloat_variable\n\n10.5"
+  },
+  {
+    "objectID": "320_files/danl-320-python-basic.html#control-structures",
+    "href": "320_files/danl-320-python-basic.html#control-structures",
+    "title": "Python Basics",
+    "section": "",
+    "text": "Python supports the usual logical conditions from mathematics:\n\n# Equals: a == b\n# Not Equals: a != b\n# Less than: a &lt; b\n# Less than or equal to: a &lt;= b\n# Greater than: a &gt; b\n# Greater than or equal to: a &gt;= b\n\nThese conditions can be used in several ways, most commonly in ‘if statements’ and loops.\n\n# if statement:\nif 5 &gt; 2:\n    print('Five is greater than two!')"
+  },
+  {
+    "objectID": "320_files/danl-320-python-basic.html#functions",
+    "href": "320_files/danl-320-python-basic.html#functions",
+    "title": "Python Basics",
+    "section": "",
+    "text": "A function is a block of code which only runs when it is called.\nYou can pass data, known as parameters, into a function.\nA function can return data as a result.\n\n# Defining a function:\ndef my_function():\n    print('Hello from a function')\n\n# Calling a function:\nmy_function()"
+  },
+  {
+    "objectID": "320_files/danl-320-python-basic.html#lists-and-dictionaries",
+    "href": "320_files/danl-320-python-basic.html#lists-and-dictionaries",
+    "title": "Python Basics",
+    "section": "",
+    "text": "A list is a collection which is ordered and changeable.\nA dictionary is a collection which is unordered, changeable and indexed.\n\n# List example:\nmy_list = ['apple', 'banana', 'cherry']\n\n# Dictionary example:\nmy_dict = {'name': 'John', 'age': 36}"
   },
   {
     "objectID": "310_files/danl-310-quarto-r.html",
@@ -147,102 +189,67 @@
     "text": "2.3 Conclusion\nggplot2 provides a powerful and flexible system for making a wide variety of plots. By understanding the grammar of graphics upon which it is based, you can build up complex visualizations from simple components, allowing for a deep and intuitive exploration of data."
   },
   {
-    "objectID": "320_files/danl-320-python-basic.html",
-    "href": "320_files/danl-320-python-basic.html",
-    "title": "Python Basics",
+    "objectID": "310_files/310_1-27_ggplot.html",
+    "href": "310_files/310_1-27_ggplot.html",
+    "title": "Lecture 3 - 1/27/25",
     "section": "",
-    "text": "Python is a high-level, interpreted programming language. This is a simple Python code:\n\nprint('Hello, World!')\n\n\n\n\nIn Python, variables can store data of different types without explicitly declaring the type.\nFor example:\n\ninteger_variable = 10\nstring_variable = 'Hello'\nfloat_variable = 10.5\n\nfloat_variable\n\n10.5\n\n\n\n\n\nPython supports the usual logical conditions from mathematics:\n\n# Equals: a == b\n# Not Equals: a != b\n# Less than: a &lt; b\n# Less than or equal to: a &lt;= b\n# Greater than: a &gt; b\n# Greater than or equal to: a &gt;= b\n\nThese conditions can be used in several ways, most commonly in ‘if statements’ and loops.\n\n# if statement:\nif 5 &gt; 2:\n    print('Five is greater than two!')\n\n\n\n\nA function is a block of code which only runs when it is called.\nYou can pass data, known as parameters, into a function.\nA function can return data as a result.\n\n# Defining a function:\ndef my_function():\n    print('Hello from a function')\n\n# Calling a function:\nmy_function()\n\n\n\n\nA list is a collection which is ordered and changeable.\nA dictionary is a collection which is unordered, changeable and indexed.\n\n# List example:\nmy_list = ['apple', 'banana', 'cherry']\n\n# Dictionary example:\nmy_dict = {'name': 'John', 'age': 36}"
+    "text": "Code\nlibrary(gapminder)\ngapminder &lt;- gapminder::gapminder\n\n\n\n\nCode\nlibrary(skimr)\nskim(gapminder)\n\n\n\nData summary\n\n\nName\ngapminder\n\n\nNumber of rows\n1704\n\n\nNumber of columns\n6\n\n\n_______________________\n\n\n\nColumn type frequency:\n\n\n\nfactor\n2\n\n\nnumeric\n4\n\n\n________________________\n\n\n\nGroup variables\nNone\n\n\n\nVariable type: factor\n\n\n\n\n\n\n\n\n\n\n\nskim_variable\nn_missing\ncomplete_rate\nordered\nn_unique\ntop_counts\n\n\n\n\ncountry\n0\n1\nFALSE\n142\nAfg: 12, Alb: 12, Alg: 12, Ang: 12\n\n\ncontinent\n0\n1\nFALSE\n5\nAfr: 624, Asi: 396, Eur: 360, Ame: 300\n\n\n\nVariable type: numeric\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nskim_variable\nn_missing\ncomplete_rate\nmean\nsd\np0\np25\np50\np75\np100\nhist\n\n\n\n\nyear\n0\n1\n1979.50\n17.27\n1952.00\n1965.75\n1979.50\n1993.25\n2007.0\n▇▅▅▅▇\n\n\nlifeExp\n0\n1\n59.47\n12.92\n23.60\n48.20\n60.71\n70.85\n82.6\n▁▆▇▇▇\n\n\npop\n0\n1\n29601212.32\n106157896.74\n60011.00\n2793664.00\n7023595.50\n19585221.75\n1318683096.0\n▇▁▁▁▁\n\n\ngdpPercap\n0\n1\n7215.33\n9857.45\n241.17\n1202.06\n3531.85\n9325.46\n113523.1\n▇▁▁▁▁\n\n\n\n\n\n\n\nCode\nlibrary(tidyverse)\np &lt;- ggplot(data = gapminder,\n            mapping = aes(x = gdpPercap,\n                          y = lifeExp))\np + geom_point() \n\n\n\n\n\n\n\n\n\n\n\nCode\np + \n  geom_point() + \n  geom_smooth()\n\n\n\n\n\n\n\n\n\n\n\nCode\n#assign color to a variable gives different colors for each different value in that variable\np1 &lt;-  ggplot(data = gapminder,\n             mapping = aes(x = gdpPercap, y = lifeExp,\n                           color = continent))\n\n\n\n\nCode\np1 + geom_point() +\n  geom_smooth(method = 'lm')\n\n\n\n\n\n\n\n\n\n\n\nCode\np2 &lt;- ggplot(data = gapminder,\n            mapping = aes(x = gdpPercap, y = lifeExp))\n\n\n\n\nCode\np2 + geom_point(color = \"purple\") +\n     geom_smooth(color = \"red\", method = \"loess\", se = F, size = 8)\n\n\n\n\n\n\n\n\n\nCode\n#other argument: alpha = &lt;number between 0 & 1 excluding&gt;\n#size - thickness of points or line\n\n\n\n\nCode\np &lt;- ggplot(data = gapminder,\n            mapping = aes(x = gdpPercap,\n                          y = lifeExp))\n\np + geom_point(color = \"purple\") +\n    geom_smooth(method = \"loess\") \n\n\n\n\n\n\n\n\n\nCode\np + geom_point(alpha = 0.3) +\n    geom_smooth(color = \"orange\", se = F, size = 8, method = \"lm\") \n\n\n\n\n\n\n\n\n\n\n\nCode\np + geom_point(alpha = 0.3) +\n    geom_smooth(method = \"gam\") +\n    scale_x_log10(labels = scales::dollar) +\n    labs(x = \"GDP Per Capita\", \n         y = \"Life Expectancy in Years\",\n         title = \"Economic Growth and Life Expectancy\",\n         subtitle = \"Data points are country-years\",\n         caption = \"Source: Gapminder.\")\n\n\n\n\n\n\n\n\n\nCode\n#scale_x_log10 - scales x by log10 (base 10 log of 1000 is 3)\n#labs - labels\n\n\n\n\nCode\n# mapping aesthetics per geom\np &lt;- ggplot(data = gapminder, \n            mapping = aes(x = gdpPercap, y = lifeExp))\n\np + geom_point(mapping = aes(color = continent)) +\n    geom_smooth(method = \"loess\")  +\n    scale_x_continuous(trans = scales::log_trans())\n\n\n\n\n\n\n\n\n\nCode\n#natural log ^"
   },
   {
-    "objectID": "320_files/danl-320-python-basic.html#what-is-python",
-    "href": "320_files/danl-320-python-basic.html#what-is-python",
-    "title": "Python Basics",
+    "objectID": "320_files/danl_proj_nba.html#salary-distribution-among-teams",
+    "href": "320_files/danl_proj_nba.html#salary-distribution-among-teams",
+    "title": "Data Analysis Project",
+    "section": "Salary Distribution Among Teams",
+    "text": "Salary Distribution Among Teams\nLet’s start with the salary distribution among teams using seaborn for visualization. ​​\n\n\n# Handle missing values in 'Salary' by replacing them with the median salary\nmedian_salary = nba['Salary'].median()\nnba['Salary'].fillna(median_salary, inplace=True)\n\n/var/folders/_m/d6jf0jhd2zzdfd5kzdhl_24w0000gn/T/ipykernel_79892/1671011424.py:3: FutureWarning: A value is trying to be set on a copy of a DataFrame or Series through chained assignment using an inplace method.\nThe behavior will change in pandas 3.0. This inplace method will never work because the intermediate object on which we are setting values always behaves as a copy.\n\nFor example, when doing 'df[col].method(value, inplace=True)', try using 'df.method({col: value}, inplace=True)' or df[col] = df[col].method(value) instead, to perform the operation inplace on the original object.\n\n\n  nba['Salary'].fillna(median_salary, inplace=True)\n\n\n\n# Set the aesthetic style of the plots\nsns.set_style(\"whitegrid\")\n\n# Calculate total salary by team\nteam_salary = (\n    nba\n    .groupby('Team')['Salary']\n    .sum()\n    .reset_index()\n    .sort_values(by='Salary', ascending=False)\n)\n\n# Plot total salary by team\nplt.figure(figsize=(10, 16))\nsns.barplot(data = team_salary,\n            x = 'Salary', y = 'Team',\n            palette = 'coolwarm')\nplt.title('Total Salary Distribution Among NBA Teams')\nplt.xlabel('Total Salary')\nplt.ylabel('Team')\nplt.xticks(rotation=45)\nplt.show()\n\n\n\n\n\n\n\n\nThe visualization above displays the total salary distribution among NBA teams, with teams sorted by their total salary expenditure. This bar plot reveals which teams are the biggest spenders on player salaries and which are more conservative. The color gradient provides a visual cue to easily distinguish between the higher and lower spending teams.\nNotice that Portland Trail Blazers has the highest total salary followed by Golden State Warriors and Philadelphia 76ers, and Memphis Grizzlies has the lowest total salary."
+  },
+  {
+    "objectID": "320_files/danl_proj_nba.html#player-age-distribution",
+    "href": "320_files/danl_proj_nba.html#player-age-distribution",
+    "title": "Data Analysis Project",
+    "section": "Player Age Distribution",
+    "text": "Player Age Distribution\nNext, let’s explore the Player Age Distribution across the NBA. We’ll create a histogram to visualize how player ages are distributed, which will help us understand if the league trends younger, older, or has a balanced age mix. ​​\n\n# Convert 'Birthday' column to datetime format\nfrom dateutil import parser\n# nba['Birthday'] = nba['Birthday'].apply(lambda x: parser.parse(x))\n\n# Now, let's calculate the age of each player\n# nba['Age'] = (datetime.now() - nba['Birthday']).dt.days // 365\n\n# Plot the age distribution of NBA players\nplt.figure(figsize=(10, 6))\nsns.histplot(nba['Age'],\n             bins = 15,\n             kde = True,\n             color = 'skyblue')\nplt.title('Age Distribution of NBA Players')\nplt.xlabel('Age')\nplt.ylabel('Count')\nplt.show()\n\n\n/Users/bchoe/anaconda3/lib/python3.11/site-packages/seaborn/_oldcore.py:1119: FutureWarning: use_inf_as_na option is deprecated and will be removed in a future version. Convert inf values to NaN before operating instead.\n  with pd.option_context('mode.use_inf_as_na', True):\n\n\n\n\n\n\n\n\n\nThe histogram above shows the age distribution of NBA players, with a kernel density estimate (KDE) overlay to indicate the distribution shape. The plot helps identify the common ages for NBA players and whether there are significant numbers of very young or older players.\nNotice that the majority of players fall within an age range from 24 to 34. There are few players whose age is above 40."
+  },
+  {
+    "objectID": "320_files/danl_proj_nba.html#position-wise-salary-insights",
+    "href": "320_files/danl_proj_nba.html#position-wise-salary-insights",
+    "title": "Data Analysis Project",
+    "section": "Position-wise Salary Insights",
+    "text": "Position-wise Salary Insights\nMoving on to Position-wise Salary Insights, we’ll examine how average salaries differ across player positions. This analysis could reveal which positions are typically higher-paid, potentially reflecting their value on the basketball court. Let’s create a box plot to visualize the salary distribution for each position. ​​\n\n# Plot salary distribution by player position\nplt.figure(figsize=(10, 6))\nsns.boxplot(data = nba,\n            x = 'Position', y = 'Salary',\n            palette = 'Set2')\nplt.title('Salary Distribution by Position')\nplt.xlabel('Position')\nplt.ylabel('Salary')\nplt.show()\n\n\n\n\n\n\n\n\nThe box plot above illustrates the salary distribution by player position, showcasing the variation in salaries among different positions within the NBA. PG-SG has the highest median salary."
+  },
+  {
+    "objectID": "320_files/danl_proj_nba.html#top-10-highest-paid-players",
+    "href": "320_files/danl_proj_nba.html#top-10-highest-paid-players",
+    "title": "Data Analysis Project",
+    "section": "Top 10 Highest Paid Players",
+    "text": "Top 10 Highest Paid Players\nLastly, we’ll identify the Top 10 Highest Paid Players in the NBA. Let’s visualize this information.\n\n# Identify the top 10 highest paid players\ntop_10_salaries = nba.sort_values(by='Salary', ascending=False).head(10)\n\n# Plot the top 10 highest paid players\nplt.figure(figsize=(12, 8))\nsns.barplot(data = top_10_salaries,\n            x = 'Salary', y = 'PlayerName',\n            palette = 'viridis')\nplt.title('Top 10 Highest Paid NBA Players')\nplt.xlabel('Salary')\nplt.ylabel('Player')\nplt.show()\n\n\n\n\n\n\n\n\nThe bar plot above reveals the top 10 highest-paid NBA players, showcasing those who stand at the pinnacle of the league in terms of salary. This visualization not only highlights the star players who command the highest salaries but also may reflect their marketability, performance, and contribution to their respective teams."
+  },
+  {
+    "objectID": "320_files/seaborn_basics.html",
+    "href": "320_files/seaborn_basics.html",
+    "title": "Seaborn Example",
     "section": "",
-    "text": "Python is a high-level, interpreted programming language. This is a simple Python code:\n\nprint('Hello, World!')"
+    "text": "import seaborn as sns\nimport matplotlib.pyplot as plt\nimport pandas as pd\n\n# Sample data\ndata = {\n    'Category': ['A', 'B', 'C', 'D'],\n    'Values': [23, 45, 56, 78]\n}\ndf = pd.DataFrame(data)\n\n# Create a barplot\nsns.set(style=\"whitegrid\")  # Optional: Set a clean grid style\nplt.figure(figsize=(8, 6))  # Set the figure size\nsns.barplot(data=df, x='Category', y='Values', palette='viridis')\n\n# Customize the plot\nplt.title(\"Bar Plot Example\", fontsize=16)\nplt.xlabel(\"Category\", fontsize=12)\nplt.ylabel(\"Values\", fontsize=12)\n\n# Show the plot\nplt.show()\n\nFutureWarning: \n\nPassing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.\n\n  sns.barplot(data=df, x='Category', y='Values', palette='viridis')"
   },
   {
-    "objectID": "320_files/danl-320-python-basic.html#variables-and-data-types",
-    "href": "320_files/danl-320-python-basic.html#variables-and-data-types",
-    "title": "Python Basics",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Emily Peters",
     "section": "",
-    "text": "In Python, variables can store data of different types without explicitly declaring the type.\nFor example:\n\ninteger_variable = 10\nstring_variable = 'Hello'\nfloat_variable = 10.5\n\nfloat_variable\n\n10.5"
+    "text": "Emily Peters majors in Data Analytics and minors in Mathematics at SUNY Geneseo. Outside of school, Emily enjoys spending time outside with her dog and doing puzzles."
   },
   {
-    "objectID": "320_files/danl-320-python-basic.html#control-structures",
-    "href": "320_files/danl-320-python-basic.html#control-structures",
-    "title": "Python Basics",
+    "objectID": "index.html#education",
+    "href": "index.html#education",
+    "title": "Emily Peters",
+    "section": "Education",
+    "text": "Education\nState University of New York at Geneseo | Geneseo, NY  B.S. in Data Analytics | Jan 2023 - May 2025  Minor in Business Mathematics \nGenesee Community College | Batavia, NY  Major in Economic Crime Investigation | Aug 2021 - Dec 2022"
+  },
+  {
+    "objectID": "posts/post-with-code/index.html",
+    "href": "posts/post-with-code/index.html",
+    "title": "Post With Code",
     "section": "",
-    "text": "Python supports the usual logical conditions from mathematics:\n\n# Equals: a == b\n# Not Equals: a != b\n# Less than: a &lt; b\n# Less than or equal to: a &lt;= b\n# Greater than: a &gt; b\n# Greater than or equal to: a &gt;= b\n\nThese conditions can be used in several ways, most commonly in ‘if statements’ and loops.\n\n# if statement:\nif 5 &gt; 2:\n    print('Five is greater than two!')"
-  },
-  {
-    "objectID": "320_files/danl-320-python-basic.html#functions",
-    "href": "320_files/danl-320-python-basic.html#functions",
-    "title": "Python Basics",
-    "section": "",
-    "text": "A function is a block of code which only runs when it is called.\nYou can pass data, known as parameters, into a function.\nA function can return data as a result.\n\n# Defining a function:\ndef my_function():\n    print('Hello from a function')\n\n# Calling a function:\nmy_function()"
-  },
-  {
-    "objectID": "320_files/danl-320-python-basic.html#lists-and-dictionaries",
-    "href": "320_files/danl-320-python-basic.html#lists-and-dictionaries",
-    "title": "Python Basics",
-    "section": "",
-    "text": "A list is a collection which is ordered and changeable.\nA dictionary is a collection which is unordered, changeable and indexed.\n\n# List example:\nmy_list = ['apple', 'banana', 'cherry']\n\n# Dictionary example:\nmy_dict = {'name': 'John', 'age': 36}"
-  },
-  {
-    "objectID": "320_files/pandas_basics.html#creating-a-series",
-    "href": "320_files/pandas_basics.html#creating-a-series",
-    "title": "Pandas Basics",
-    "section": "Creating a Series",
-    "text": "Creating a Series\n\n\n# Creating a Series from a list\ndata = [10, 20, 30, 40, 50]\nseries = pd.Series(data)\nseries\n\n\n\n\n\n\n\n\n0\n\n\n\n\n0\n10\n\n\n1\n20\n\n\n2\n30\n\n\n3\n40\n\n\n4\n50\n\n\n\n\ndtype: int64"
-  },
-  {
-    "objectID": "320_files/pandas_basics.html#creating-a-dataframe",
-    "href": "320_files/pandas_basics.html#creating-a-dataframe",
-    "title": "Pandas Basics",
-    "section": "Creating a DataFrame",
-    "text": "Creating a DataFrame\n\n\n# Creating a DataFrame from a dictionary\ndata = {\n    \"Name\": [\"Alice\", \"Bob\", \"Charlie\"],\n    \"Age\": [25, 30, 35],\n    \"City\": [\"New York\", \"Los Angeles\", \"Chicago\"]\n}\ndf = pd.DataFrame(data)\ndf\n\n\n  \n    \n\n\n\n\n\n\nName\nAge\nCity\n\n\n\n\n0\nAlice\n25\nNew York\n\n\n1\nBob\n30\nLos Angeles\n\n\n2\nCharlie\n35\nChicago"
-  },
-  {
-    "objectID": "320_files/pandas_basics.html#exploring-data",
-    "href": "320_files/pandas_basics.html#exploring-data",
-    "title": "Pandas Basics",
-    "section": "Exploring Data",
-    "text": "Exploring Data\n\n\n# Display the first few rows\ndf.head()\n\n# Display the shape of the DataFrame\nprint(\"Shape:\", df.shape)\n\n# Display summary statistics\ndf.describe()\n\nShape: (3, 3)\n\n\n\n  \n    \n\n\n\n\n\n\nAge\n\n\n\n\ncount\n3.0\n\n\nmean\n30.0\n\n\nstd\n5.0\n\n\nmin\n25.0\n\n\n25%\n27.5\n\n\n50%\n30.0\n\n\n75%\n32.5\n\n\nmax\n35.0"
-  },
-  {
-    "objectID": "320_files/pandas_basics.html#selecting-data",
-    "href": "320_files/pandas_basics.html#selecting-data",
-    "title": "Pandas Basics",
-    "section": "Selecting Data",
-    "text": "Selecting Data\n\n# Selecting a single column\ndf[\"Name\"]\n\n\n\n\n\n\n\n\nName\n\n\n\n\n0\nAlice\n\n\n1\nBob\n\n\n2\nCharlie\n\n\n\n\ndtype: object\n\n\n\n# Selecting multiple columns\ndf[[\"Name\", \"City\"]]\n\n\n  \n    \n\n\n\n\n\n\nName\nCity\n\n\n\n\n0\nAlice\nNew York\n\n\n1\nBob\nLos Angeles\n\n\n2\nCharlie\nChicago\n\n\n\n\n\n    \n\n  \n    \n\n  \n    \n  \n    \n\n  \n\n    \n  \n\n\n\n  \n\n\n    \n        \n    \n\n  \n\n\n\n  \n\n\n    \n  \n\n\n\n# Selecting rows by index\ndf.iloc[0]\n\n\n\n\n\n\n\n\n0\n\n\n\n\nName\nAlice\n\n\nAge\n25\n\n\nCity\nNew York\n\n\n\n\ndtype: object"
-  },
-  {
-    "objectID": "320_files/pandas_basics.html#filtering-data",
-    "href": "320_files/pandas_basics.html#filtering-data",
-    "title": "Pandas Basics",
-    "section": "Filtering Data",
-    "text": "Filtering Data\n\n# Filtering rows where Age is greater than 25\nfiltered_df = df[df[\"Age\"] &gt; 25]\nfiltered_df\n\n\n  \n    \n\n\n\n\n\n\nName\nAge\nCity\n\n\n\n\n1\nBob\n30\nLos Angeles\n\n\n2\nCharlie\n35\nChicago"
-  },
-  {
-    "objectID": "320_files/pandas_basics.html#adding-a-new-column",
-    "href": "320_files/pandas_basics.html#adding-a-new-column",
-    "title": "Pandas Basics",
-    "section": "Adding a New Column",
-    "text": "Adding a New Column\n\n\n# Adding a new column\ndf[\"Salary\"] = [50000, 60000, 70000]\ndf\n\n\n  \n    \n\n\n\n\n\n\nName\nAge\nCity\nSalary\n\n\n\n\n0\nAlice\n25\nNew York\n50000\n\n\n1\nBob\n30\nLos Angeles\n60000\n\n\n2\nCharlie\n35\nChicago\n70000\n\n\n\n\n\n    \n\n  \n    \n\n  \n    \n  \n    \n\n  \n\n    \n  \n\n\n\n  \n\n\n    \n        \n    \n\n  \n\n\n\n  \n\n\n  \n    \n    \n\n  \n    \n  \n    \n    \n  \n\n    \n  \n\n\n    ## Conclusion\n\n    This notebook covers the basic operations of pandas. You can explore more advanced features like merging,\n    joining, and working with time series data in pandas documentation: https://pandas.pydata.org/docs/"
-  },
-  {
-    "objectID": "blog-listing.html",
-    "href": "blog-listing.html",
-    "title": "Insightful Analytics",
-    "section": "",
-    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\nGGPlot Basics\n\n\n\n\n\n\n\n\nFeb 17, 2025\n\n\nEmily Peters\n\n\n5 min\n\n\n\n\n\n\n\n\n\n\n\n\nStarwars\n\n\n\n\n\n\n\n\nOct 30, 2023\n\n\nYour Name\n\n\n3 min\n\n\n\n\n\n\n\n\n\n\n\n\nPost With Code\n\n\n\n\n\n\n\n\nOct 30, 2023\n\n\nYOUR NAME\n\n\n1 min\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\n\n\nOct 27, 2023\n\n\nYOUR NAME\n\n\n1 min\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "posts/ggplot-review/ggplot-basics.html",
-    "href": "posts/ggplot-review/ggplot-basics.html",
-    "title": "GGPlot Basics",
-    "section": "",
-    "text": "Let’s go over some essentials to create amazing visualizations in GGPlot. We will use the gapminder dataframe. First, we’ll load tidyverse, which is where ggplot2 is stored, and the gapminder dataframe.\n\nlibrary(tidyverse)\nlibrary(gapminder)\ngapminder &lt;- gapminder::gapminder\nview(gapminder)\n\n\nDifferent Types of GGPlots\n\nScatter Plot\n\n\nggplot(data = gapminder,\n       mapping = aes(x = gdpPercap, \n                     y = lifeExp))+\n  geom_point()\n\n\n\n\n\n\n\n\n1a. Scatter Plot with curve of best fit\n\nggplot(data = gapminder,\n       mapping = aes(x = gdpPercap, \n                     y = lifeExp))+\n  geom_point()+\n  geom_smooth()\n\n\n\n\n\n\n\n\n\nyou can get rid of the shaded part by inserting the argument se = FALSE in geom_smooth\n\n\nLine Chart\n\n\nA time series of GPD in the United States from 1952 until 2007.\n\n\ng &lt;- gapminder |&gt;\n  filter(country %in% 'United States')\n\n\nggplot(data = g,\n       mapping = aes(x = year,\n                     y = gdpPercap))+\n  geom_line()\n\n\n\n\n\n\n\n\n\nBar Chart\n\n\nThis gives a count of each continent recorded.\n\n\nggplot(data = gapminder,\n       mapping = aes(x = continent))+\n  geom_bar()\n\n\n\n\n\n\n\n\n\nBox Plot\n\n\nRange of GDP across the world in 2007\n\n\ngdp &lt;- gapminder |&gt;\n  filter(year %in% 2007)\n\n\nggplot(data = gdp,\n       mapping = aes(x = gdpPercap))+\n  geom_boxplot()\n\n\n\n\n\n\n\n\n\n\nAesthetic Mapping\nIn most cases, we will want to go beyond the basic ggPlots. We can do this in a few different ways: - add color - reduce overplotting - facets - add labels\n\nColor Color can be used to showcase different variables and/or make a graph more aesthically pleasing. Let’s add some color to our bar chart.\n\n\nggplot(data = gapminder,\n       mapping = aes(x = continent))+\n  geom_bar(aes(fill = continent))\n\n\n\n\n\n\n\n\n\nAlthough our graph is still the same, it looks much nicer and less boring than the first graph.\n\nNow, lets showcase how each continent varies in our scatter plot.\n\nggplot(data = gapminder,\n       mapping = aes(x = gdpPercap, \n                     y = lifeExp))+\n  geom_point(aes(color = continent))\n\n\n\n\n\n\n\n\n\nThis gives us insight into how different continents compare to each other’s relationship between GDP Per Capita and Life Expectancy\n\nYou might notice that a lot of points towards the left of the graph look very crowded. This is called overplotting, and there is a way to reduce this.\n\nReduce Overplotting\n\n\nWe can use alpha to add transparency to the graph\nalpha is set to a value between 0 and 1\n\nThe closer to 0, the more transparent the points become\n\n\n\nggplot(data = gapminder,\n       mapping = aes(x = gdpPercap, \n                     y = lifeExp))+\n  geom_point(aes(color = continent,\n                 alpha = .04))\n\n\n\n\n\n\n\n\n\nThe points are still jumbled together, but it is easier to see through the overlapping.\n\nWith a large quantity of data, sometimes it’s easier to interpret a graph if it is partitioned into smaller graphs by a variable in the dataset. This is where facets come into play.\n\nFacets Continuing with our scatter plot, separating the points into facets by continent (just like we did with color), will paint a more clear picture about the relationships between GDP and Life Expectancy for each continent.\n\n\nggplot(data = gapminder,\n       mapping = aes(x = gdpPercap, \n                     y = lifeExp))+\n  geom_point()+\n  facet_wrap(~continent)+\n  geom_smooth()\n\n\n\n\n\n\n\n\n\nLabels\n\n\nLabels add clarity to a graph. They tell the audience exactly what they are looking at, leaving little room for misinterpretation.\n\n\nggplot(data = gapminder,\n       mapping = aes(x = gdpPercap, \n                     y = lifeExp))+\n  geom_point()+\n  facet_wrap(~continent)+\n  geom_smooth()+\nlabs(x = \"GDP Per Capita\", \n         y = \"Life Expectancy in Years\",\n         title = \"GDP and Life Expectancy Throughout the World\",\n         subtitle = \"Years 1952 Through 2007\",\n         caption = \"Source: Gapminder.\")\n\n\n\n\n\n\n\n\n-This is very useful if the variable names in a dataset are not very clear, and because you can add some background information about the data."
+    "text": "This is a post with executable code with no space in the folder name.\n\n1 + 1\n\n[1] 2"
   },
   {
     "objectID": "posts/starwars/starwars_df.html",

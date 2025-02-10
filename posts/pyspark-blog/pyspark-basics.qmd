@@ -8,35 +8,35 @@ image: posts/pyspark-blog/pyspark-image.png
 toc: true
 ---
 # Apache Hadoop 
-Hadoop provides storage and ways to easily process big data sets. Storage is managed by the Hadoop Distributed File System (HDFS), and the data is processed using MapReduce.
-- HDFS divides up data from multiple sources and distributes them across different servers to be processed.The computing environment is redundant, allowing the application to run if a server fails.
+Hadoop provides storage and ways to easily process big data sets. Storage is managed by the Hadoop Distributed File System (HDFS), and the data is processed using MapReduce. <br>
+- HDFS divides up data from multiple sources and distributes them across different servers to be processed.The computing environment is redundant, allowing the application to run if a server fails. <br>
 - MapReduce distributes data across multiple machines and the brings the processed data back together so it's coherent.
 
 Hadoop has its limits, however. Data cannot be processed in real time. It can only collect data for a certain period of time and then process it all at once. This process is called batch processing.
 
 # Apache Spark
-Spark is built for processing large amounts of data, as well as data analysis, machine learning, data visualization, and streaming real-time data.
-Spark starts with the driver node, which communicates to the cluser manager. The cluser manager to distributes tasks to different worker nodes. Worker nodes execute the task they were given, communicate with each other if needed, and send the results back to the driver node.
-Here are some other attribuutes of Spark:
-1. In-Memory Processing
-  - Loads data into memory once and performs all operations in-memory
-2. Data Reuse
-  - Data is cached so that it can be reused
-3. Faster Execution
-  - Allows for real-time processing
+Spark is built for processing large amounts of data, as well as data analysis, machine learning, data visualization, and streaming real-time data. <br>
+Spark starts with the driver node, which communicates to the cluser manager. The cluser manager to distributes tasks to different worker nodes. Worker nodes execute the task they were given, communicate with each other if needed, and send the results back to the driver node.<br>
+Here are some other attribuutes of Spark:<br>
+1. In-Memory Processing <br>
+  - Loads data into memory once and performs all operations in-memory <br>
+2. Data Reuse <br>
+  - Data is cached so that it can be reused <br>
+3. Faster Execution <br>
+  - Allows for real-time processing <br>
   
 Hadoop and Spark can be used together to store big data sets and quickly process data.
 
 # PySpark
-PySpark is an API that allows the use of Spark in Python.
+PySpark is an API that allows the use of Spark in Python.<br>
 - PySpark can incorporate pandas DataFrames and SQL tables.
 
-PySpark has methods that make data transformation easy to complete, similar to pandas. A Spark DataFrame has a few key differences:
-1. Data is distributed among different machines
-2. Operations are executed the same in each node
-3. Can process more data than one machine can handle
-4. Transformations are not computed until called to action (lazy evaluation)
-5. High fault tolerance; can function if a node is disabled and recovers lost data
+PySpark has methods that make data transformation easy to complete, similar to pandas. A Spark DataFrame has a few key differences:<br>
+1. Data is distributed among different machines <br>
+2. Operations are executed the same in each node <br>
+3. Can process more data than one machine can handle <br>
+4. Transformations are not computed until called to action (lazy evaluation) <br>
+5. High fault tolerance; can function if a node is disabled and recovers lost data <br>
 6. Built for extremely large amounts of data
 
 
