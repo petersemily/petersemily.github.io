@@ -14,6 +14,10 @@ website:
             href: 310_files/danl-310-quarto-r.qmd
       - text: DANL 320
         menu:
+          - text: Project
+            href: 320_files/danl_proj_nba.ipynb
+      - text: Python Data Analysis
+        menu:
           - text: Python Basics
             href: 320_files/danl-320-python-basic.ipynb
           - text: Seaborn

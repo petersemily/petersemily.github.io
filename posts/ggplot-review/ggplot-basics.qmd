@@ -12,7 +12,7 @@ execute:
 toc: true
 ---
 
-Let's go over some essentials to create amazing visualizations in GGPlot. We will use the `gapminder` dataframe. First, we'll load `tidyverse`, which is where `ggplot2` is store, and the `gapminder` dataframe.
+Let's go over some essentials to create amazing visualizations in GGPlot. We will use the `gapminder` dataframe. First, we'll load `tidyverse`, which is where `ggplot2` is stored, and the `gapminder` dataframe.
 ```{r}
 library(tidyverse)
 library(gapminder)
