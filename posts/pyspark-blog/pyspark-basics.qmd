@@ -33,9 +33,9 @@ Hadoop and Spark can be used together to store big data sets and quickly process
 
 # PySpark
 PySpark is an API that allows the use of Spark in Python.<br>
-- PySpark can incorporate pandas DataFrames and SQL tables.
+- PySpark can incorporate Pandas DataFrames and SQL tables.
 
-PySpark has methods that make data transformation easy to complete, similar to pandas. A Spark DataFrame has a few key differences:<br>
+PySpark has methods that make data transformation easy to complete, similar to Pandas. A Spark DataFrame has a few key differences:<br>
 1. Data is distributed among different machines <br>
 2. Operations are executed the same in each node <br>
 3. Can process more data than one machine can handle <br>
@@ -43,6 +43,291 @@ PySpark has methods that make data transformation easy to complete, similar to p
 5. High fault tolerance; can function if a node is disabled and recovers lost data <br>
 6. Built for extremely large amounts of data
 
+## PySpark in Google Colab
+PySpark is very similar to Pandas. It is very convenient to transform data just like we learned before, just with a slightly different syntax.<br>
+Here are the basics of coding with PySpark: <br>
 
+### Loading Data <br>
+Every time you use PySpark, you must establish a `SparkSession` entry point. This allows you to transform DataFrames and SQL tables.
 
+```{python}
+from pyspark.sql import SparkSession
+spark = SparkSession.builder.master("local[*]").getOrCreate()
+```
 
+There are two ways to approach reading a CSV file. First, if the file is in your local directory, follow this syntax that is similar to Pandas:
+
+```{python}
+path = '/content/drive/MyDrive/lecture-data/cces.csv'
+df = spark.read.csv(path, 
+                    inferSchema=True,
+                    header=True)
+df.show()  
+```
+- Note: in order to see any display of a DataFrame at any point while you're working with it, you must use `show()`. <br>
+
+Second, if the file is from a URL, you have to create a Pandas DataFrame first. From there, you can convert the Pandas DataFrame into a Spark DataFrame.
+
+```{python}
+import pandas as pd
+df_pd = pd.read_csv('https://bcdanl.github.io/data/nba.csv')
+
+df = spark.createDataFrame(df_pd)
+```
+
+### Summarizing Data <br>
+- `df.printSchema()` prints column names and data types <br>
+  - the argument, nullable = True allows columns with a null value to print
+- `df.columns` prints list of columns <br>
+- `df.dtypes` returns a list of tuples containing the column name and data type <br>
+- `df.count()` prints the total number of rows <br>
+- `df.describe()` prints summary statistics for each column <br>
+
+### Displaying Data <br>
+- `df.show()`: default shows the first 20 rows <br>
+  - arguments: <br>
+  1. n = : number of rows to display <br>
+  2. truncate = : either boolean value, or a number specifying how many characters to keep <br>
+  3. vertical = : boolean value; if True, each row is displayed vertically <br>
+
+### Selecting Columns <br>
+Selecting one column:
+```{python}
+df.select("Name")
+```
+
+Selecting multiple columns:
+```{python}
+df.select("Name", "Team", "Salary")
+```
+
+### Counting Methods <br>
+Like previously mentioned, you can use `df.count()` for a count of the entire DataFrame. You can also count specific columns. Here are two ways to do this: <br>
+
+```{python}
+from pyspark.sql.functions import countDistinct
+num_teams = df.select(countDistinct("Team")).collect()[0][0]
+num_teams
+```
+This code shows the number of observations of the unique values in the Team column.
+
+```{python}
+df.groupBy("Team").count()
+```
+This code shows how many times each unique value in Team occurrs. <br>
+
+### Sorting <br>
+- `df.orderBy()` sorts values by a variable given. It can be given ascending/descending intstructions. Sorting by multiple columns requires the use of a list. 
+
+```{python}
+df.orderBy("Name").show(5)
+```
+The default sorting is ascending.
+
+```{python}
+from pyspark.sql.functions import desc
+df.orderBy(desc("Salary")).show(5)
+```
+
+```{python}
+df.orderBy(["Team", desc("Salary")]).show(5)
+```
+- `nsmallest` and `nlargest` are not functions in PySpark, but there is an equivalent way to do it:
+
+```{python}
+# nsmallest example:
+df.orderBy("Salary").limit(5).show()
+
+# nlargest example:
+df.orderBy(desc("Salary")).limit(5).show()
+```
+
+### Row-Based Access <br>
+PySpark does not use row indexing, so you have to use other ways to access rows: <br>
+1. `df.limit()` or `df.take()` takes an integer and returns a list of the number of rows <br>
+2. `df.collect()` returns all the reconds as a list of rows <br>
+Here is an example:
+```{python}
+# Example: filter by condition
+df.filter("Team == 'New York Knicks'").show()
+df.limit(5).show()
+df.take(5)
+df.collect()
+```
+
+### Changing Variables <br>
+1. Adding Columns <br>
+`df.withColumn()` takes the new name, along with how you'd like to create the new column. When using an already existing column, you must specify that it is a column by using `col('ColumnName')`. <br>
+Example: Dividing the NBA salaries by 1000
+```{python}
+df = df.withColumn("SalaryK", col("Salary")/1000)
+```
+
+2. Removing Columns <br>
+`df.drop()` takes one or multiple column names. <br>
+Example: Removing 'SalaryK'
+```{python}
+df = df.drop("SalaryK")
+```
+
+3. Renaming Columns <br>
+`df.withColumnRenamed()` takes the current column name, followed by the new name
+Example: Changing 'Birthday' to 'DateOfBirth'
+```{python}
+df = df.withColumnRenamed("Birthday", "DateOfBirth")
+```
+
+4. Rearranging Columns
+Use `select()` to order the columns in the way that you would like. <br>
+Example: 
+```{python}
+df = df.select("Name", "Team", "Position", "Salary", "DateOfBirth")
+```
+
+### Mathematical & Vectorized Operations <br>
+1. Aggregate Functions: <br>
+- `mean()` <br>
+- `min()` <br>
+- `max()` <br>
+- `stdev_pop()` <br>
+- `median()` <br>
+These functions are used within `selectExpr()`. They take the name of the variable you'd like to aggregate, and then add as "new_variable_name" after. <br>
+Here are the aggregation functions in action:
+
+```{python}
+# Summaries for numeric columns
+df.selectExpr(
+    "mean(Salary) as mean_salary",
+    "min(Salary) as min_salary",
+    "max(Salary) as max_salary",
+    "stddev_pop(Salary) as std_salary"
+).show()
+```
+
+1. Using the `functions` package
+```{python}
+from pyspark.sql import functions as F
+```
+This package will allow you to create new columns or transform current ones. <br>
+Examples: <br>
+- `F.avg()` <br>
+- `F.concat()` <br>
+- `F.lit()` <br>
+- `F.col()` <br>
+
+Here are these fucntions in action:
+```{python}
+# Pre-compute the average salary (pulls it back as a Python float)
+salary_mean = df.select(F.avg("Salary").alias("mean_salary")).collect()[0]["mean_salary"]
+
+df2 = (
+    df
+    .withColumn("Salary_2x", F.col("Salary") * 2)    # Add Salary_2x
+    .withColumn(
+        "Name_w_Position",           # Concatenate Name and Position
+        F.concat(F.col("Name"), F.lit(" ("), F.col("Position"), F.lit(")")))
+    .withColumn(
+        "Salary_minus_Mean",        # Subtract mean salary
+        F.col("Salary") - F.lit(salary_mean))
+)
+```
+
+### Converting Data Types <br>
+1. `.cast()` is used after a variable is specified, and takes different data types as a string. <br>
+2. `to_date()` converts data to a specified date format. It takes the variable to be changed, and the specific date format you wish to chose.<br>
+
+```{python}
+from pyspark.sql.functions import to_date
+
+df = df.withColumn('DateOfBirth_ts', to_date('Birthday','M/d/yy'))
+```
+Main Data Types: <br>
+- `int` <br>
+- `float` <br>
+- `string` <br>
+- `boolean` <br>
+- `date` <br>
+- `timestamp` <br>
+
+### Filtering by a Condition <br>
+`df.filter()` takes one or multiple conditions to be met and displayed. Separate conditions by putting each one in parentheses and with the & or | sign. <br>
+Here are some examples: 
+```{python}
+df.filter(col("Salary") > 100000).show()
+
+#or
+
+df.filter(
+    ( col("Team") == "Finance" ) & 
+    ( col("Salary") >= 100000 )
+).show()
+
+#or 
+
+df.filter(
+    (col("Team") == "Finance") | 
+    (col("Team") == "Legal")   | 
+    (col("Team") == "Sales")
+).show()
+```
+
+`isin()` used within `filter()`, takes a list of values within a variable and filters only those values
+
+```{python}
+df.filter(col('Team').isin('Finance','Legal','Sales')).show()
+```
+
+`between()` is also used within `filter()`. It takes a range of values and returns True if a value falls wihin the range.
+
+```{python}
+df_between = df.filter(col('Salary').between(90000,100000))
+df_between.show()
+```
+
+### Missing Values
+Find how many missing values are in a column with `isNull()`:
+
+```{python}
+df.filter(col('Team').isNull()).count()
+```
+You can find how many non-null values by using the same code and replacing `isNull()` with `isNotNull()`. <br>
+
+Drop rows with missing values with `na.drop()`:
+
+```{python}
+df_drop = df.na.drop()
+```
+- takes the argument `how = 'all'`, which removes observations that all values are missing <br>
+- use the argument `subset = ` to target rows with missing values in a given variable <br>
+
+```{python}
+df_drop_subset = df.na.drop(subset=["Gender", "Team"])
+```
+
+`na.fill()` fills in null values with a specified value.
+
+```{python}
+df_fill = df.na.fill(value = 0, subset = ["Salary"])
+```
+ - you can do multiple variables at a time by usingn a dictionary instead of `value = , subset = `
+ 
+### Dealing with Duplicates 
+`dropDuplicates()` drops all rows that are exact duplicates 
+
+```{python}
+df_no_dups = df.dropDuplicates()
+```
+
+  - add `['Variable_Name']` in the function to specify how to drop duplicates
+
+```{python}
+df_no_dups_subset = df.dropDuplicates(["Team"])
+```
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
