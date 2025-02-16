@@ -1,0 +1,1915 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Emily Peters">
+<meta name="dcterms.date" content="2025-02-17">
+
+<title>PySpark Basics – Emily Peters</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-57476271c5f0467c372e20ff5d25630e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-391c4f7f0df7475a7487d1067a5e1fc7.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-621212c557b4547e16f6b32c41e2871e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-e8ceb9de67065b051875aa2fc9fce7f9.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Emily Peters</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-danl-310" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">DANL 310</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-danl-310">    
+        <li>
+    <a class="dropdown-item" href="../../310_files/danl-310-quarto-r.html">
+ <span class="dropdown-text">R Basics</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-danl-320" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">DANL 320</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-danl-320">    
+        <li>
+    <a class="dropdown-item" href="../../320_files/danl_proj_nba.html">
+ <span class="dropdown-text">Project</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-python-data-analysis" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Python Data Analysis</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-python-data-analysis">    
+        <li>
+    <a class="dropdown-item" href="../../320_files/danl-320-python-basic.html">
+ <span class="dropdown-text">Python Basics</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../320_files/seaborn_basics.html">
+ <span class="dropdown-text">Seaborn</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../320_files/pandas_basics.html">
+ <span class="dropdown-text">Pandas</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog-listing.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">PySpark Basics</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Emily Peters </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">February 17, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="apache-hadoop" class="level1">
+<h1>Apache Hadoop</h1>
+<p>Hadoop provides storage and ways to easily process big data sets. Storage is managed by the Hadoop Distributed File System (HDFS), and the data is processed using MapReduce. <br> - HDFS divides up data from multiple sources and distributes them across different servers to be processed.The computing environment is redundant, allowing the application to run if a server fails. <br> - MapReduce distributes data across multiple machines and the brings the processed data back together so it’s coherent.</p>
+<p>Hadoop has its limits, however. Data cannot be processed in real time. It can only collect data for a certain period of time and then process it all at once. This process is called batch processing.</p>
+</section>
+<section id="apache-spark" class="level1">
+<h1>Apache Spark</h1>
+<p>Spark is built for processing large amounts of data, as well as data analysis, machine learning, data visualization, and streaming real-time data. <br> Spark starts with the driver node, which communicates to the cluser manager. The cluser manager to distributes tasks to different worker nodes. Worker nodes execute the task they were given, communicate with each other if needed, and send the results back to the driver node.<br> Here are some other attribuutes of Spark:<br> 1. In-Memory Processing <br> - Loads data into memory once and performs all operations in-memory <br> 2. Data Reuse <br> - Data is cached so that it can be reused <br> 3. Faster Execution <br> - Allows for real-time processing <br></p>
+<p>Hadoop and Spark can be used together to store big data sets and quickly process data.</p>
+</section>
+<section id="pyspark" class="level1">
+<h1>PySpark</h1>
+<p>PySpark is an API that allows the use of Spark in Python.<br> - PySpark can incorporate Pandas DataFrames and SQL tables.</p>
+<p>PySpark has methods that make data transformation easy to complete, similar to Pandas. A Spark DataFrame has a few key differences:<br> 1. Data is distributed among different machines <br> 2. Operations are executed the same in each node <br> 3. Can process more data than one machine can handle <br> 4. Transformations are not computed until called to action (lazy evaluation) <br> 5. High fault tolerance; can function if a node is disabled and recovers lost data <br> 6. Built for extremely large amounts of data</p>
+<section id="pyspark-in-google-colab" class="level2">
+<h2 class="anchored" data-anchor-id="pyspark-in-google-colab">PySpark in Google Colab</h2>
+<p>PySpark is very similar to Pandas. It is very convenient to transform data just like we learned before, just with a slightly different syntax.<br> Here are the basics of coding with PySpark: <br></p>
+<section id="loading-data" class="level3">
+<h3 class="anchored" data-anchor-id="loading-data">Loading Data <br></h3>
+<p>Every time you use PySpark, you must establish a <code>SparkSession</code> entry point. This allows you to transform DataFrames and SQL tables.</p>
+<div id="cell-2" class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyspark</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql <span class="im">import</span> SparkSession</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>spark <span class="op">=</span> SparkSession.builder.master(<span class="st">"local[*]"</span>).getOrCreate()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>There are two ways to approach reading a CSV file. First, if the file is in your local directory, follow this syntax that is similar to Pandas:</p>
+<div id="cell-4" class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> <span class="st">'/content/drive/MyDrive/lecture-data/cces.csv'</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> spark.read.csv(path,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                    inferSchema<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                    header<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>df.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Note: in order to see any display of a DataFrame at any point while you’re working with it, you must use <code>.show()</code>. <br></li>
+</ul>
+<p>Second, if the file is from a URL, you have to create a Pandas DataFrame first. From there, you can convert the Pandas DataFrame into a Spark DataFrame.</p>
+<div id="cell-6" class="cell" data-outputid="1d28c20d-e782-49c5-9dee-8590df4a6021">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df_pd <span class="op">=</span> pd.read_csv(<span class="st">'https://bcdanl.github.io/data/nba.csv'</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> spark.createDataFrame(df_pd)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>df.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>+---------------+--------------------+--------+--------+--------+
+|           Name|                Team|Position|Birthday|  Salary|
++---------------+--------------------+--------+--------+--------+
+|   Shake Milton|  Philadelphia 76ers|      SG| 9/26/96| 1445697|
+| Christian Wood|     Detroit Pistons|      PF| 9/27/95| 1645357|
+|  PJ Washington|   Charlotte Hornets|      PF| 8/23/98| 3831840|
+|   Derrick Rose|     Detroit Pistons|      PG| 10/4/88| 7317074|
+|  Marial Shayok|  Philadelphia 76ers|       G| 7/26/95|   79568|
+| Draymond Green|Golden State Warr...|      PF|  3/4/90|18539130|
+|  Kendrick Nunn|          Miami Heat|      SG|  8/3/95| 1416852|
+|     Cedi Osman| Cleveland Cavaliers|      SF|  4/8/95| 2907143|
+|    Brook Lopez|     Milwaukee Bucks|       C|  4/1/88|12093024|
+|   Torrey Craig|      Denver Nuggets|      SF|12/19/90| 2000000|
+|Jordan Clarkson| Cleveland Cavaliers|      PG|  6/7/92|13437500|
+|    Alex Caruso|  Los Angeles Lakers|      PG| 2/28/94| 2750000|
+|   Norvel Pelle|  Philadelphia 76ers|      FC|  2/3/93|   79568|
+|  Tyler Johnson|        Phoenix Suns|      PG|  5/7/92|19245370|
+|     Alec Burks|Golden State Warr...|      SG| 7/20/91| 2320044|
+| JaMychal Green|Los Angeles Clippers|      PF| 6/21/90| 4767000|
+|  Dwight Howard|  Los Angeles Lakers|       C| 12/8/85| 5603850|
+|   Nikola Jokic|      Denver Nuggets|       C| 2/19/95|27504630|
+|  Chris Boucher|     Toronto Raptors|      PF| 1/11/93| 1588231|
+|  Marcus Morris|     New York Knicks|      PF|  9/2/89|15000000|
++---------------+--------------------+--------+--------+--------+
+only showing top 20 rows
+</code></pre>
+</div>
+</div>
+</section>
+<section id="summarizing-data" class="level3">
+<h3 class="anchored" data-anchor-id="summarizing-data">Summarizing Data <br></h3>
+<ul>
+<li><code>df.printSchema()</code> prints column names and data types <br>
+<ul>
+<li>the argument, nullable = True allows columns with a null value to print</li>
+</ul></li>
+<li><code>df.columns</code> prints list of columns <br></li>
+<li><code>df.dtypes</code> returns a list of tuples containing the column name and data type <br></li>
+<li><code>df.count()</code> prints the total number of rows <br></li>
+<li><code>df.describe()</code> prints summary statistics for each column <br></li>
+</ul>
+</section>
+<section id="displaying-data" class="level3">
+<h3 class="anchored" data-anchor-id="displaying-data">Displaying Data <br></h3>
+<ul>
+<li><code>df.show()</code>: default shows the first 20 rows <br>
+<ul>
+<li>arguments: <br></li>
+</ul>
+<ol type="1">
+<li>n = : number of rows to display <br></li>
+<li>truncate = : either boolean value, or a number specifying how many characters to keep <br></li>
+<li>vertical = : boolean value; if True, each row is displayed vertically <br></li>
+</ol></li>
+</ul>
+</section>
+<section id="selecting-columns" class="level3">
+<h3 class="anchored" data-anchor-id="selecting-columns">Selecting Columns <br></h3>
+<p>Selecting one column:</p>
+<div id="cell-8" class="cell" data-outputid="2b073acf-27fc-40c1-b48d-33e6a599d5b9">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df.select(<span class="st">"Name"</span>).show(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>+--------------+
+|          Name|
++--------------+
+|  Shake Milton|
+|Christian Wood|
+| PJ Washington|
+|  Derrick Rose|
+| Marial Shayok|
++--------------+
+only showing top 5 rows
+</code></pre>
+</div>
+</div>
+<p>Selecting multiple columns:</p>
+<div id="cell-10" class="cell" data-outputid="d0374576-0568-4dcb-aa20-4716fce53bf3">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df.select(<span class="st">"Name"</span>, <span class="st">"Team"</span>, <span class="st">"Salary"</span>).show(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>+--------------+------------------+-------+
+|          Name|              Team| Salary|
++--------------+------------------+-------+
+|  Shake Milton|Philadelphia 76ers|1445697|
+|Christian Wood|   Detroit Pistons|1645357|
+| PJ Washington| Charlotte Hornets|3831840|
+|  Derrick Rose|   Detroit Pistons|7317074|
+| Marial Shayok|Philadelphia 76ers|  79568|
++--------------+------------------+-------+
+only showing top 5 rows
+</code></pre>
+</div>
+</div>
+</section>
+<section id="counting-methods" class="level3">
+<h3 class="anchored" data-anchor-id="counting-methods">Counting Methods <br></h3>
+<p>Like previously mentioned, you can use <code>df.count()</code> for a count of the entire DataFrame. You can also count specific columns. Here are two ways to do this: <br></p>
+<div id="cell-12" class="cell" data-outputid="8e05e84d-5b39-4eae-a578-928b3f9d052a">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> countDistinct</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>num_teams <span class="op">=</span> df.select(countDistinct(<span class="st">"Team"</span>)).collect()[<span class="dv">0</span>][<span class="dv">0</span>]</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>num_teams</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>30</code></pre>
+</div>
+</div>
+<p>This code shows the number of observations of the unique values in the Team column.</p>
+<div id="cell-14" class="cell" data-outputid="7868f33c-5c4e-4011-f7d6-fe408022c6ad">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df.groupBy(<span class="st">"Team"</span>).count().show(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>+--------------------+-----+
+|                Team|count|
++--------------------+-----+
+|        Phoenix Suns|   15|
+|      Boston Celtics|   16|
+|    Dallas Mavericks|   13|
+|New Orleans Pelicans|   16|
+|       Brooklyn Nets|   17|
++--------------------+-----+
+only showing top 5 rows
+</code></pre>
+</div>
+</div>
+<p>This code shows how many times each unique value in Team occurrs. <br></p>
+</section>
+<section id="sorting" class="level3">
+<h3 class="anchored" data-anchor-id="sorting">Sorting <br></h3>
+<ul>
+<li><code>df.orderBy()</code> sorts values by a variable given. It can be given ascending/descending intstructions. Sorting by multiple columns requires the use of a list.</li>
+</ul>
+<div id="cell-16" class="cell" data-outputid="4e539a96-a48c-4f3c-a097-dda9572ab350">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df.orderBy(<span class="st">"Name"</span>).show(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>+-----------------+--------------------+--------+--------+--------+
+|             Name|                Team|Position|Birthday|  Salary|
++-----------------+--------------------+--------+--------+--------+
+|     Aaron Gordon|       Orlando Magic|      PF| 9/16/95|19863636|
+|    Aaron Holiday|      Indiana Pacers|      PG| 9/30/96| 2239200|
+|      Abdel Nader|Oklahoma City Thu...|      SF| 9/25/93| 1618520|
+|      Adam Mokoka|       Chicago Bulls|       G| 7/18/98|   79568|
+|Admiral Schofield|  Washington Wizards|      SF| 3/30/97| 1000000|
++-----------------+--------------------+--------+--------+--------+
+only showing top 5 rows
+</code></pre>
+</div>
+</div>
+<p>The default sorting is ascending.</p>
+<div id="cell-18" class="cell" data-outputid="03f1257c-6f84-42fb-c290-51a044f2ea09">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> desc</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>df.orderBy(desc(<span class="st">"Salary"</span>)).show(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>+-----------------+--------------------+--------+--------+--------+
+|             Name|                Team|Position|Birthday|  Salary|
++-----------------+--------------------+--------+--------+--------+
+|    Stephen Curry|Golden State Warr...|      PG| 3/14/88|40231758|
+|Russell Westbrook|     Houston Rockets|      PG|11/12/88|38506482|
+|       Chris Paul|Oklahoma City Thu...|      PG|  5/6/85|38506482|
+|        John Wall|  Washington Wizards|      PG|  9/6/90|38199000|
+|     James Harden|     Houston Rockets|      PG| 8/26/89|38199000|
++-----------------+--------------------+--------+--------+--------+
+only showing top 5 rows
+</code></pre>
+</div>
+</div>
+<div id="cell-19" class="cell" data-outputid="e9788715-68cd-4e24-93b1-9f84cfd9e567">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df.orderBy([<span class="st">"Team"</span>, desc(<span class="st">"Salary"</span>)]).show(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>+----------------+-------------+--------+--------+--------+
+|            Name|         Team|Position|Birthday|  Salary|
++----------------+-------------+--------+--------+--------+
+|Chandler Parsons|Atlanta Hawks|      SF|10/25/88|25102512|
+|     Evan Turner|Atlanta Hawks|      PG|10/27/88|18606556|
+|    Allen Crabbe|Atlanta Hawks|      SG|  4/9/92|18500000|
+| De'Andre Hunter|Atlanta Hawks|      SF| 12/2/97| 7068360|
+|   Jabari Parker|Atlanta Hawks|      PF| 3/15/95| 6500000|
++----------------+-------------+--------+--------+--------+
+only showing top 5 rows
+</code></pre>
+</div>
+</div>
+<ul>
+<li><code>nsmallest</code> and <code>nlargest</code> are not functions in PySpark, but there is an equivalent way to do it:</li>
+</ul>
+<div id="cell-21" class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># nsmallest example:</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>df.orderBy(<span class="st">"Salary"</span>).limit(<span class="dv">5</span>).show()</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># nlargest example:</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>df.orderBy(desc(<span class="st">"Salary"</span>)).limit(<span class="dv">5</span>).show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="row-based-access" class="level3">
+<h3 class="anchored" data-anchor-id="row-based-access">Row-Based Access <br></h3>
+<p>PySpark does not use row indexing, so you have to use other ways to access rows: <br> 1. <code>df.limit()</code> or <code>df.take()</code> takes an integer and returns a list of the number of rows <br> 2. <code>df.collect()</code> returns all the reconds as a list of rows <br> Here is an example:</p>
+<div id="cell-23" class="cell" data-outputid="1c99d1a1-9a5b-4d61-9b61-1ea240612dbe">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>df.<span class="bu">filter</span>(<span class="st">"Team == 'New York Knicks'"</span>).show()</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>df.limit(<span class="dv">5</span>).show()</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>df.take(<span class="dv">5</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>df.collect()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>+-----------------+---------------+--------+--------+--------+
+|             Name|           Team|Position|Birthday|  Salary|
++-----------------+---------------+--------+--------+--------+
+|    Marcus Morris|New York Knicks|      PF|  9/2/89|15000000|
+|   Damyean Dotson|New York Knicks|      SG|  5/6/94| 1618520|
+| Ignas Brazdeikis|New York Knicks|      SF|  1/8/99|  898310|
+|        Ivan Rabb|New York Knicks|      PF|  2/4/97|   79568|
+|       Kevin Knox|New York Knicks|      PF| 8/11/99| 4380120|
+|    Julius Randle|New York Knicks|       C|11/29/94|18000000|
+|Mitchell Robinson|New York Knicks|       C|  4/1/98| 1559712|
+|  Wayne Ellington|New York Knicks|      SG|11/29/87| 8000000|
+|       RJ Barrett|New York Knicks|      SG| 6/14/00| 7839960|
+|    Elfrid Payton|New York Knicks|      PG| 2/22/94| 8000000|
+|    Allonzo Trier|New York Knicks|      PG| 1/17/96| 3551100|
+|   Reggie Bullock|New York Knicks|      SF| 3/16/91| 4000000|
+|     Bobby Portis|New York Knicks|       C| 2/10/95|15000000|
+|       Taj Gibson|New York Knicks|       C| 6/24/85| 9000000|
+|  Frank Ntilikina|New York Knicks|      PG| 7/28/98| 4855800|
+|     Kadeem Allen|New York Knicks|      PG| 1/15/93|   79568|
++-----------------+---------------+--------+--------+--------+
+
++--------------+------------------+--------+--------+-------+
+|          Name|              Team|Position|Birthday| Salary|
++--------------+------------------+--------+--------+-------+
+|  Shake Milton|Philadelphia 76ers|      SG| 9/26/96|1445697|
+|Christian Wood|   Detroit Pistons|      PF| 9/27/95|1645357|
+| PJ Washington| Charlotte Hornets|      PF| 8/23/98|3831840|
+|  Derrick Rose|   Detroit Pistons|      PG| 10/4/88|7317074|
+| Marial Shayok|Philadelphia 76ers|       G| 7/26/95|  79568|
++--------------+------------------+--------+--------+-------+
+</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<pre><code>[Row(Name='Shake Milton', Team='Philadelphia 76ers', Position='SG', Birthday='9/26/96', Salary=1445697),
+ Row(Name='Christian Wood', Team='Detroit Pistons', Position='PF', Birthday='9/27/95', Salary=1645357),
+ Row(Name='PJ Washington', Team='Charlotte Hornets', Position='PF', Birthday='8/23/98', Salary=3831840),
+ Row(Name='Derrick Rose', Team='Detroit Pistons', Position='PG', Birthday='10/4/88', Salary=7317074),
+ Row(Name='Marial Shayok', Team='Philadelphia 76ers', Position='G', Birthday='7/26/95', Salary=79568),
+ Row(Name='Draymond Green', Team='Golden State Warriors', Position='PF', Birthday='3/4/90', Salary=18539130),
+ Row(Name='Kendrick Nunn', Team='Miami Heat', Position='SG', Birthday='8/3/95', Salary=1416852),
+ Row(Name='Cedi Osman', Team='Cleveland Cavaliers', Position='SF', Birthday='4/8/95', Salary=2907143),
+ Row(Name='Brook Lopez', Team='Milwaukee Bucks', Position='C', Birthday='4/1/88', Salary=12093024),
+ Row(Name='Torrey Craig', Team='Denver Nuggets', Position='SF', Birthday='12/19/90', Salary=2000000),
+ Row(Name='Jordan Clarkson', Team='Cleveland Cavaliers', Position='PG', Birthday='6/7/92', Salary=13437500),
+ Row(Name='Alex Caruso', Team='Los Angeles Lakers', Position='PG', Birthday='2/28/94', Salary=2750000),
+ Row(Name='Norvel Pelle', Team='Philadelphia 76ers', Position='FC', Birthday='2/3/93', Salary=79568),
+ Row(Name='Tyler Johnson', Team='Phoenix Suns', Position='PG', Birthday='5/7/92', Salary=19245370),
+ Row(Name='Alec Burks', Team='Golden State Warriors', Position='SG', Birthday='7/20/91', Salary=2320044),
+ Row(Name='JaMychal Green', Team='Los Angeles Clippers', Position='PF', Birthday='6/21/90', Salary=4767000),
+ Row(Name='Dwight Howard', Team='Los Angeles Lakers', Position='C', Birthday='12/8/85', Salary=5603850),
+ Row(Name='Nikola Jokic', Team='Denver Nuggets', Position='C', Birthday='2/19/95', Salary=27504630),
+ Row(Name='Chris Boucher', Team='Toronto Raptors', Position='PF', Birthday='1/11/93', Salary=1588231),
+ Row(Name='Marcus Morris', Team='New York Knicks', Position='PF', Birthday='9/2/89', Salary=15000000),
+ Row(Name='Kevin Huerter', Team='Atlanta Hawks', Position='SG', Birthday='8/27/98', Salary=2636280),
+ Row(Name='Rui Hachimura', Team='Washington Wizards', Position='PF', Birthday='2/8/98', Salary=4469160),
+ Row(Name='George Hill', Team='Milwaukee Bucks', Position='PG', Birthday='5/4/86', Salary=10133907),
+ Row(Name='Nickeil Alexander-Walker', Team='New Orleans Pelicans', Position='SG', Birthday='9/2/98', Salary=2964840),
+ Row(Name='Jaylen Hoard', Team='Portland Trail Blazers', Position='SF', Birthday='3/30/99', Salary=79568),
+ Row(Name='Tyler Cook', Team='Cleveland Cavaliers', Position='PF', Birthday='9/23/97', Salary=79568),
+ Row(Name='Otto Porter', Team='Chicago Bulls', Position='SF', Birthday='6/3/93', Salary=27250576),
+ Row(Name='Langston Galloway', Team='Detroit Pistons', Position='PG', Birthday='12/9/91', Salary=7333333),
+ Row(Name='Evan Turner', Team='Atlanta Hawks', Position='PG', Birthday='10/27/88', Salary=18606556),
+ Row(Name='Norman Powell', Team='Toronto Raptors', Position='SG', Birthday='5/25/93', Salary=10116576),
+ Row(Name='Nicolas Claxton', Team='Brooklyn Nets', Position='PF', Birthday='4/17/99', Salary=898310),
+ Row(Name='Michael Frazier', Team='Houston Rockets', Position='G', Birthday='3/8/94', Salary=79568),
+ Row(Name='Paul Millsap', Team='Denver Nuggets', Position='PF', Birthday='2/10/85', Salary=30000000),
+ Row(Name='Furkan Korkmaz', Team='Philadelphia 76ers', Position='SG', Birthday='7/24/97', Salary=1620564),
+ Row(Name='Trey Burke', Team='Philadelphia 76ers', Position='PG', Birthday='11/12/92', Salary=2028594),
+ Row(Name='Bradley Beal', Team='Washington Wizards', Position='SG', Birthday='6/28/93', Salary=27093018),
+ Row(Name='Thomas Bryant', Team='Washington Wizards', Position='C', Birthday='7/31/97', Salary=8000000),
+ Row(Name='Dean Wade', Team='Cleveland Cavaliers', Position='PF', Birthday='11/20/96', Salary=79568),
+ Row(Name='Chris Paul', Team='Oklahoma City Thunder', Position='PG', Birthday='5/6/85', Salary=38506482),
+ Row(Name='Josh Hart', Team='New Orleans Pelicans', Position='SF', Birthday='3/6/95', Salary=1934160),
+ Row(Name='LaMarcus Aldridge', Team='San Antonio Spurs', Position='C', Birthday='7/19/85', Salary=26000000),
+ Row(Name='DaQuan Jeffries', Team='Sacramento Kings', Position='SG', Birthday='8/30/97', Salary=898310),
+ Row(Name='Hamidou Diallo', Team='Oklahoma City Thunder', Position='SF', Birthday='7/31/98', Salary=1416852),
+ Row(Name='Jamal Murray', Team='Denver Nuggets', Position='PG', Birthday='2/23/97', Salary=4444746),
+ Row(Name='Darius Bazley', Team='Oklahoma City Thunder', Position='PF', Birthday='6/12/00', Salary=2284800),
+ Row(Name='Robert Franks', Team='Charlotte Hornets', Position='F', Birthday='12/18/96', Salary=79568),
+ Row(Name='Gerald Green', Team='Houston Rockets', Position='SF', Birthday='1/26/86', Salary=2564753),
+ Row(Name='Thaddeus Young', Team='Chicago Bulls', Position='PF', Birthday='6/21/88', Salary=12900000),
+ Row(Name='Sviatoslav Mykhailiuk', Team='Detroit Pistons', Position='SF', Birthday='6/10/97', Salary=1416852),
+ Row(Name='Ian Mahinmi', Team='Washington Wizards', Position='C', Birthday='11/5/86', Salary=15450051),
+ Row(Name='Deonte Burton', Team='Oklahoma City Thunder', Position='SG', Birthday='1/31/94', Salary=1416852),
+ Row(Name='Markelle Fultz', Team='Orlando Magic', Position='PG', Birthday='5/29/98', Salary=9745200),
+ Row(Name='Aaron Gordon', Team='Orlando Magic', Position='PF', Birthday='9/16/95', Salary=19863636),
+ Row(Name='Dzanan Musa', Team='Brooklyn Nets', Position='SF', Birthday='5/8/99', Salary=1911600),
+ Row(Name='Patrick McCaw', Team='Toronto Raptors', Position='SF', Birthday='10/25/95', Salary=4000000),
+ Row(Name='Bismack Biyombo', Team='Charlotte Hornets', Position='C', Birthday='8/28/92', Salary=17000000),
+ Row(Name='JaVale McGee', Team='Los Angeles Lakers', Position='C', Birthday='1/19/88', Salary=4000000),
+ Row(Name='Juwan Morgan', Team='Utah Jazz', Position='F', Birthday='4/17/97', Salary=796806),
+ Row(Name='Marc Gasol', Team='Toronto Raptors', Position='C', Birthday='1/29/85', Salary=25595700),
+ Row(Name='Marcus Smart', Team='Boston Celtics', Position='PG', Birthday='3/6/94', Salary=12553571),
+ Row(Name='Rudy Gobert', Team='Utah Jazz', Position='C', Birthday='6/26/92', Salary=24258427),
+ Row(Name='Wesley Iwundu', Team='Orlando Magic', Position='SF', Birthday='12/20/94', Salary=1618520),
+ Row(Name='Dwight Powell', Team='Dallas Mavericks', Position='C', Birthday='7/20/91', Salary=10259375),
+ Row(Name='Goran Dragic', Team='Miami Heat', Position='PG', Birthday='5/6/86', Salary=19217900),
+ Row(Name='Theo Pinson', Team='Brooklyn Nets', Position='SG', Birthday='11/5/95', Salary=1445697),
+ Row(Name='Danilo Gallinari', Team='Oklahoma City Thunder', Position='PF', Birthday='8/8/88', Salary=22615559),
+ Row(Name='Joe Ingles', Team='Utah Jazz', Position='PF', Birthday='10/2/87', Salary=11454546),
+ Row(Name='Jarrett Culver', Team='Minnesota Timberwolves', Position='SG', Birthday='2/20/99', Salary=5813640),
+ Row(Name='Robert Covington', Team='Minnesota Timberwolves', Position='PF', Birthday='12/14/90', Salary=11301219),
+ Row(Name='Damyean Dotson', Team='New York Knicks', Position='SG', Birthday='5/6/94', Salary=1618520),
+ Row(Name='Patrick Beverley', Team='Los Angeles Clippers', Position='PG', Birthday='7/12/88', Salary=12345680),
+ Row(Name='Kevin Love', Team='Cleveland Cavaliers', Position='C', Birthday='9/7/88', Salary=28942830),
+ Row(Name='Quinn Cook', Team='Los Angeles Lakers', Position='PG', Birthday='3/23/93', Salary=3000000),
+ Row(Name='Justin Wright-Foreman', Team='Utah Jazz', Position='G', Birthday='10/27/97', Salary=79568),
+ Row(Name='Noah Vonleh', Team='Minnesota Timberwolves', Position='C', Birthday='8/24/95', Salary=2000000),
+ Row(Name='Tyus Jones', Team='Memphis Grizzlies', Position='PG', Birthday='5/10/96', Salary=9258000),
+ Row(Name='Dewayne Dedmon', Team='Sacramento Kings', Position='C', Birthday='8/12/89', Salary=13333334),
+ Row(Name='Malcolm Brogdon', Team='Indiana Pacers', Position='PG', Birthday='12/11/92', Salary=20000000),
+ Row(Name='Ben McLemore', Team='Houston Rockets', Position='SG', Birthday='2/11/93', Salary=2028594),
+ Row(Name='Wilson Chandler', Team='Brooklyn Nets', Position='PF', Birthday='5/10/87', Salary=2564753),
+ Row(Name='Isaac Bonga', Team='Washington Wizards', Position='PG', Birthday='11/8/99', Salary=1416852),
+ Row(Name='Adam Mokoka', Team='Chicago Bulls', Position='G', Birthday='7/18/98', Salary=79568),
+ Row(Name='Lonzo Ball', Team='New Orleans Pelicans', Position='PG', Birthday='10/27/97', Salary=8719320),
+ Row(Name='Jalen Brunson', Team='Dallas Mavericks', Position='PG', Birthday='8/31/96', Salary=1416852),
+ Row(Name='John Collins', Team='Atlanta Hawks', Position='PF', Birthday='9/23/97', Salary=2686560),
+ Row(Name='Marvin Williams', Team='Charlotte Hornets', Position='PF', Birthday='6/19/86', Salary=15006250),
+ Row(Name='Brad Wanamaker', Team='Boston Celtics', Position='PG', Birthday='7/25/89', Salary=1445697),
+ Row(Name='Donte DiVincenzo', Team='Milwaukee Bucks', Position='SG', Birthday='1/31/97', Salary=2905800),
+ Row(Name='Omari Spellman', Team='Golden State Warriors', Position='PF', Birthday='7/21/97', Salary=1897800),
+ Row(Name='Joe Harris', Team='Brooklyn Nets', Position='SF', Birthday='9/6/91', Salary=7666667),
+ Row(Name="Royce O'Neale", Team='Utah Jazz', Position='PF', Birthday='6/5/93', Salary=1618520),
+ Row(Name='Deandre Ayton', Team='Phoenix Suns', Position='C', Birthday='7/23/98', Salary=9562920),
+ Row(Name='Cory Joseph', Team='Sacramento Kings', Position='PG', Birthday='8/20/91', Salary=12000000),
+ Row(Name='Malcolm Miller', Team='Toronto Raptors', Position='SF', Birthday='3/6/93', Salary=1588231),
+ Row(Name='Justise Winslow', Team='Miami Heat', Position='PF', Birthday='3/26/96', Salary=13000000),
+ Row(Name='Kevin Durant', Team='Brooklyn Nets', Position='PF', Birthday='9/29/88', Salary=37199000),
+ Row(Name='Evan Fournier', Team='Orlando Magic', Position='SF', Birthday='10/29/92', Salary=17000000),
+ Row(Name='Chris Silva', Team='Miami Heat', Position='PF', Birthday='9/19/96', Salary=79568),
+ Row(Name='Vince Carter', Team='Atlanta Hawks', Position='PF', Birthday='1/26/77', Salary=2564753),
+ Row(Name='Cody Zeller', Team='Charlotte Hornets', Position='C', Birthday='10/5/92', Salary=14471910),
+ Row(Name='Brian Bowen', Team='Indiana Pacers', Position='SG', Birthday='10/2/98', Salary=79568),
+ Row(Name='Aaron Holiday', Team='Indiana Pacers', Position='PG', Birthday='9/30/96', Salary=2239200),
+ Row(Name='Troy Daniels', Team='Los Angeles Lakers', Position='SG', Birthday='7/15/91', Salary=2028594),
+ Row(Name='Buddy Hield', Team='Sacramento Kings', Position='SG', Birthday='12/17/92', Salary=4861207),
+ Row(Name='Terance Mann', Team='Los Angeles Clippers', Position='SG', Birthday='10/18/96', Salary=1000000),
+ Row(Name='John Konchar', Team='Memphis Grizzlies', Position='SG', Birthday='3/22/96', Salary=79568),
+ Row(Name='KZ Okpala', Team='Miami Heat', Position='SF', Birthday='4/28/99', Salary=898310),
+ Row(Name='Denzel Valentine', Team='Chicago Bulls', Position='SF', Birthday='11/16/93', Salary=3377568),
+ Row(Name='Marquese Chriss', Team='Golden State Warriors', Position='PF', Birthday='7/2/97', Salary=1678854),
+ Row(Name='Anthony Davis', Team='Los Angeles Lakers', Position='C', Birthday='3/11/93', Salary=27093019),
+ Row(Name='Nemanja Bjelica', Team='Sacramento Kings', Position='PF', Birthday='5/9/88', Salary=6825000),
+ Row(Name='Chandler Parsons', Team='Atlanta Hawks', Position='SF', Birthday='10/25/88', Salary=25102512),
+ Row(Name='Courtney Lee', Team='Dallas Mavericks', Position='SG', Birthday='10/3/85', Salary=12759670),
+ Row(Name='Myles Turner', Team='Indiana Pacers', Position='C', Birthday='3/24/96', Salary=18000000),
+ Row(Name="Kyle O'Quinn", Team='Philadelphia 76ers', Position='C', Birthday='3/26/90', Salary=2174318),
+ Row(Name='Bryn Forbes', Team='San Antonio Spurs', Position='SG', Birthday='7/23/93', Salary=2875000),
+ Row(Name='Duncan Robinson', Team='Miami Heat', Position='PF', Birthday='4/22/94', Salary=1416852),
+ Row(Name='Devin Booker', Team='Phoenix Suns', Position='SG', Birthday='10/30/96', Salary=27285000),
+ Row(Name='Grant Williams', Team='Boston Celtics', Position='PF', Birthday='11/30/98', Salary=2379840),
+ Row(Name='DeMarcus Cousins', Team='Los Angeles Lakers', Position='C', Birthday='8/13/90', Salary=3500000),
+ Row(Name='DeMar DeRozan', Team='San Antonio Spurs', Position='SF', Birthday='8/7/89', Salary=27739975),
+ Row(Name='Kristaps Porzingis', Team='Dallas Mavericks', Position='PF', Birthday='8/2/95', Salary=27285000),
+ Row(Name='Brandon Knight', Team='Cleveland Cavaliers', Position='PG', Birthday='12/2/91', Salary=15643750),
+ Row(Name='Thabo Sefolosha', Team='Houston Rockets', Position='PF', Birthday='5/2/84', Salary=2564753),
+ Row(Name='David Nwaba', Team='Brooklyn Nets', Position='SF', Birthday='1/14/93', Salary=1678854),
+ Row(Name='Quinndary Weatherspoon', Team='San Antonio Spurs', Position='G', Birthday='9/10/96', Salary=79568),
+ Row(Name='Dewan Hernandez', Team='Toronto Raptors', Position='C', Birthday='12/9/96', Salary=898310),
+ Row(Name='Isaiah Thomas', Team='Washington Wizards', Position='PG', Birthday='2/7/89', Salary=2320044),
+ Row(Name='Bruce Brown', Team='Detroit Pistons', Position='SG', Birthday='8/15/96', Salary=1416852),
+ Row(Name='Keldon Johnson', Team='San Antonio Spurs', Position='SF', Birthday='10/11/99', Salary=1950600),
+ Row(Name='Damian Jones', Team='Atlanta Hawks', Position='C', Birthday='6/30/95', Salary=2305057),
+ Row(Name='Luguentz Dort', Team='Oklahoma City Thunder', Position='G', Birthday='4/19/99', Salary=79568),
+ Row(Name='Terence Davis', Team='Toronto Raptors', Position='SG', Birthday='5/16/97', Salary=898310),
+ Row(Name='Chandler Hutchison', Team='Chicago Bulls', Position='SF', Birthday='4/26/96', Salary=2332320),
+ Row(Name='Steven Adams', Team='Oklahoma City Thunder', Position='C', Birthday='7/20/93', Salary=25842697),
+ Row(Name='Jordan Poole', Team='Golden State Warriors', Position='SG', Birthday='6/19/99', Salary=1964760),
+ Row(Name='Sekou Doumbouya', Team='Detroit Pistons', Position='SF', Birthday='12/23/00', Salary=3285120),
+ Row(Name='Zion Williamson', Team='New Orleans Pelicans', Position='F', Birthday='7/6/00', Salary=9757440),
+ Row(Name='Mike Muscala', Team='Oklahoma City Thunder', Position='C', Birthday='7/1/91', Salary=2028594),
+ Row(Name='Skal Labissiere', Team='Portland Trail Blazers', Position='C', Birthday='3/18/96', Salary=2338846),
+ Row(Name='Meyers Leonard', Team='Miami Heat', Position='C', Birthday='2/27/92', Salary=11286515),
+ Row(Name='Reggie Jackson', Team='Detroit Pistons', Position='PG', Birthday='4/16/90', Salary=18086956),
+ Row(Name='Alfonzo McKinnie', Team='Cleveland Cavaliers', Position='SF', Birthday='9/17/92', Salary=1588231),
+ Row(Name='Yuta Watanabe', Team='Memphis Grizzlies', Position='SF', Birthday='10/13/94', Salary=79568),
+ Row(Name='Kentavious Caldwell-Pope', Team='Los Angeles Lakers', Position='SG', Birthday='2/18/93', Salary=8089282),
+ Row(Name='Kelan Martin', Team='Minnesota Timberwolves', Position='SF', Birthday='8/3/95', Salary=79568),
+ Row(Name='OG Anunoby', Team='Toronto Raptors', Position='SF', Birthday='7/17/97', Salary=2281800),
+ Row(Name='Tyler Herro', Team='Miami Heat', Position='SG', Birthday='1/20/00', Salary=3640200),
+ Row(Name='Richaun Holmes', Team='Sacramento Kings', Position='C', Birthday='10/15/93', Salary=4767000),
+ Row(Name='Tyson Chandler', Team='Houston Rockets', Position='C', Birthday='10/2/82', Salary=2564753),
+ Row(Name='Solomon Hill', Team='Memphis Grizzlies', Position='SF', Birthday='3/18/91', Salary=13290395),
+ Row(Name='Keita Bates-Diop', Team='Minnesota Timberwolves', Position='SF', Birthday='1/23/96', Salary=1416852),
+ Row(Name='Kelly Olynyk', Team='Miami Heat', Position='C', Birthday='4/19/91', Salary=12667885),
+ Row(Name='Jaxson Hayes', Team='New Orleans Pelicans', Position='C', Birthday='5/23/00', Salary=4862040),
+ Row(Name='CJ McCollum', Team='Portland Trail Blazers', Position='SG', Birthday='9/19/91', Salary=27556959),
+ Row(Name='Darius Miller', Team='New Orleans Pelicans', Position='SF', Birthday='3/21/90', Salary=7250000),
+ Row(Name='Luka Doncic', Team='Dallas Mavericks', Position='PG', Birthday='2/28/99', Salary=7683360),
+ Row(Name='DeMarre Carroll', Team='San Antonio Spurs', Position='PF', Birthday='7/27/86', Salary=7000000),
+ Row(Name='Cristiano Felicio', Team='Chicago Bulls', Position='C', Birthday='7/7/92', Salary=8156500),
+ Row(Name='Zach LaVine', Team='Chicago Bulls', Position='PG', Birthday='3/10/95', Salary=19500000),
+ Row(Name='Tremont Waters', Team='Boston Celtics', Position='PG', Birthday='1/10/98', Salary=79568),
+ Row(Name='Dejounte Murray', Team='San Antonio Spurs', Position='PG', Birthday='9/19/96', Salary=2321735),
+ Row(Name='Jerome Robinson', Team='Los Angeles Clippers', Position='SG', Birthday='2/22/97', Salary=3567720),
+ Row(Name='Rudy Gay', Team='San Antonio Spurs', Position='PF', Birthday='8/17/86', Salary=14500000),
+ Row(Name='Ryan Broekhoff', Team='Dallas Mavericks', Position='SG', Birthday='8/23/90', Salary=1416852),
+ Row(Name='Jake Layman', Team='Minnesota Timberwolves', Position='PF', Birthday='3/7/94', Salary=3581986),
+ Row(Name='Cameron Johnson', Team='Phoenix Suns', Position='PF', Birthday='3/3/96', Salary=4033440),
+ Row(Name='Allen Crabbe', Team='Atlanta Hawks', Position='SG', Birthday='4/9/92', Salary=18500000),
+ Row(Name='Justin James', Team='Sacramento Kings', Position='SG', Birthday='1/24/97', Salary=898310),
+ Row(Name='Emmanuel Mudiay', Team='Utah Jazz', Position='PG', Birthday='3/5/96', Salary=1737145),
+ Row(Name='Avery Bradley', Team='Los Angeles Lakers', Position='PG', Birthday='11/26/90', Salary=6767000),
+ Row(Name='Victor Oladipo', Team='Indiana Pacers', Position='PG', Birthday='5/4/92', Salary=21000000),
+ Row(Name='Caleb Martin', Team='Charlotte Hornets', Position='SF', Birthday='9/28/95', Salary=898310),
+ Row(Name='Coby White', Team='Chicago Bulls', Position='SG', Birthday='2/16/00', Salary=5307120),
+ Row(Name='Isaiah Hartenstein', Team='Houston Rockets', Position='C', Birthday='5/5/98', Salary=1416852),
+ Row(Name='Will Barton', Team='Denver Nuggets', Position='SF', Birthday='1/6/91', Salary=12776786),
+ Row(Name='Dwayne Bacon', Team='Charlotte Hornets', Position='SG', Birthday='8/30/95', Salary=1618520),
+ Row(Name='Harrison Barnes', Team='Sacramento Kings', Position='PF', Birthday='5/30/92', Salary=24147727),
+ Row(Name='Tim Frazier', Team='Detroit Pistons', Position='PG', Birthday='11/1/90', Salary=1620564),
+ Row(Name='Jimmy Butler', Team='Miami Heat', Position='SF', Birthday='9/14/89', Salary=32742000),
+ Row(Name='Gary Harris', Team='Denver Nuggets', Position='SG', Birthday='9/14/94', Salary=17839286),
+ Row(Name='Thon Maker', Team='Detroit Pistons', Position='C', Birthday='2/25/97', Salary=3569643),
+ Row(Name='Shai Gilgeous-Alexander', Team='Oklahoma City Thunder', Position='PG', Birthday='7/12/98', Salary=3952920),
+ Row(Name='Hassan Whiteside', Team='Portland Trail Blazers', Position='C', Birthday='6/13/89', Salary=27093018),
+ Row(Name='Karl-Anthony Towns', Team='Minnesota Timberwolves', Position='C', Birthday='11/15/95', Salary=27285000),
+ Row(Name='Ky Bowman', Team='Golden State Warriors', Position='PG', Birthday='6/16/97', Salary=79568),
+ Row(Name='Ben Simmons', Team='Philadelphia 76ers', Position='PG', Birthday='7/20/96', Salary=8113929),
+ Row(Name='Terrence Ross', Team='Orlando Magic', Position='SF', Birthday='2/5/91', Salary=12500000),
+ Row(Name='Jordan McLaughlin', Team='Minnesota Timberwolves', Position='PG', Birthday='4/9/96', Salary=79568),
+ Row(Name='Daniel Theis', Team='Boston Celtics', Position='C', Birthday='4/4/92', Salary=5000000),
+ Row(Name='Jonathan Isaac', Team='Orlando Magic', Position='PF', Birthday='10/3/97', Salary=5806440),
+ Row(Name='Cheick Diallo', Team='Phoenix Suns', Position='C', Birthday='9/13/96', Salary=1678854),
+ Row(Name='Serge Ibaka', Team='Toronto Raptors', Position='C', Birthday='9/18/89', Salary=23271604),
+ Row(Name='Amile Jefferson', Team='Orlando Magic', Position='PF', Birthday='5/7/93', Salary=1339515),
+ Row(Name='Cam Reddish', Team='Atlanta Hawks', Position='SF', Birthday='9/1/99', Salary=4245720),
+ Row(Name="De'Anthony Melton", Team='Memphis Grizzlies', Position='PG', Birthday='5/28/98', Salary=1416852),
+ Row(Name='Udonis Haslem', Team='Miami Heat', Position='C', Birthday='6/9/80', Salary=2564753),
+ Row(Name='Charlie Brown', Team='Atlanta Hawks', Position='SG', Birthday='2/2/97', Salary=79568),
+ Row(Name='Elie Okobo', Team='Phoenix Suns', Position='PG', Birthday='10/23/97', Salary=1416852),
+ Row(Name='Gordon Hayward', Team='Boston Celtics', Position='PF', Birthday='3/23/90', Salary=32700690),
+ Row(Name='Marco Belinelli', Team='San Antonio Spurs', Position='SF', Birthday='3/25/86', Salary=5846154),
+ Row(Name='Javonte Green', Team='Boston Celtics', Position='SF', Birthday='7/23/93', Salary=898310),
+ Row(Name='Rondae Hollis-Jefferson', Team='Toronto Raptors', Position='SF', Birthday='1/3/95', Salary=2500000),
+ Row(Name='Carmelo Anthony', Team='Portland Trail Blazers', Position='PF', Birthday='5/29/84', Salary=2159029),
+ Row(Name='Danny Green', Team='Los Angeles Lakers', Position='SG', Birthday='6/22/87', Salary=14634147),
+ Row(Name='Stephen Curry', Team='Golden State Warriors', Position='PG', Birthday='3/14/88', Salary=40231758),
+ Row(Name='Eric Paschall', Team='Golden State Warriors', Position='PF', Birthday='11/4/96', Salary=898310),
+ Row(Name='Daniel Gafford', Team='Chicago Bulls', Position='C', Birthday='10/1/98', Salary=898310),
+ Row(Name='Anfernee Simons', Team='Portland Trail Blazers', Position='SG', Birthday='6/8/99', Salary=2149560),
+ Row(Name='Frank Kaminsky', Team='Phoenix Suns', Position='C', Birthday='4/4/93', Salary=4767000),
+ Row(Name='Luke Kennard', Team='Detroit Pistons', Position='SG', Birthday='6/24/96', Salary=3827160),
+ Row(Name='Josh Okogie', Team='Minnesota Timberwolves', Position='SG', Birthday='9/1/98', Salary=2530680),
+ Row(Name='Rodney Hood', Team='Portland Trail Blazers', Position='SF', Birthday='10/20/92', Salary=5718000),
+ Row(Name="De'Andre Hunter", Team='Atlanta Hawks', Position='SF', Birthday='12/2/97', Salary=7068360),
+ Row(Name='Klay Thompson', Team='Golden State Warriors', Position='SG', Birthday='2/8/90', Salary=32742000),
+ Row(Name='Jrue Holiday', Team='New Orleans Pelicans', Position='PG', Birthday='6/12/90', Salary=26131111),
+ Row(Name='PJ Dozier', Team='Denver Nuggets', Position='PG', Birthday='10/25/96', Salary=79568),
+ Row(Name='Andre Drummond', Team='Detroit Pistons', Position='C', Birthday='8/10/93', Salary=27093018),
+ Row(Name='Jared Harper', Team='Phoenix Suns', Position='PG', Birthday='9/14/97', Salary=79568),
+ Row(Name='Russell Westbrook', Team='Houston Rockets', Position='PG', Birthday='11/12/88', Salary=38506482),
+ Row(Name='Tony Bradley', Team='Utah Jazz', Position='C', Birthday='1/8/98', Salary=1962360),
+ Row(Name='Oshae Brissett', Team='Toronto Raptors', Position='SF', Birthday='6/20/98', Salary=79568),
+ Row(Name='Gary Clark', Team='Houston Rockets', Position='PF', Birthday='11/16/94', Salary=1416852),
+ Row(Name='Pascal Siakam', Team='Toronto Raptors', Position='PF', Birthday='4/2/94', Salary=2351838),
+ Row(Name='Eric Bledsoe', Team='Milwaukee Bucks', Position='PG', Birthday='12/9/89', Salary=15625000),
+ Row(Name='Tomas Satoransky', Team='Chicago Bulls', Position='PG', Birthday='10/30/91', Salary=10000000),
+ Row(Name='Davis Bertans', Team='Washington Wizards', Position='PF', Birthday='11/12/92', Salary=7000000),
+ Row(Name='Amir Coffey', Team='Los Angeles Clippers', Position='G', Birthday='6/17/97', Salary=79568),
+ Row(Name='Ignas Brazdeikis', Team='New York Knicks', Position='SF', Birthday='1/8/99', Salary=898310),
+ Row(Name='Ivan Rabb', Team='New York Knicks', Position='PF', Birthday='2/4/97', Salary=79568),
+ Row(Name='Khris Middleton', Team='Milwaukee Bucks', Position='SF', Birthday='8/12/91', Salary=30603448),
+ Row(Name='Kevin Knox', Team='New York Knicks', Position='PF', Birthday='8/11/99', Salary=4380120),
+ Row(Name='Jeff Green', Team='Utah Jazz', Position='PF', Birthday='8/28/86', Salary=2564753),
+ Row(Name='Ersan Ilyasova', Team='Milwaukee Bucks', Position='PF', Birthday='5/15/87', Salary=7000000),
+ Row(Name='Caleb Swanigan', Team='Sacramento Kings', Position='PF', Birthday='4/18/97', Salary=2033160),
+ Row(Name='Al Horford', Team='Philadelphia 76ers', Position='C', Birthday='6/3/86', Salary=28000000),
+ Row(Name='Clint Capela', Team='Houston Rockets', Position='C', Birthday='5/18/94', Salary=16896552),
+ Row(Name='Georges Niang', Team='Utah Jazz', Position='PF', Birthday='6/17/93', Salary=1645357),
+ Row(Name='Wesley Matthews', Team='Milwaukee Bucks', Position='SF', Birthday='10/14/86', Salary=2564753),
+ Row(Name='Rajon Rondo', Team='Los Angeles Lakers', Position='PG', Birthday='2/22/86', Salary=2564753),
+ Row(Name='Delon Wright', Team='Dallas Mavericks', Position='PG', Birthday='4/26/92', Salary=9473684),
+ Row(Name='Ja Morant', Team='Memphis Grizzlies', Position='PG', Birthday='8/10/99', Salary=8730240),
+ Row(Name='Fred VanVleet', Team='Toronto Raptors', Position='PG', Birthday='2/25/94', Salary=9346153),
+ Row(Name='Brandon Clarke', Team='Memphis Grizzlies', Position='PF', Birthday='9/19/96', Salary=2478840),
+ Row(Name='Miye Oni', Team='Utah Jazz', Position='SG', Birthday='8/4/97', Salary=898310),
+ Row(Name='Julius Randle', Team='New York Knicks', Position='C', Birthday='11/29/94', Salary=18000000),
+ Row(Name='Glenn Robinson III', Team='Golden State Warriors', Position='SF', Birthday='1/8/94', Salary=1882867),
+ Row(Name='Dillon Brooks', Team='Memphis Grizzlies', Position='SF', Birthday='1/22/96', Salary=1618520),
+ Row(Name='Zylan Cheatham', Team='New Orleans Pelicans', Position='SF', Birthday='11/17/95', Salary=79568),
+ Row(Name='Markieff Morris', Team='Detroit Pistons', Position='PF', Birthday='9/2/89', Salary=3200000),
+ Row(Name='Malik Beasley', Team='Denver Nuggets', Position='SG', Birthday='11/26/96', Salary=2731713),
+ Row(Name='John Wall', Team='Washington Wizards', Position='PG', Birthday='9/6/90', Salary=38199000),
+ Row(Name='Vlatko Cancar', Team='Denver Nuggets', Position='SF', Birthday='4/10/97', Salary=898310),
+ Row(Name='Alize Johnson', Team='Indiana Pacers', Position='PF', Birthday='4/22/96', Salary=1416852),
+ Row(Name='Andrew Wiggins', Team='Minnesota Timberwolves', Position='SF', Birthday='2/23/95', Salary=27504630),
+ Row(Name='Khyri Thomas', Team='Detroit Pistons', Position='SG', Birthday='5/8/96', Salary=1416852),
+ Row(Name='Mitchell Robinson', Team='New York Knicks', Position='C', Birthday='4/1/98', Salary=1559712),
+ Row(Name='Damian Lillard', Team='Portland Trail Blazers', Position='PG', Birthday='7/15/90', Salary=29802321),
+ Row(Name='Nassir Little', Team='Portland Trail Blazers', Position='PF', Birthday='2/11/00', Salary=2105520),
+ Row(Name='Mikal Bridges', Team='Phoenix Suns', Position='SF', Birthday='8/30/96', Salary=4161000),
+ Row(Name='Kyle Anderson', Team='Memphis Grizzlies', Position='PF', Birthday='9/20/93', Salary=9073050),
+ Row(Name='Garrett Temple', Team='Brooklyn Nets', Position='PG', Birthday='5/8/86', Salary=4767000),
+ Row(Name='Kyle Korver', Team='Milwaukee Bucks', Position='PF', Birthday='3/17/81', Salary=6004753),
+ Row(Name='Al-Farouq Aminu', Team='Orlando Magic', Position='PF', Birthday='9/21/90', Salary=9258000),
+ Row(Name='James Harden', Team='Houston Rockets', Position='PG', Birthday='8/26/89', Salary=38199000),
+ Row(Name='Derrick White', Team='San Antonio Spurs', Position='PG', Birthday='7/2/94', Salary=1948080),
+ Row(Name='JaKarr Sampson', Team='Indiana Pacers', Position='SF', Birthday='3/20/93', Salary=1737145),
+ Row(Name='Dario Saric', Team='Phoenix Suns', Position='PF', Birthday='4/8/94', Salary=3481985),
+ Row(Name='Ivica Zubac', Team='Los Angeles Clippers', Position='C', Birthday='3/18/97', Salary=6481482),
+ Row(Name='Juan Hernangomez', Team='Denver Nuggets', Position='PF', Birthday='9/28/95', Salary=3321029),
+ Row(Name='Jarrell Brantley', Team='Utah Jazz', Position='PF', Birthday='6/7/96', Salary=79568),
+ Row(Name='Eric Gordon', Team='Houston Rockets', Position='PG', Birthday='12/25/88', Salary=14057730),
+ Row(Name='Naz Reid', Team='Minnesota Timberwolves', Position='F', Birthday='8/26/99', Salary=898310),
+ Row(Name='Justin Robinson', Team='Washington Wizards', Position='PG', Birthday='10/12/97', Salary=898310),
+ Row(Name='Grayson Allen', Team='Memphis Grizzlies', Position='SG', Birthday='10/8/95', Salary=2429400),
+ Row(Name='Trevor Ariza', Team='Sacramento Kings', Position='SF', Birthday='6/30/85', Salary=12200000),
+ Row(Name='Brandon Goodwin', Team='Atlanta Hawks', Position='PG', Birthday='10/2/95', Salary=79568),
+ Row(Name="E'Twaun Moore", Team='New Orleans Pelicans', Position='PG', Birthday='2/25/89', Salary=8664928),
+ Row(Name='Mario Hezonja', Team='Portland Trail Blazers', Position='PF', Birthday='2/25/95', Salary=1737145),
+ Row(Name='Henry Ellenson', Team='Brooklyn Nets', Position='PF', Birthday='1/13/97', Salary=79568),
+ Row(Name='Johnathan Motley', Team='Los Angeles Clippers', Position='PF', Birthday='5/4/95', Salary=79568),
+ Row(Name='James Ennis', Team='Philadelphia 76ers', Position='SF', Birthday='7/1/90', Salary=1882867),
+ Row(Name='Andre Roberson', Team='Oklahoma City Thunder', Position='SF', Birthday='12/4/91', Salary=10740740),
+ Row(Name='Garrison Mathews', Team='Washington Wizards', Position='SG', Birthday='10/24/96', Salary=79568),
+ Row(Name='Jahlil Okafor', Team='New Orleans Pelicans', Position='C', Birthday='12/15/95', Salary=1702486),
+ Row(Name='Mfiondu Kabengele', Team='Los Angeles Clippers', Position='C', Birthday='8/14/97', Salary=1977000),
+ Row(Name='Treveon Graham', Team='Minnesota Timberwolves', Position='SG', Birthday='10/28/93', Salary=1645357),
+ Row(Name='Seth Curry', Team='Dallas Mavericks', Position='PG', Birthday='8/23/90', Salary=7461380),
+ Row(Name="D'Angelo Russell", Team='Golden State Warriors', Position='PG', Birthday='2/23/96', Salary=27285000),
+ Row(Name='Justin Holiday', Team='Indiana Pacers', Position='SG', Birthday='4/5/89', Salary=4767000),
+ Row(Name='Tyrone Wallace', Team='Atlanta Hawks', Position='PG', Birthday='6/10/94', Salary=1620564),
+ Row(Name='Miles Bridges', Team='Charlotte Hornets', Position='SF', Birthday='3/21/98', Salary=3755400),
+ Row(Name='Bogdan Bogdanovic', Team='Sacramento Kings', Position='SG', Birthday='8/18/92', Salary=8529386),
+ Row(Name='Matt Thomas', Team='Toronto Raptors', Position='SG', Birthday='8/4/94', Salary=898310),
+ Row(Name='Jordan Bell', Team='Minnesota Timberwolves', Position='C', Birthday='1/7/95', Salary=1620564),
+ Row(Name='Wenyen Gabriel', Team='Sacramento Kings', Position='PF', Birthday='3/26/97', Salary=79568),
+ Row(Name='Tony Snell', Team='Detroit Pistons', Position='SF', Birthday='11/10/91', Salary=11392857),
+ Row(Name='Shaquille Harrison', Team='Chicago Bulls', Position='PG', Birthday='10/6/93', Salary=1620564),
+ Row(Name='Yogi Ferrell', Team='Sacramento Kings', Position='PG', Birthday='5/9/93', Salary=3150000),
+ Row(Name='Mike Scott', Team='Philadelphia 76ers', Position='PF', Birthday='7/16/88', Salary=4767000),
+ Row(Name='Jarred Vanderbilt', Team='Denver Nuggets', Position='PF', Birthday='4/3/99', Salary=1416852),
+ Row(Name='Jeff Teague', Team='Minnesota Timberwolves', Position='PG', Birthday='6/10/88', Salary=19000000),
+ Row(Name='Zach Norvell', Team='Los Angeles Lakers', Position='SG', Birthday='12/9/97', Salary=79568),
+ Row(Name='Maxi Kleber', Team='Dallas Mavericks', Position='C', Birthday='1/29/92', Salary=8000000),
+ Row(Name='Matisse Thybulle', Team='Philadelphia 76ers', Position='SG', Birthday='3/4/97', Salary=2582160),
+ Row(Name='Ryan Arcidiacono', Team='Chicago Bulls', Position='PG', Birthday='3/26/94', Salary=3000000),
+ Row(Name='Wayne Ellington', Team='New York Knicks', Position='SG', Birthday='11/29/87', Salary=8000000),
+ Row(Name='Kawhi Leonard', Team='Los Angeles Clippers', Position='SF', Birthday='6/29/91', Salary=32742000),
+ Row(Name='Montrezl Harrell', Team='Los Angeles Clippers', Position='C', Birthday='1/26/94', Salary=6000000),
+ Row(Name='Jusuf Nurkic', Team='Portland Trail Blazers', Position='C', Birthday='8/23/94', Salary=12000000),
+ Row(Name='Matthew Dellavedova', Team='Cleveland Cavaliers', Position='PG', Birthday='9/8/90', Salary=9607500),
+ Row(Name='Cody Martin', Team='Charlotte Hornets', Position='SF', Birthday='9/28/95', Salary=1173310),
+ Row(Name='Zhaire Smith', Team='Philadelphia 76ers', Position='SG', Birthday='6/4/99', Salary=3058800),
+ Row(Name='RJ Barrett', Team='New York Knicks', Position='SG', Birthday='6/14/00', Salary=7839960),
+ Row(Name='Lonnie Walker', Team='San Antonio Spurs', Position='SG', Birthday='12/14/98', Salary=2764200),
+ Row(Name='Taurean Prince', Team='Brooklyn Nets', Position='SF', Birthday='3/22/94', Salary=3481985),
+ Row(Name='Elfrid Payton', Team='New York Knicks', Position='PG', Birthday='2/22/94', Salary=8000000),
+ Row(Name='Blake Griffin', Team='Detroit Pistons', Position='PF', Birthday='3/16/89', Salary=34449964),
+ Row(Name='Marko Guduric', Team='Memphis Grizzlies', Position='SG', Birthday='3/8/95', Salary=2625000),
+ Row(Name='Zach Collins', Team='Portland Trail Blazers', Position='C', Birthday='11/19/97', Salary=4240200),
+ Row(Name='Stanley Johnson', Team='Toronto Raptors', Position='PF', Birthday='5/29/96', Salary=3623000),
+ Row(Name='Boban Marjanovic', Team='Dallas Mavericks', Position='C', Birthday='8/15/88', Salary=3500000),
+ Row(Name='Josh Magette', Team='Orlando Magic', Position='PG', Birthday='11/28/89', Salary=79568),
+ Row(Name='Kyle Lowry', Team='Toronto Raptors', Position='PG', Birthday='3/25/86', Salary=33296296),
+ Row(Name='Darius Garland', Team='Cleveland Cavaliers', Position='PG', Birthday='1/26/00', Salary=6400920),
+ Row(Name='Frank Jackson', Team='New Orleans Pelicans', Position='PG', Birthday='5/4/98', Salary=1618520),
+ Row(Name='Dragan Bender', Team='Milwaukee Bucks', Position='PF', Birthday='11/17/97', Salary=1678854),
+ Row(Name='Kenrich Williams', Team='New Orleans Pelicans', Position='PF', Birthday='12/2/94', Salary=1416852),
+ Row(Name='Jerami Grant', Team='Denver Nuggets', Position='PF', Birthday='3/12/94', Salary=9346153),
+ Row(Name='Allonzo Trier', Team='New York Knicks', Position='PG', Birthday='1/17/96', Salary=3551100),
+ Row(Name='Pat Connaughton', Team='Milwaukee Bucks', Position='SG', Birthday='1/6/93', Salary=1723050),
+ Row(Name='Domantas Sabonis', Team='Indiana Pacers', Position='C', Birthday='5/3/96', Salary=3529554),
+ Row(Name='Dylan Windler', Team='Cleveland Cavaliers', Position='GF', Birthday='9/22/96', Salary=2035800),
+ Row(Name='Antonius Cleveland', Team='Dallas Mavericks', Position='SG', Birthday='2/2/94', Salary=79568),
+ Row(Name='Damion Lee', Team='Golden State Warriors', Position='SG', Birthday='10/21/92', Salary=79568),
+ Row(Name='Khem Birch', Team='Orlando Magic', Position='C', Birthday='9/28/92', Salary=3000000),
+ Row(Name='Aron Baynes', Team='Phoenix Suns', Position='C', Birthday='12/9/86', Salary=5453280),
+ Row(Name='Kemba Walker', Team='Boston Celtics', Position='PG', Birthday='5/8/90', Salary=32742000),
+ Row(Name='Nerlens Noel', Team='Oklahoma City Thunder', Position='C', Birthday='4/10/94', Salary=1882867),
+ Row(Name='Jabari Parker', Team='Atlanta Hawks', Position='PF', Birthday='3/15/95', Salary=6500000),
+ Row(Name='Carsen Edwards', Team='Boston Celtics', Position='SG', Birthday='3/12/98', Salary=1228026),
+ Row(Name='Anthony Tolliver', Team='Portland Trail Blazers', Position='PF', Birthday='6/1/85', Salary=2564753),
+ Row(Name='Lauri Markkanen', Team='Chicago Bulls', Position='PF', Birthday='5/22/97', Salary=5300400),
+ Row(Name='Kris Dunn', Team='Chicago Bulls', Position='PG', Birthday='3/18/94', Salary=5348007),
+ Row(Name='Reggie Bullock', Team='New York Knicks', Position='SF', Birthday='3/16/91', Salary=4000000),
+ Row(Name='Mike Conley', Team='Utah Jazz', Position='PG', Birthday='10/11/87', Salary=32511623),
+ Row(Name='Jaylen Nowell', Team='Minnesota Timberwolves', Position='SG', Birthday='7/9/99', Salary=1400000),
+ Row(Name='Gorgui Dieng', Team='Minnesota Timberwolves', Position='C', Birthday='1/18/90', Salary=16229213),
+ Row(Name='Patrick Patterson', Team='Los Angeles Clippers', Position='PF', Birthday='3/14/89', Salary=3068660),
+ Row(Name='Jarrett Allen', Team='Brooklyn Nets', Position='C', Birthday='4/21/98', Salary=2376840),
+ Row(Name='Bobby Portis', Team='New York Knicks', Position='C', Birthday='2/10/95', Salary=15000000),
+ Row(Name='Joel Embiid', Team='Philadelphia 76ers', Position='C', Birthday='3/16/94', Salary=27504630),
+ Row(Name='Jonas Valanciunas', Team='Memphis Grizzlies', Position='C', Birthday='5/6/92', Salary=16000000),
+ Row(Name='Chris Chiozza', Team='Washington Wizards', Position='PG', Birthday='11/21/95', Salary=79568),
+ Row(Name='Kent Bazemore', Team='Portland Trail Blazers', Position='SF', Birthday='7/1/89', Salary=19269663),
+ Row(Name='Tristan Thompson', Team='Cleveland Cavaliers', Position='C', Birthday='3/13/91', Salary=18539130),
+ Row(Name='Mason Plumlee', Team='Denver Nuggets', Position='C', Birthday='3/5/90', Salary=14041096),
+ Row(Name='Shabazz Napier', Team='Minnesota Timberwolves', Position='PG', Birthday='7/14/91', Salary=1845301),
+ Row(Name='Edmond Sumner', Team='Indiana Pacers', Position='PG', Birthday='12/31/95', Salary=2000000),
+ Row(Name='Alex Len', Team='Atlanta Hawks', Position='C', Birthday='6/16/93', Salary=4160000),
+ Row(Name='Josh Richardson', Team='Philadelphia 76ers', Position='SF', Birthday='9/15/93', Salary=10116576),
+ Row(Name='Bojan Bogdanovic', Team='Utah Jazz', Position='SF', Birthday='4/18/89', Salary=17000000),
+ Row(Name='Iman Shumpert', Team='Brooklyn Nets', Position='PG', Birthday='6/26/90', Salary=2031676),
+ Row(Name='Daryl Macon', Team='Miami Heat', Position='SG', Birthday='11/29/95', Salary=79568),
+ Row(Name='Rodney McGruder', Team='Los Angeles Clippers', Position='SG', Birthday='7/29/91', Salary=4807693),
+ Row(Name='Bam Adebayo', Team='Miami Heat', Position='C', Birthday='7/18/97', Salary=3454080),
+ Row(Name='Jacob Evans', Team='Golden State Warriors', Position='SG', Birthday='6/18/97', Salary=1928280),
+ Row(Name='Nigel Williams-Goss', Team='Utah Jazz', Position='PG', Birthday='9/16/94', Salary=1500000),
+ Row(Name='Terrance Ferguson', Team='Oklahoma City Thunder', Position='SF', Birthday='5/17/98', Salary=2475840),
+ Row(Name='Michael Carter-Williams', Team='Orlando Magic', Position='PG', Birthday='10/10/91', Salary=2028594),
+ Row(Name='Bol Bol', Team='Denver Nuggets', Position='C', Birthday='11/16/99', Salary=79568),
+ Row(Name='Willie Cauley-Stein', Team='Golden State Warriors', Position='C', Birthday='8/18/93', Salary=2177483),
+ Row(Name='Nikola Vucevic', Team='Orlando Magic', Position='C', Birthday='10/24/90', Salary=28000000),
+ Row(Name='Nicolas Batum', Team='Charlotte Hornets', Position='SF', Birthday='12/14/88', Salary=25565217),
+ Row(Name='Kyrie Irving', Team='Brooklyn Nets', Position='PG', Birthday='3/23/92', Salary=31742000),
+ Row(Name='Jeremy Lamb', Team='Indiana Pacers', Position='SF', Birthday='5/30/92', Salary=10500000),
+ Row(Name='Donovan Mitchell', Team='Utah Jazz', Position='SG', Birthday='9/7/96', Salary=3635760),
+ Row(Name='Thanasis Antetokounmpo', Team='Milwaukee Bucks', Position='SF', Birthday='7/18/92', Salary=1445697),
+ Row(Name='James Johnson', Team='Miami Heat', Position='PF', Birthday='2/20/87', Salary=15349400),
+ Row(Name='Monte Morris', Team='Denver Nuggets', Position='PG', Birthday='6/27/95', Salary=1588231),
+ Row(Name='Terry Rozier', Team='Charlotte Hornets', Position='PG', Birthday='3/17/94', Salary=19894737),
+ Row(Name='DeAndre Jordan', Team='Brooklyn Nets', Position='C', Birthday='7/21/88', Salary=9881598),
+ Row(Name='Jae Crowder', Team='Memphis Grizzlies', Position='SF', Birthday='7/6/90', Salary=7815533),
+ Row(Name='Josh Gray', Team='New Orleans Pelicans', Position='PG', Birthday='9/9/93', Salary=79568),
+ Row(Name='Goga Bitadze', Team='Indiana Pacers', Position='C', Birthday='7/20/99', Salary=2816760),
+ Row(Name='Kobi Simmons', Team='Charlotte Hornets', Position='PG', Birthday='7/4/97', Salary=79568),
+ Row(Name='Derrick Favors', Team='New Orleans Pelicans', Position='C', Birthday='7/15/91', Salary=17650000),
+ Row(Name='Landry Shamet', Team='Los Angeles Clippers', Position='SG', Birthday='3/13/97', Salary=1995120),
+ Row(Name='Jalen McDaniels', Team='Charlotte Hornets', Position='PF', Birthday='1/31/98', Salary=898310),
+ Row(Name='Bruno Caboclo', Team='Memphis Grizzlies', Position='SF', Birthday='9/21/95', Salary=1845301),
+ Row(Name='Drew Eubanks', Team='San Antonio Spurs', Position='PF', Birthday='2/1/97', Salary=79568),
+ Row(Name='Raul Neto', Team='Philadelphia 76ers', Position='PG', Birthday='5/19/92', Salary=1737145),
+ Row(Name='Jalen Lecque', Team='Phoenix Suns', Position='G', Birthday='6/13/00', Salary=898310),
+ Row(Name='Giannis Antetokounmpo', Team='Milwaukee Bucks', Position='PF', Birthday='12/6/94', Salary=25842697),
+ Row(Name='Malik Monk', Team='Charlotte Hornets', Position='SG', Birthday='2/4/98', Salary=4028400),
+ Row(Name='Tacko Fall', Team='Boston Celtics', Position='C', Birthday='12/10/95', Salary=79568),
+ Row(Name='Justin Jackson', Team='Dallas Mavericks', Position='PF', Birthday='3/28/95', Salary=3280920),
+ Row(Name='Paul George', Team='Los Angeles Clippers', Position='SF', Birthday='5/2/90', Salary=33005556),
+ Row(Name='Jayson Tatum', Team='Boston Celtics', Position='PF', Birthday='3/3/98', Salary=7830000),
+ Row(Name='Admiral Schofield', Team='Washington Wizards', Position='SF', Birthday='3/30/97', Salary=1000000),
+ Row(Name='Louis King', Team='Detroit Pistons', Position='F', Birthday='4/6/99', Salary=79568),
+ Row(Name='Kostas Antetokounmpo', Team='Los Angeles Lakers', Position='PF', Birthday='11/20/97', Salary=79568),
+ Row(Name='Rodions Kurucs', Team='Brooklyn Nets', Position='PF', Birthday='2/5/98', Salary=1699236),
+ Row(Name='Spencer Dinwiddie', Team='Brooklyn Nets', Position='PG', Birthday='4/6/93', Salary=10605600),
+ Row(Name='Doug McDermott', Team='Indiana Pacers', Position='PF', Birthday='1/3/92', Salary=7333333),
+ Row(Name='Romeo Langford', Team='Boston Celtics', Position='SG', Birthday='10/25/99', Salary=3458400),
+ Row(Name='Caris LeVert', Team='Brooklyn Nets', Position='SF', Birthday='8/25/94', Salary=2625717),
+ Row(Name='Michael Kidd-Gilchrist', Team='Charlotte Hornets', Position='PF', Birthday='9/26/93', Salary=13000000),
+ Row(Name='LeBron James', Team='Los Angeles Lakers', Position='PF', Birthday='12/30/84', Salary=37436858),
+ Row(Name='Taj Gibson', Team='New York Knicks', Position='C', Birthday='6/24/85', Salary=9000000),
+ Row(Name='Ty Jerome', Team='Phoenix Suns', Position='G', Birthday='7/8/97', Salary=2193480),
+ Row(Name='Chris Clemons', Team='Houston Rockets', Position='SG', Birthday='7/23/97', Salary=79568),
+ Row(Name='Luke Kornet', Team='Chicago Bulls', Position='C', Birthday='7/15/95', Salary=2250000),
+ Row(Name='Trey Lyles', Team='San Antonio Spurs', Position='PF', Birthday='11/5/95', Salary=5500000),
+ Row(Name='Sterling Brown', Team='Milwaukee Bucks', Position='SF', Birthday='2/10/95', Salary=1618520),
+ Row(Name='Andre Iguodala', Team='Memphis Grizzlies', Position='SF', Birthday='1/28/84', Salary=17185185),
+ Row(Name='Vincent Poirier', Team='Boston Celtics', Position='C', Birthday='10/17/93', Salary=2505793),
+ Row(Name='Frank Ntilikina', Team='New York Knicks', Position='PG', Birthday='7/28/98', Salary=4855800),
+ Row(Name='Jordan McRae', Team='Washington Wizards', Position='PG', Birthday='3/28/91', Salary=1645357),
+ Row(Name='Enes Kanter', Team='Boston Celtics', Position='C', Birthday='5/20/92', Salary=4767000),
+ Row(Name='John Henson', Team='Cleveland Cavaliers', Position='C', Birthday='12/28/90', Salary=9732396),
+ Row(Name='Jaylen Brown', Team='Boston Celtics', Position='SF', Birthday='10/24/96', Salary=6534829),
+ Row(Name='Jonah Bolden', Team='Philadelphia 76ers', Position='PF', Birthday='1/2/96', Salary=1698450),
+ Row(Name='Chimezie Metu', Team='San Antonio Spurs', Position='PF', Birthday='3/22/97', Salary=1416852),
+ Row(Name='Tobias Harris', Team='Philadelphia 76ers', Position='PF', Birthday='7/15/92', Salary=32742000),
+ Row(Name='Semi Ojeleye', Team='Boston Celtics', Position='PF', Birthday='12/5/94', Salary=1618520),
+ Row(Name='Jevon Carter', Team='Phoenix Suns', Position='PG', Birthday='9/14/95', Salary=1416852),
+ Row(Name='Brandon Ingram', Team='New Orleans Pelicans', Position='PF', Birthday='9/2/97', Salary=7265485),
+ Row(Name='Moritz Wagner', Team='Washington Wizards', Position='C', Birthday='4/26/97', Salary=2063520),
+ Row(Name='Dorian Finney-Smith', Team='Dallas Mavericks', Position='PF', Birthday='5/4/93', Salary=4000000),
+ Row(Name='Danuel House', Team='Houston Rockets', Position='SF', Birthday='6/7/93', Salary=3540000),
+ Row(Name='Nicolo Melli', Team='New Orleans Pelicans', Position='C', Birthday='1/26/91', Salary=4102564),
+ Row(Name='Talen Horton-Tucker', Team='Los Angeles Lakers', Position='GF', Birthday='11/25/00', Salary=898310),
+ Row(Name='Ed Davis', Team='Utah Jazz', Position='C', Birthday='6/5/89', Salary=4767000),
+ Row(Name='Kyle Guy', Team='Sacramento Kings', Position='G', Birthday='8/11/97', Salary=79568),
+ Row(Name='Kadeem Allen', Team='New York Knicks', Position='PG', Birthday='1/15/93', Salary=79568),
+ Row(Name='Dante Exum', Team='Utah Jazz', Position='PG', Birthday='7/13/95', Salary=9600000),
+ Row(Name='Abdel Nader', Team='Oklahoma City Thunder', Position='SF', Birthday='9/25/93', Salary=1618520),
+ Row(Name='Bruno Fernando', Team='Atlanta Hawks', Position='C', Birthday='8/15/98', Salary=1400000),
+ Row(Name='Dion Waiters', Team='Miami Heat', Position='SG', Birthday='12/10/91', Salary=12100000),
+ Row(Name='Jared Dudley', Team='Los Angeles Lakers', Position='PF', Birthday='7/10/85', Salary=2564753),
+ Row(Name='Max Strus', Team='Chicago Bulls', Position='SG', Birthday='3/28/96', Salary=79568),
+ Row(Name='Kevon Looney', Team='Golden State Warriors', Position='C', Birthday='2/6/96', Salary=4464286),
+ Row(Name='Willy Hernangomez', Team='Charlotte Hornets', Position='C', Birthday='5/27/94', Salary=1557250),
+ Row(Name='Melvin Frazier', Team='Orlando Magic', Position='SG', Birthday='8/30/96', Salary=1416852),
+ Row(Name='Austin Rivers', Team='Houston Rockets', Position='PG', Birthday='8/1/92', Salary=2174310),
+ Row(Name='Harry Giles', Team='Sacramento Kings', Position='PF', Birthday='4/22/98', Salary=2578800),
+ Row(Name='Robin Lopez', Team='Milwaukee Bucks', Position='C', Birthday='4/1/88', Salary=4767000),
+ Row(Name='Collin Sexton', Team='Cleveland Cavaliers', Position='PG', Birthday='1/4/99', Salary=4764960),
+ Row(Name='Ricky Rubio', Team='Phoenix Suns', Position='PG', Birthday='10/21/90', Salary=16200000)]</code></pre>
+</div>
+</div>
+</section>
+<section id="changing-variables" class="level3">
+<h3 class="anchored" data-anchor-id="changing-variables">Changing Variables <br></h3>
+<ol type="1">
+<li>Adding Columns <br> <code>df.withColumn()</code> takes the new name, along with how you’d like to create the new column. When using an already existing column, you must specify that it is a column by using <code>col('ColumnName')</code>. <br></li>
+</ol>
+<ul>
+<li>Note: you need to import <code>col()</code> in order for it to be recognized. <br></li>
+</ul>
+<p>Example: Dividing the NBA salaries by 1000</p>
+<div id="cell-25" class="cell" data-outputid="9a34ad3e-6515-4444-a302-277fa58918d7">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> col</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.withColumn(<span class="st">"SalaryK"</span>, col(<span class="st">"Salary"</span>)<span class="op">/</span><span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>+--------------+------------------+--------+--------+-------+--------+
+|          Name|              Team|Position|Birthday| Salary| SalaryK|
++--------------+------------------+--------+--------+-------+--------+
+|  Shake Milton|Philadelphia 76ers|      SG| 9/26/96|1445697|1445.697|
+|Christian Wood|   Detroit Pistons|      PF| 9/27/95|1645357|1645.357|
+| PJ Washington| Charlotte Hornets|      PF| 8/23/98|3831840| 3831.84|
+|  Derrick Rose|   Detroit Pistons|      PG| 10/4/88|7317074|7317.074|
+| Marial Shayok|Philadelphia 76ers|       G| 7/26/95|  79568|  79.568|
++--------------+------------------+--------+--------+-------+--------+
+only showing top 5 rows
+</code></pre>
+</div>
+</div>
+<ol start="2" type="1">
+<li>Removing Columns <br> <code>df.drop()</code> takes one or multiple column names. <br> Example: Removing ‘SalaryK’</li>
+</ol>
+<div id="cell-27" class="cell" data-outputid="705162fc-b403-45eb-d850-10ec60508399">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.drop(<span class="st">"SalaryK"</span>).show(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>+--------------+------------------+--------+--------+-------+
+|          Name|              Team|Position|Birthday| Salary|
++--------------+------------------+--------+--------+-------+
+|  Shake Milton|Philadelphia 76ers|      SG| 9/26/96|1445697|
+|Christian Wood|   Detroit Pistons|      PF| 9/27/95|1645357|
+| PJ Washington| Charlotte Hornets|      PF| 8/23/98|3831840|
+|  Derrick Rose|   Detroit Pistons|      PG| 10/4/88|7317074|
+| Marial Shayok|Philadelphia 76ers|       G| 7/26/95|  79568|
++--------------+------------------+--------+--------+-------+
+only showing top 5 rows
+</code></pre>
+</div>
+</div>
+<ol start="3" type="1">
+<li>Renaming Columns <br> <code>df.withColumnRenamed()</code> takes the current column name, followed by the new name Example: Changing ‘Birthday’ to ‘DateOfBirth’</li>
+</ol>
+<div id="cell-29" class="cell" data-outputid="e1f9bc96-8c4c-49fc-ff0e-9a366caf1d13">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.withColumnRenamed(<span class="st">"Birthday"</span>, <span class="st">"DateOfBirth"</span>).show(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>+--------------+------------------+--------+-----------+-------+
+|          Name|              Team|Position|DateOfBirth| Salary|
++--------------+------------------+--------+-----------+-------+
+|  Shake Milton|Philadelphia 76ers|      SG|    9/26/96|1445697|
+|Christian Wood|   Detroit Pistons|      PF|    9/27/95|1645357|
+| PJ Washington| Charlotte Hornets|      PF|    8/23/98|3831840|
+|  Derrick Rose|   Detroit Pistons|      PG|    10/4/88|7317074|
+| Marial Shayok|Philadelphia 76ers|       G|    7/26/95|  79568|
++--------------+------------------+--------+-----------+-------+
+only showing top 5 rows
+</code></pre>
+</div>
+</div>
+<ol start="4" type="1">
+<li>Rearranging Columns Use <code>select()</code> to order the columns in the way that you would like. <br> Example:</li>
+</ol>
+<div id="cell-31" class="cell" data-outputid="440f4076-e23a-4b99-f327-b11ff868ccd1">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.select(<span class="st">"Name"</span>, <span class="st">"Team"</span>, <span class="st">"Position"</span>, <span class="st">"Salary"</span>).show(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>+--------------+------------------+--------+-------+
+|          Name|              Team|Position| Salary|
++--------------+------------------+--------+-------+
+|  Shake Milton|Philadelphia 76ers|      SG|1445697|
+|Christian Wood|   Detroit Pistons|      PF|1645357|
+| PJ Washington| Charlotte Hornets|      PF|3831840|
+|  Derrick Rose|   Detroit Pistons|      PG|7317074|
+| Marial Shayok|Philadelphia 76ers|       G|  79568|
++--------------+------------------+--------+-------+
+only showing top 5 rows
+</code></pre>
+</div>
+</div>
+</section>
+<section id="mathematical-vectorized-operations" class="level3">
+<h3 class="anchored" data-anchor-id="mathematical-vectorized-operations">Mathematical &amp; Vectorized Operations <br></h3>
+<ol type="1">
+<li>Aggregate Functions: <br></li>
+</ol>
+<ul>
+<li><code>mean()</code> <br></li>
+<li><code>min()</code> <br></li>
+<li><code>max()</code> <br></li>
+<li><code>stdev_pop()</code> <br></li>
+<li><code>median()</code> <br> These functions are used within <code>selectExpr()</code>. They take the name of the variable you’d like to aggregate, and then add as “new_variable_name” after. <br> Here are the aggregation functions in action:</li>
+</ul>
+<div id="cell-33" class="cell" data-outputid="5e32590b-7504-4d71-db07-bade40e846bd">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>df.selectExpr(</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"mean(Salary) as mean_salary"</span>,</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"min(Salary) as min_salary"</span>,</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"max(Salary) as max_salary"</span>,</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"stddev_pop(Salary) as std_salary"</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>).show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>+-----------------+----------+----------+-----------------+
+|      mean_salary|min_salary|max_salary|       std_salary|
++-----------------+----------+----------+-----------------+
+|7653583.764444444|     79568|  40231758|9278483.657952718|
++-----------------+----------+----------+-----------------+
+</code></pre>
+</div>
+</div>
+<ol type="1">
+<li>Using the <code>functions</code> package</li>
+</ol>
+<div id="cell-35" class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql <span class="im">import</span> functions <span class="im">as</span> F</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This package will allow you to create new columns or transform current ones. <br> Examples: <br> - <code>F.avg()</code> <br> - <code>F.concat()</code> <br> - <code>F.lit()</code> <br> - <code>F.col()</code> <br></p>
+<p>Here are these fucntions in action:</p>
+<div id="cell-37" class="cell" data-outputid="6c2f67b3-af7b-4062-bb50-713bd37b62eb">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>salary_mean <span class="op">=</span> df.select(F.avg(<span class="st">"Salary"</span>).alias(<span class="st">"mean_salary"</span>)).collect()[<span class="dv">0</span>][<span class="st">"mean_salary"</span>]</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> (</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    df</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    .withColumn(<span class="st">"Salary_2x"</span>, F.col(<span class="st">"Salary"</span>) <span class="op">*</span> <span class="dv">2</span>)    <span class="co"># Add Salary_2x</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    .withColumn(</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Name_w_Position"</span>,           <span class="co"># Concatenate Name and Position</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>        F.concat(F.col(<span class="st">"Name"</span>), F.lit(<span class="st">" ("</span>), F.col(<span class="st">"Position"</span>), F.lit(<span class="st">")"</span>)))</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>    .withColumn(</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Salary_minus_Mean"</span>,        <span class="co"># Subtract mean salary</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>        F.col(<span class="st">"Salary"</span>) <span class="op">-</span> F.lit(salary_mean))</span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>).show(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>+--------------+------------------+--------+--------+-------+---------+-------------------+-------------------+
+|          Name|              Team|Position|Birthday| Salary|Salary_2x|    Name_w_Position|  Salary_minus_Mean|
++--------------+------------------+--------+--------+-------+---------+-------------------+-------------------+
+|  Shake Milton|Philadelphia 76ers|      SG| 9/26/96|1445697|  2891394|  Shake Milton (SG)| -6207886.764444444|
+|Christian Wood|   Detroit Pistons|      PF| 9/27/95|1645357|  3290714|Christian Wood (PF)| -6008226.764444444|
+| PJ Washington| Charlotte Hornets|      PF| 8/23/98|3831840|  7663680| PJ Washington (PF)|-3821743.7644444443|
+|  Derrick Rose|   Detroit Pistons|      PG| 10/4/88|7317074| 14634148|  Derrick Rose (PG)| -336509.7644444443|
+| Marial Shayok|Philadelphia 76ers|       G| 7/26/95|  79568|   159136|  Marial Shayok (G)| -7574015.764444444|
++--------------+------------------+--------+--------+-------+---------+-------------------+-------------------+
+only showing top 5 rows
+</code></pre>
+</div>
+</div>
+</section>
+<section id="converting-data-types" class="level3">
+<h3 class="anchored" data-anchor-id="converting-data-types">Converting Data Types <br></h3>
+<ol type="1">
+<li><code>.cast()</code> is used after a variable is specified, and takes different data types as a string. <br></li>
+<li><code>to_date()</code> converts data to a specified date format. It takes the variable to be changed, and the specific date format you wish to chose.<br></li>
+</ol>
+<div id="cell-39" class="cell" data-outputid="40af4f0b-892a-4566-b69a-c7ba40c85f46">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> to_date</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.withColumn(<span class="st">'DateOfBirth_ts'</span>, to_date(<span class="st">'Birthday'</span>,<span class="st">'M/d/yy'</span>)).show(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>+--------------+------------------+--------+--------+-------+--------------+
+|          Name|              Team|Position|Birthday| Salary|DateOfBirth_ts|
++--------------+------------------+--------+--------+-------+--------------+
+|  Shake Milton|Philadelphia 76ers|      SG| 9/26/96|1445697|    2096-09-26|
+|Christian Wood|   Detroit Pistons|      PF| 9/27/95|1645357|    2095-09-27|
+| PJ Washington| Charlotte Hornets|      PF| 8/23/98|3831840|    2098-08-23|
+|  Derrick Rose|   Detroit Pistons|      PG| 10/4/88|7317074|    2088-10-04|
+| Marial Shayok|Philadelphia 76ers|       G| 7/26/95|  79568|    2095-07-26|
++--------------+------------------+--------+--------+-------+--------------+
+only showing top 5 rows
+</code></pre>
+</div>
+</div>
+<p>Main Data Types: <br> - <code>int</code> <br> - <code>float</code> <br> - <code>string</code> <br> - <code>boolean</code> <br> - <code>date</code> <br> - <code>timestamp</code> <br></p>
+</section>
+<section id="filtering-by-a-condition" class="level3">
+<h3 class="anchored" data-anchor-id="filtering-by-a-condition">Filtering by a Condition <br></h3>
+<p><code>df.filter()</code> takes one or multiple conditions to be met and displayed. Separate conditions by putting each one in parentheses and with the &amp; or | sign. <br> Here are some examples with a new DataFrame:</p>
+<div id="cell-41" class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql <span class="im">import</span> SparkSession</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>spark <span class="op">=</span> SparkSession.builder.master(<span class="st">"local[*]"</span>).getOrCreate()</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>df_pd <span class="op">=</span> pd.read_csv(<span class="st">"https://bcdanl.github.io/data/employment.csv"</span>)</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>df_pd <span class="op">=</span> df_pd.where(pd.notnull(df_pd), <span class="va">None</span>)  <span class="co"># Convert NaN to None</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> spark.createDataFrame(df_pd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-42" class="cell" data-outputid="6427187b-d9d4-4db4-e6ce-51eec8c484dd">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>df.<span class="bu">filter</span>(col(<span class="st">"Salary"</span>) <span class="op">&gt;</span> <span class="dv">100000</span>).show(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>+----------+------+----------+--------+-----+---------+
+|First Name|Gender|Start Date|  Salary| Mgmt|     Team|
++----------+------+----------+--------+-----+---------+
+|   Douglas|  Male|    8/6/93|     NaN| true|Marketing|
+|     Maria|Female|      NULL|130590.0|false|  Finance|
+|     Jerry|  NULL|    3/4/05|138705.0| true|  Finance|
+|     Larry|  Male|   1/24/98|101004.0| true|       IT|
+|    Dennis|  Male|   4/18/87|115163.0|false|    Legal|
++----------+------+----------+--------+-----+---------+
+only showing top 5 rows
+</code></pre>
+</div>
+</div>
+<div id="cell-43" class="cell" data-outputid="12520be8-4668-4af3-fa42-575dcdbb939b">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co">#or</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>df.<span class="bu">filter</span>(</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    ( col(<span class="st">"Team"</span>) <span class="op">==</span> <span class="st">"Finance"</span> ) <span class="op">&amp;</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>    ( col(<span class="st">"Salary"</span>) <span class="op">&gt;=</span> <span class="dv">100000</span> )</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>).show(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>+----------+------+----------+--------+-----+-------+
+|First Name|Gender|Start Date|  Salary| Mgmt|   Team|
++----------+------+----------+--------+-----+-------+
+|     Maria|Female|      NULL|130590.0|false|Finance|
+|     Jerry|  NULL|    3/4/05|138705.0| true|Finance|
+|     Bruce|  Male|  11/28/09|114796.0|false|Finance|
+|      Carl|  Male|    5/3/06|130276.0| true|Finance|
+|     Irene|  NULL|   7/14/15|100863.0| true|Finance|
++----------+------+----------+--------+-----+-------+
+only showing top 5 rows
+</code></pre>
+</div>
+</div>
+<div id="cell-44" class="cell" data-outputid="3790b6ad-5069-4cdb-ef83-ce1f39842b45">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co">#or</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>df.<span class="bu">filter</span>(</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>    (col(<span class="st">"Team"</span>) <span class="op">==</span> <span class="st">"Finance"</span>) <span class="op">|</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>    (col(<span class="st">"Team"</span>) <span class="op">==</span> <span class="st">"Legal"</span>)   <span class="op">|</span></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>    (col(<span class="st">"Team"</span>) <span class="op">==</span> <span class="st">"Sales"</span>)</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>).show(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>+----------+------+----------+--------+-----+-------+
+|First Name|Gender|Start Date|  Salary| Mgmt|   Team|
++----------+------+----------+--------+-----+-------+
+|     Maria|Female|      NULL|130590.0|false|Finance|
+|     Jerry|  NULL|    3/4/05|138705.0| true|Finance|
+|    Dennis|  Male|   4/18/87|115163.0|false|  Legal|
+|      NULL|Female|   7/20/15| 45906.0| NULL|Finance|
+|     Julie|Female|  10/26/97|102508.0| true|  Legal|
++----------+------+----------+--------+-----+-------+
+only showing top 5 rows
+</code></pre>
+</div>
+</div>
+<p><code>isin()</code> used within <code>filter()</code>, takes a list of values within a variable and filters only those values.</p>
+<div id="cell-46" class="cell" data-outputid="f9e8b053-fa27-4734-ef13-ab264cfdb847">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>df.<span class="bu">filter</span>(col(<span class="st">'Team'</span>).isin(<span class="st">'Finance'</span>,<span class="st">'Legal'</span>,<span class="st">'Sales'</span>)).show(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>+----------+------+----------+--------+-----+-------+
+|First Name|Gender|Start Date|  Salary| Mgmt|   Team|
++----------+------+----------+--------+-----+-------+
+|     Maria|Female|      NULL|130590.0|false|Finance|
+|     Jerry|  NULL|    3/4/05|138705.0| true|Finance|
+|    Dennis|  Male|   4/18/87|115163.0|false|  Legal|
+|      NULL|Female|   7/20/15| 45906.0| NULL|Finance|
+|     Julie|Female|  10/26/97|102508.0| true|  Legal|
++----------+------+----------+--------+-----+-------+
+only showing top 5 rows
+</code></pre>
+</div>
+</div>
+<p><code>between()</code> is also used within <code>filter()</code>. It takes a range of values and returns True if a value falls wihin the range.</p>
+<div id="cell-48" class="cell" data-outputid="0227d2ec-ab1e-4a3e-875f-e0b5a0bbf8fe">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>df_between <span class="op">=</span> df.<span class="bu">filter</span>(col(<span class="st">'Salary'</span>).between(<span class="dv">90000</span>,<span class="dv">100000</span>))</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>df_between.show(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>+----------+------+----------+-------+-----+-----------+
+|First Name|Gender|Start Date| Salary| Mgmt|       Team|
++----------+------+----------+-------+-----+-----------+
+|    Angela|Female|  11/22/05|95570.0| true|Engineering|
+|    Jeremy|  Male|   9/21/10|90370.0|false|         HR|
+|    Joshua|  NULL|    3/8/12|90816.0| true|         IT|
+|      John|  Male|    7/1/92|97950.0|false|         IT|
+|     Jerry|  Male|   1/10/04|95734.0|false|         IT|
++----------+------+----------+-------+-----+-----------+
+only showing top 5 rows
+</code></pre>
+</div>
+</div>
+</section>
+<section id="missing-values" class="level3">
+<h3 class="anchored" data-anchor-id="missing-values">Missing Values</h3>
+<p>Find how many missing values are in a column with <code>isNull()</code>:</p>
+<div id="cell-50" class="cell" data-outputid="cd767ec7-e71c-4c5e-8f2b-4df1e8359d69">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>df.<span class="bu">filter</span>(col(<span class="st">'Team'</span>).isNull()).count()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="67">
+<pre><code>44</code></pre>
+</div>
+</div>
+<p>You can find how many non-null values by using the same code and replacing <code>isNull()</code> with <code>isNotNull()</code>. <br></p>
+<p>Drop rows with missing values with <code>na.drop()</code>:</p>
+<div id="cell-52" class="cell" data-outputid="98365e2e-622a-4c28-ca43-92fec95e8683">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>df_drop <span class="op">=</span> df.na.drop().show(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>+----------+------+----------+--------+-----+------------+
+|First Name|Gender|Start Date|  Salary| Mgmt|        Team|
++----------+------+----------+--------+-----+------------+
+|     Larry|  Male|   1/24/98|101004.0| true|          IT|
+|    Dennis|  Male|   4/18/87|115163.0|false|       Legal|
+|      Ruby|Female|   8/17/87| 65476.0| true|     Product|
+|    Angela|Female|  11/22/05| 95570.0| true| Engineering|
+|   Frances|Female|    8/8/02|139852.0| true|Business Dev|
+|     Julie|Female|  10/26/97|102508.0| true|       Legal|
+|   Brandon|  Male|   12/1/80|112807.0| true|          HR|
+|      Gary|  Male|   1/27/08|109831.0|false|       Sales|
+|  Kimberly|Female|   1/14/99| 41426.0| true|     Finance|
+|   Lillian|Female|    6/5/16| 59414.0|false|     Product|
++----------+------+----------+--------+-----+------------+
+only showing top 10 rows
+</code></pre>
+</div>
+</div>
+<ul>
+<li>takes the argument <code>how = 'all'</code>, which removes observations that all values are missing <br></li>
+<li>use the argument <code>subset =</code> to target rows with missing values in a given variable <br></li>
+</ul>
+<div id="cell-54" class="cell" data-outputid="a101dcda-4dbf-43ea-c2f7-30c52f40ff7a">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>df_drop_subset <span class="op">=</span> df.na.drop(subset<span class="op">=</span>[<span class="st">"Gender"</span>, <span class="st">"Team"</span>]).show(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>+----------+------+----------+--------+-----+------------+
+|First Name|Gender|Start Date|  Salary| Mgmt|        Team|
++----------+------+----------+--------+-----+------------+
+|   Douglas|  Male|    8/6/93|     NaN| true|   Marketing|
+|     Maria|Female|      NULL|130590.0|false|     Finance|
+|     Larry|  Male|   1/24/98|101004.0| true|          IT|
+|    Dennis|  Male|   4/18/87|115163.0|false|       Legal|
+|      Ruby|Female|   8/17/87| 65476.0| true|     Product|
+|      NULL|Female|   7/20/15| 45906.0| NULL|     Finance|
+|    Angela|Female|  11/22/05| 95570.0| true| Engineering|
+|   Frances|Female|    8/8/02|139852.0| true|Business Dev|
+|     Julie|Female|  10/26/97|102508.0| true|       Legal|
+|   Brandon|  Male|   12/1/80|112807.0| true|          HR|
++----------+------+----------+--------+-----+------------+
+only showing top 10 rows
+</code></pre>
+</div>
+</div>
+<p><code>na.fill()</code> fills in null values with a specified value.</p>
+<div id="cell-56" class="cell" data-outputid="725e664e-4cca-43cf-aa63-9b4933fa2668">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>df_fill <span class="op">=</span> df.na.fill(value <span class="op">=</span> <span class="dv">0</span>, subset <span class="op">=</span> [<span class="st">"Salary"</span>]).show(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>+----------+------+----------+--------+-----+------------+
+|First Name|Gender|Start Date|  Salary| Mgmt|        Team|
++----------+------+----------+--------+-----+------------+
+|   Douglas|  Male|    8/6/93|     0.0| true|   Marketing|
+|    Thomas|  Male|   3/31/96| 61933.0| true|        NULL|
+|     Maria|Female|      NULL|130590.0|false|     Finance|
+|     Jerry|  NULL|    3/4/05|138705.0| true|     Finance|
+|     Larry|  Male|   1/24/98|101004.0| true|          IT|
+|    Dennis|  Male|   4/18/87|115163.0|false|       Legal|
+|      Ruby|Female|   8/17/87| 65476.0| true|     Product|
+|      NULL|Female|   7/20/15| 45906.0| NULL|     Finance|
+|    Angela|Female|  11/22/05| 95570.0| true| Engineering|
+|   Frances|Female|    8/8/02|139852.0| true|Business Dev|
++----------+------+----------+--------+-----+------------+
+only showing top 10 rows
+</code></pre>
+</div>
+</div>
+<ul>
+<li>you can do multiple variables at a time by usingn a dictionary instead of <code>value = , subset =</code></li>
+</ul>
+</section>
+<section id="dealing-with-duplicates" class="level3">
+<h3 class="anchored" data-anchor-id="dealing-with-duplicates">Dealing with Duplicates</h3>
+<p><code>dropDuplicates()</code> drops all rows that are exact duplicates</p>
+<div id="cell-58" class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>df_no_dups <span class="op">=</span> df.dropDuplicates()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>add <code>['Variable_Name']</code> in the function to specify how to drop duplicates</li>
+</ul>
+<div id="cell-60" class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>df_no_dups_subset <span class="op">=</span> df.dropDuplicates([<span class="st">"Team"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now you’re all caught up on the PySpark basics!</p>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script type="text/javascript" src="links.js"></script>
+
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Powered with GitHub and Quarto<br>© Emily Peters, 2025</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
