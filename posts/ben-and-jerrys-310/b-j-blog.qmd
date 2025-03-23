@@ -1,0 +1,122 @@
+---
+title: Ben & Jerry's Analysis
+author: Emily Peters
+date: 2025-03-24
+categories: [R, data tranformation, data visualization] 
+image: b-j-img.jpg 
+
+execute: 
+  warning: false
+  message: false
+  
+toc: true
+---
+# Analysis of Ben & Jerry's products, sales, and customers
+
+```{r}
+library(tidyverse)
+library(skimr)
+library(ggrepel)
+```
+
+```{r}
+ice_cream <- read_csv('https://bcdanl.github.io/data/ben-and-jerry-cleaned.csv')
+DT::datatable(ice_cream |> head(100))
+```
+
+```{r}
+DT::datatable(skim(ice_cream))
+```
+
+## Money spent on Ben & Jerry's per flavor
+
+```{r}
+price_house <- ice_cream |> 
+  group_by(household_size) |> 
+  summarize(tot_spent = sum(priceper1)) |> 
+  arrange(desc(tot_spent)) |> 
+  mutate(tot_spent = round(tot_spent, 2))
+```
+
+```{r}
+ggplot(data = price_house,
+       mapping = aes(x = household_size,
+                     y = tot_spent)) +
+  geom_line(color = "deepskyblue", size = 1.5) +
+  geom_point() +
+  theme_minimal() +
+  scale_y_continuous(breaks = c(5000,10000,15000,20000,25000,30000), labels = scales :: dollar) +
+  scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9)) +
+  labs(x = "People per Household",
+       y = "Total Money Spent",
+       title = "Total Money Spent on Ben and Jerry's \n Ice Cream by Household Size") +
+  annotate("rect",
+           xmin = .75, xmax = 2.25,
+           ymin = 17000, ymax = 28500,
+           fill = "green3", alpha = .3) +
+  annotate("text",
+           x = 2.5, y = 25000,
+           label = "Households with a small number of \n kids or no kids at all buy much more \n ice cream.",
+           hjust = 0, size = 3)
+```
+This may be suprising results at first look. One might think that larger households would buy more ice cream since there are most likely more children in the household, and ice cream is notably a favorite treat among children. However, for Ben & Jerry's that is not the case. Here are a couple reasons why: <br>
+1. Smaller portions <br>
+Ben and Jerry's is purchased in either 16 ounce or 32 ounce containers (1 or 2 pints). Purchasing enough Ben & Jerry's ice cream for a larger household will get very expensive. For large families, it would make more financial sense to get a larger container of ice cream of a different brand for the whole family. On the other hand, a smaller container of ice cream would suit households with 1 to 2, or sometimes 3 people. Buying for a smaller amount of people makes Ben and Jerry's more convenient, which might lead to a smaller household consistantly buying it. <br> 
+2. Income <br>
+Households with 0 children or 1 child will most likely have different budgetary restrictions that than households with multiple children. Obviously, it is much less expensive to support fewer children. Households with multiple children will have to allocate their money differently, which might deter them from buying multiple containers of Ben and Jerry's consistantly. 
+
+## Top 10 Flavors Sold By Region
+
+```{r}
+tot_spent_flavor <- ice_cream |> 
+  group_by(flavor_descr, region) |> 
+  summarize(flav_spent = sum(priceper1))
+```
+```{r}
+ggplot(data = tot_spent_flavor,
+       mapping = aes(x = fct_reorder(flavor_descr,
+                                     flav_spent,
+                                     na.rm = T), 
+                     y = flav_spent,
+                     fill = flavor_descr))+
+  geom_col(data = tot_spent_flavor |> 
+             filter(region == "Central") |> 
+             arrange(desc(flav_spent)) |> 
+             head(5)) +
+    geom_col(data = tot_spent_flavor |> 
+             filter(region == "East") |> 
+             arrange(desc(flav_spent)) |> 
+             head(5)) +
+    geom_col(data = tot_spent_flavor |> 
+             filter(region == "South") |> 
+             arrange(desc(flav_spent)) |> 
+             head(5)) +
+    geom_col(data = tot_spent_flavor |> 
+             filter(region == "West") |>
+             arrange(desc(flav_spent)) |> 
+             head(5)) +
+  facet_wrap(~ region, 
+             scales = "free_x",
+             nrow = 1) +
+  theme_bw()+
+  theme(legend.position = "bottom",
+        legend.key.size = unit(8, "pt"),
+        axis.text.x = element_blank())+
+  scale_fill_viridis_d()+
+  scale_y_continuous(labels = scales :: dollar) +
+  labs(x = "",
+       y = "Total Money Spent",
+       title = "Top 5 Flavors Sold by Region",
+       fill = "Flavor")
+```
+
+One flavor occurs in the top 5 for every region, Cherry Garcia, indicating that is a favorite flavor throughout the US. In each region, Cherry Garcia has higher sales than the second top flavor by at least $250. Another favorite in the US is Chocholate Chip Cookie Dough, which is a top flavor in all but the southern region. <br>
+The southern region has the highest sales of the top 5 flavors compared to the flavors in other regions. The central and eastern regions have notably lower sales of each top 5 group of flavors compared to the southern and western regions. This could be due to the climate of each region, since the southern and western region have higher top 5 flavor sales. People who live in places that are always warm might be more likely to buy ice cream. 
+
+
+
+
+
+
+
+
