@@ -111,7 +111,7 @@ ggplot(data = tot_spent_flavor,
 ```
 
 One flavor occurs in the top 5 for every region, Cherry Garcia, indicating that is a favorite flavor throughout the US. In each region, Cherry Garcia has higher sales than the second top flavor by at least $250. Another favorite in the US is Chocholate Chip Cookie Dough, which is a top flavor in all but the southern region. <br>
-The southern region has the highest sales of the top 5 flavors compared to the flavors in other regions. The central and eastern regions have notably lower sales of each top 5 group of flavors compared to the southern and western regions. This could be due to the climate of each region, since the southern and western region have higher top 5 flavor sales. People who live in places that are always warm might be more likely to buy ice cream. 
+The southern region has the highest sales of the top 5 flavors compared to the flavors in other regions. The central and eastern regions have notably lower sales of each top 5 group of flavors compared to the southern and western regions. This could be due to the climate of each region, since the southern and western region have higher top 5 flavor sales. People who live in places that are always warm might be more likely to buy ice cream.
 
 
 
