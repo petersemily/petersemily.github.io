@@ -1,0 +1,13 @@
+---
+title: "DANL310 Shiny App"
+date: 2025-05-16
+---
+
+```{=html}
+<div style="text-align: center; margin: 1em 0;">
+  <iframe
+    src="https://github.com/petersemily/shiny-app-danl310"
+    style="width: 800px; height: 800px; border: none;"
+  ></iframe>
+</div>
+```
