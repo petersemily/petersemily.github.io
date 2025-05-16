@@ -21,7 +21,7 @@ website:
       - text: DANL 320
         menu:
           - text: Project
-            href: 320_files/danl_proj_nba.ipynb
+            href: 320_files/danl_320_noone_daniel_peters_emily_project.ipynb
       - text: Python Data Analysis
         menu:
           - text: Python Basics
