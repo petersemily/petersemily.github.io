@@ -97,7 +97,7 @@ list(
 
 highest_unemp <- svi3 |> 
   arrange(desc(UNEMP)) |>
-  filter(COUNTY == "Tioga County")git
+  filter(COUNTY == "Tioga County")
 
 list(
   icon = "briefcase",
