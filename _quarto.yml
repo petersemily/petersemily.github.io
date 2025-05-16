@@ -15,7 +15,7 @@ website:
           - text: Project- Dashboard
             href: 310_files/dashboard.qmd
           - text: Project- R file
-            href: 310_files/410-visualizations
+            href: 310_files/410-visualizations.R
           - text: Project- Presentation
             href: 310_files/DANL410-Capstone.pptx
           - text: Project- Shiny App
