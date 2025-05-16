@@ -13,13 +13,13 @@ website:
           - text: R Basics
             href: 310_files/danl-310-quarto-r.qmd
           - text: Project- Dashboard
-            href: 310/files/dashboard.qmd
+            href: 310_files/dashboard.qmd
           - text: Project- R file
             href: 310_files/410-visualizations
           - text: Project- Presentation
             href: 310_files/DANL410-Capstone.pptx
           - text: Project- Shiny App
-            href:310_files/shiny-on-website.qmd
+            href: 310_files/shiny-on-website.qmd
       - text: DANL 320
         menu:
           - text: Project
