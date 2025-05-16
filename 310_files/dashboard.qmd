@@ -67,7 +67,7 @@ svi3_long <- svi3 |>
 #| title: "Total Population (All Counties)"
 
 list(
-  icon = "users",
+  icon = "bar-chart",
   color = "info",
   value = sum(svi2$C_TOTPOP)
 )
@@ -84,7 +84,7 @@ highest_noveh <- svi3 |>
   
 
 list(
-  icon = "car-slash",
+  icon = "car-front",
   color = "danger",
   value = highest_noveh$NOVEH
 )
@@ -97,7 +97,7 @@ list(
 
 highest_unemp <- svi3 |> 
   arrange(desc(UNEMP)) |>
-  filter(COUNTY == "Tioga County")
+  filter(COUNTY == "Tioga County")git
 
 list(
   icon = "briefcase",
@@ -111,10 +111,15 @@ list(
 #| content: valuebox
 #| title: "Sufficient Counties Count"
 
+counts <- svi2 |> 
+  filter(RATING == "Sufficient") |> 
+  count(RATING) |> 
+  pull(n)  
+
 list(
-  icon = "bus",
+  icon = "bus-front",
   color = "secondary",
-  value = count(svi2 |> filter(RATING == "Sufficient"))
+  value = counts
 )
 
 ```
